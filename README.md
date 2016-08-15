@@ -2,6 +2,13 @@
 
 bbn: blog.bouzuya.net using Cycle.js
 
+## Badges
+
+[![Travis CI][travisci-badge-url]][travisci-url]
+
+[travisci-badge-url]: https://travis-ci.org/bouzuya/bbn-cycle.svg
+[travisci-url]: https://travis-ci.org/bouzuya/bbn-cycle
+
 ## License
 
 [MIT](LICENSE)
