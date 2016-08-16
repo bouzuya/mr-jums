@@ -22,4 +22,7 @@ const main = (): void => {
   );
 };
 
+// FIXME
+main();
+
 export { main };
