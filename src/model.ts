@@ -1,15 +1,6 @@
 import xs from 'xstream';
 import { Action, ActionType, ToggleAction } from './action';
-
-export interface Entry {
-  title: string;
-  body: string;
-}
-
-export interface State {
-  entries: Entry[];
-  checked: boolean;
-}
+import { Entry, State } from './type';
 
 const select = <T extends Action>(
   action$: xs<Action>, type: ActionType
