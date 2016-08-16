@@ -1,7 +1,25 @@
-import { run } from './cycle';
+import xs from 'xstream';
+import { run } from '@cycle/xstream-run';
+import { DOMSource, makeDOMDriver } from '@cycle/dom';
+import { intent } from './intent';
+import { model } from './model';
+import { view } from './view';
 
-const add = (x: number, y: number): number => x + y;
+type MySources = {
+  DOM: DOMSource
+};
 
-run();
+type MySinks = {
+  DOM: xs<any>;
+};
 
-export { add };
+const main = (): void => {
+  run(
+    (sources: MySources): MySinks => view(model(intent(sources))),
+    {
+      DOM: makeDOMDriver('#app')
+    }
+  );
+};
+
+export { main };
