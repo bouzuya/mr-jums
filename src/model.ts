@@ -1,5 +1,12 @@
 import xs from 'xstream';
-import { Action, ActionType, SelectAction, ToggleAction } from './action';
+import {
+  Action,
+  ActionType,
+  NextAction,
+  PrevAction,
+  SelectAction,
+  ToggleAction
+} from './action';
 import { Entry, State } from './type';
 
 const select = <T extends Action>(
@@ -51,13 +58,40 @@ const model = (action$: xs<Action>): xs<State> => {
     select<SelectAction>(action$, 'select')
       .map<string | null>(({ entryId }) => entryId)
       .startWith(null);
+
+  const selectedEntryIdInList$: xs<string | null> = xs
+    .merge(
+    select<SelectAction>(action$, 'select'),
+    select<NextAction>(action$, 'next'),
+    select<PrevAction>(action$, 'prev')
+    )
+    .map((action) => entries$.map((entries) => ({ action, entries })))
+    .flatten()
+    .fold<string | null>((selectedEntryIdInList, { action, entries }) => {
+      if (action.type === 'select') return action.entryId;
+      if (entries.length === 0) return null;
+      const index = entries.findIndex(({ id }) => id === selectedEntryIdInList);
+      if (action.type === 'next') {
+        if (selectedEntryIdInList === null) return entries[0].id;
+        return index < 0 ? null : entries[index + 1].id;
+      } else {
+        if (selectedEntryIdInList === null) return null;
+        return index <= 0 ? null : entries[index - 1].id;
+      }
+    }, null);
   const state$: xs<State> = xs
-    .combine(checked$, entries$, selectedEntryId$)
+    .combine(
+    checked$,
+    entries$,
+    selectedEntryIdInList$,
+    selectedEntryId$
+    )
     .map(([
       checked,
       entries,
+      selectedEntryIdInList,
       selectedEntryId
-    ]) => ({ checked, entries, selectedEntryId }));
+    ]) => ({ checked, entries, selectedEntryIdInList, selectedEntryId }));
   return state$;
 };
 
