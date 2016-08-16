@@ -1,21 +1,15 @@
 import xs from 'xstream';
 import { run } from '@cycle/xstream-run';
-import { DOMSource, makeDOMDriver, div, input, p } from '@cycle/dom';
+import { DOMSource, makeDOMDriver } from '@cycle/dom';
+import { view } from './view';
 
 const main = ({ DOM }: { DOM: DOMSource }) => {
   const click$: xs<Event> = DOM.select('input').events('click');
-  const vtree$ = click$
-    .map(ev => (ev.target as any).checked)
-    .startWith(false)
-    .map(toggled =>
-      div([
-        input({ attrs: { type: 'checkbox' } }), 'Toggle me',
-        p(toggled ? 'ON' : 'off')
-      ])
-    )
-  const sinks = { DOM: vtree$ };
-  return sinks;
-}
+  const checked$: xs<boolean> = click$
+    .map((event) => (event.target as any).checked)
+  const state$: xs<boolean> = checked$.startWith(false);
+  return view(state$);
+};
 
 const drivers = {
   DOM: makeDOMDriver('#app')
