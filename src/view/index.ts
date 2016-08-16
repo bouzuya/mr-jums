@@ -1,6 +1,6 @@
 import xs from 'xstream';
 import { div, input, p, ul, li, VNode } from '@cycle/dom';
-import { Entry, State } from './type';
+import { Entry, State } from '../type';
 
 // view for DOM driver
 
