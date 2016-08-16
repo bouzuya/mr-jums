@@ -1,7 +1,11 @@
-export type ActionType = 'next' | 'prev' | 'select' | 'toggle';
+export type ActionType = 'enter' | 'next' | 'prev' | 'select' | 'toggle';
 
 export interface Action {
   type: ActionType;
+}
+
+export interface EnterAction extends Action {
+  type: 'enter';
 }
 
 export interface NextAction extends Action {
