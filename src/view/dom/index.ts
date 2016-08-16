@@ -1,27 +1,14 @@
 import xs from 'xstream';
-import { div, input, p, ul, li, VNode } from '@cycle/dom';
-import { Entry, State } from '../../type';
-import { view as entryView } from './entry';
-
-const entriesView = (entries: Entry[]): VNode => {
-  return div([
-    ul(
-      '.entry-list',
-      entries.map((entry) => {
-        return li(
-          '.entry-list-item', [
-            entryView(entry)
-          ]);
-      }))
-  ]);
-};
+import { div, input, p, VNode } from '@cycle/dom';
+import { State } from '../../type';
+import { view as entryListView } from './entry-list';
 
 const appView = (state: State): VNode => {
   const { checked, entries } = state;
   return div([
     input({ attrs: { type: 'checkbox' } }), 'Toggle me',
     p(checked ? 'ON' : 'off'),
-    entriesView(entries)
+    entryListView(entries)
   ]);
 };
 
