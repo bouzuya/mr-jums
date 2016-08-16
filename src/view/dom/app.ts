@@ -12,7 +12,8 @@ const view = (state: State): VNode => {
       entryListView(entries, selectedEntryIdInList),
       entryDetailView(entries, selectedEntryId),
       div('.next', ['J']),
-      div('.prev', ['K'])
+      div('.prev', ['K']),
+      div('.enter', ['L'])
     ])
   ]);
 };
