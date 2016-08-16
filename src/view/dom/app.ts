@@ -4,13 +4,13 @@ import { view as entryListView } from './entry-list';
 import { view as entryDetailView } from './entry-detail';
 
 const view = (state: State): VNode => {
-  const { checked, entries, selectedEntry } = state;
+  const { checked, entries, selectedEntryId } = state;
   return div([
     input({ attrs: { type: 'checkbox' } }), 'Toggle me',
     p(checked ? 'ON' : 'off'),
     div([
       entryListView(entries),
-      entryDetailView(selectedEntry)
+      entryDetailView(entries, selectedEntryId)
     ])
   ]);
 };

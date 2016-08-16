@@ -47,20 +47,17 @@ const model = (action$: xs<Action>): xs<State> => {
     .map(({ checked }) => checked)
     .startWith(false);
   const entries$: xs<Entry[]> = xs.of(entries);
-  const selectedEntry$: xs<Entry | null> =
+  const selectedEntryId$: xs<string | null> =
     select<SelectAction>(action$, 'select')
-      .map<Entry | null>(({ entryId }) => {
-        const entry = entries.find(({ id }) => id === entryId);
-        return typeof entry === 'undefined' ? null : entry;
-      })
+      .map<string | null>(({ entryId }) => entryId)
       .startWith(null);
   const state$: xs<State> = xs
-    .combine(checked$, entries$, selectedEntry$)
+    .combine(checked$, entries$, selectedEntryId$)
     .map(([
       checked,
       entries,
-      selectedEntry
-    ]) => ({ checked, entries, selectedEntry }));
+      selectedEntryId
+    ]) => ({ checked, entries, selectedEntryId }));
   return state$;
 };
 
