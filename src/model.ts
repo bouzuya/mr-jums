@@ -56,26 +56,31 @@ const model = (action$: xs<Action>): xs<State> => {
     .startWith(false);
   const entries$: xs<Entry[]> = xs.of(entries);
 
-  const selectedEntryIdInList$: xs<string | null> = xs
-    .merge(
-    select<SelectAction>(action$, 'select'),
-    select<NextAction>(action$, 'next'),
-    select<PrevAction>(action$, 'prev')
-    )
-    .map((action) => entries$.map((entries) => ({ action, entries })))
-    .flatten()
-    .fold<string | null>((selectedEntryIdInList, { action, entries }) => {
-      if (action.type === 'select') return action.entryId;
-      if (entries.length === 0) return null;
-      const index = entries.findIndex(({ id }) => id === selectedEntryIdInList);
-      if (action.type === 'next') {
-        if (selectedEntryIdInList === null) return entries[0].id;
-        return index < 0 ? null : entries[index + 1].id;
-      } else {
-        if (selectedEntryIdInList === null) return null;
-        return index <= 0 ? null : entries[index - 1].id;
-      }
-    }, null);
+  const selectedEntryIdInList$: xs<string | null> =
+    entries$
+      .map((entries) => {
+        return xs
+          .merge(
+          select<SelectAction>(action$, 'select'),
+          select<NextAction>(action$, 'next'),
+          select<PrevAction>(action$, 'prev')
+          )
+          .map((action) => ({ action, entries }));
+      })
+      .flatten()
+      .fold<string | null>((selectedEntryIdInList, { action, entries }) => {
+        if (action.type === 'select') return action.entryId;
+        if (entries.length === 0) return null;
+        const index = entries
+          .findIndex(({ id }) => id === selectedEntryIdInList);
+        if (action.type === 'next') {
+          if (selectedEntryIdInList === null) return entries[0].id;
+          return index < 0 ? null : entries[index + 1].id;
+        } else {
+          if (selectedEntryIdInList === null) return null;
+          return index <= 0 ? null : entries[index - 1].id;
+        }
+      }, null);
 
   const selectedEntryId$: xs<string | null> =
     xs.merge(
