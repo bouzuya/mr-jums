@@ -2,6 +2,7 @@ import xs from 'xstream';
 import {
   Action,
   ActionType,
+  EnterAction,
   NextAction,
   PrevAction,
   SelectAction,
@@ -54,10 +55,6 @@ const model = (action$: xs<Action>): xs<State> => {
     .map(({ checked }) => checked)
     .startWith(false);
   const entries$: xs<Entry[]> = xs.of(entries);
-  const selectedEntryId$: xs<string | null> =
-    select<SelectAction>(action$, 'select')
-      .map<string | null>(({ entryId }) => entryId)
-      .startWith(null);
 
   const selectedEntryIdInList$: xs<string | null> = xs
     .merge(
@@ -79,6 +76,20 @@ const model = (action$: xs<Action>): xs<State> => {
         return index <= 0 ? null : entries[index - 1].id;
       }
     }, null);
+
+  const selectedEntryId$: xs<string | null> =
+    xs.merge(
+      selectedEntryIdInList$
+        .map((entryId) => {
+          return select<EnterAction>(action$, 'enter')
+            .map(() => ({ entryId }));
+        })
+        .flatten(),
+      select<SelectAction>(action$, 'select')
+    )
+      .map<string | null>(({ entryId }) => entryId)
+      .startWith(null);
+
   const state$: xs<State> = xs
     .combine(
     checked$,
