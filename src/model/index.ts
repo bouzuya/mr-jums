@@ -6,8 +6,8 @@ import {
   NextAction,
   PrevAction,
   SelectAction
-} from './action';
-import { Entry, State } from './type';
+} from '../action';
+import { Entry, State } from '../type';
 
 const select = <T extends Action>(
   action$: xs<Action>, type: ActionType
