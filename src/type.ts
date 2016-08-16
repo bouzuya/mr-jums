@@ -4,6 +4,7 @@ export interface Entry {
 }
 
 export interface State {
-  entries: Entry[];
   checked: boolean;
+  entries: Entry[];
+  selectedEntry: Entry | null;
 }
