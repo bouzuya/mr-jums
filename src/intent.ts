@@ -14,6 +14,12 @@ const prev$ = ({ DOM }: { DOM: DOMSource }): xs<Action> => {
   return prev$;
 };
 
+const enter$ = ({ DOM }: { DOM: DOMSource }): xs<Action> => {
+  const click$: xs<Event> = DOM.select('div.enter').events('click');
+  const enter$: xs<Action> = click$.map<Action>(() => ({ type: 'enter' }));
+  return enter$;
+};
+
 const select$ = ({ DOM }: { DOM: DOMSource }): xs<Action> => {
   const clickList$: xs<Event> = DOM.select('li').events('click');
   const select$: xs<Action> = clickList$
@@ -46,6 +52,7 @@ const toggle$ = ({ DOM }: { DOM: DOMSource }): xs<Action> => {
 
 const intent = ({ DOM }: { DOM: DOMSource }): xs<Action> => {
   const action$: xs<Action> = xs.merge(
+    enter$({ DOM }),
     next$({ DOM }),
     prev$({ DOM }),
     select$({ DOM }),
