@@ -21,7 +21,11 @@
   "bugs": {
     "url": "https://github.com/bouzuya/bbn-cycle/issues"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@cycle/dom": "12.1.0",
+    "@cycle/xstream-run": "3.0.4",
+    "xstream": "5.3.4"
+  },
   "devDependencies": {
     "@types/node": "6.0.33",
     "@types/power-assert": "0.0.27",
