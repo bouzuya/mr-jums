@@ -42,21 +42,12 @@ const select$ = ({ DOM }: { DOM: DOMSource }): xs<Action> => {
   return select$;
 };
 
-const toggle$ = ({ DOM }: { DOM: DOMSource }): xs<Action> => {
-  const clickCheckbox$: xs<Event> = DOM.select('input').events('click');
-  const toggle$: xs<Action> = clickCheckbox$
-    .map((event) => (event.target as any).checked)
-    .map<Action>((checked) => ({ type: 'toggle', checked }));
-  return toggle$;
-};
-
 const intent = ({ DOM }: { DOM: DOMSource }): xs<Action> => {
   const action$: xs<Action> = xs.merge(
     enter$({ DOM }),
     next$({ DOM }),
     prev$({ DOM }),
-    select$({ DOM }),
-    toggle$({ DOM })
+    select$({ DOM })
   );
   return action$;
 };

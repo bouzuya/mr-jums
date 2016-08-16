@@ -5,8 +5,7 @@ import {
   EnterAction,
   NextAction,
   PrevAction,
-  SelectAction,
-  ToggleAction
+  SelectAction
 } from './action';
 import { Entry, State } from './type';
 
@@ -51,9 +50,6 @@ const entries = [
 ];
 
 const model = (action$: xs<Action>): xs<State> => {
-  const checked$: xs<boolean> = select<ToggleAction>(action$, 'toggle')
-    .map(({ checked }) => checked)
-    .startWith(false);
   const entries$: xs<Entry[]> = xs.of(entries);
 
   const selectedEntryIdInList$: xs<string | null> =
@@ -97,17 +93,15 @@ const model = (action$: xs<Action>): xs<State> => {
 
   const state$: xs<State> = xs
     .combine(
-    checked$,
     entries$,
     selectedEntryIdInList$,
     selectedEntryId$
     )
     .map(([
-      checked,
       entries,
       selectedEntryIdInList,
       selectedEntryId
-    ]) => ({ checked, entries, selectedEntryIdInList, selectedEntryId }));
+    ]) => ({ entries, selectedEntryIdInList, selectedEntryId }));
   return state$;
 };
 
