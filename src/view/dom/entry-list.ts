@@ -8,7 +8,7 @@ const view = (entries: Entry[]): VNode => {
       '.entry-list',
       entries.map((entry) => {
         return li(
-          '.entry-list-item', [
+          '.entry-list-item.entry-id-' + entry.id, [
             entryView(entry)
           ]);
       }))
