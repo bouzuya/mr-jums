@@ -7,7 +7,7 @@ import {
   PrevAction,
   SelectAction
 } from '../action';
-import { Entry, State } from '../type';
+import { Entry, EntryViewer, State } from '../type';
 
 const select = <T extends Action>(
   action$: xs<Action>, type: ActionType
@@ -50,6 +50,10 @@ const entries = [
 ];
 
 const model = (action$: xs<Action>): xs<State> => {
+  const entryViewer$: xs<EntryViewer> = xs.of(
+    EntryViewer.createForList(entries)
+  );
+
   const entries$: xs<Entry[]> = xs.of(entries);
 
   const offsetEntryIdInList$: xs<string | null> = xs.of(entries[0].id);
@@ -95,17 +99,20 @@ const model = (action$: xs<Action>): xs<State> => {
 
   const state$: xs<State> = xs
     .combine(
+    entryViewer$,
     entries$,
     offsetEntryIdInList$,
     selectedEntryIdInList$,
     selectedEntryId$
     )
     .map(([
+      entryViewer,
       entries,
       offsetEntryIdInList,
       selectedEntryIdInList,
       selectedEntryId
     ]) => ({
+      entryViewer,
       entries,
       offsetEntryIdInList,
       selectedEntryIdInList,

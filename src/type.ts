@@ -1,3 +1,7 @@
+import { EntryViewer } from './model/entry-viewer';
+
+export { EntryViewer };
+
 export interface Entry {
   id: string;
   title: string;
@@ -5,6 +9,7 @@ export interface Entry {
 }
 
 export interface State {
+  entryViewer: EntryViewer;
   entries: Entry[];
   offsetEntryIdInList: string | null;
   selectedEntryIdInList: string | null;
