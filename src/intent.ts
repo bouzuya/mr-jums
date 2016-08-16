@@ -2,6 +2,18 @@ import xs from 'xstream';
 import { Action } from './action';
 import { DOMSource } from '@cycle/dom';
 
+const next$ = ({ DOM }: { DOM: DOMSource }): xs<Action> => {
+  const click$: xs<Event> = DOM.select('div.next').events('click');
+  const next$: xs<Action> = click$.map<Action>(() => ({ type: 'next' }));
+  return next$;
+};
+
+const prev$ = ({ DOM }: { DOM: DOMSource }): xs<Action> => {
+  const click$: xs<Event> = DOM.select('div.prev').events('click');
+  const prev$: xs<Action> = click$.map<Action>(() => ({ type: 'prev' }));
+  return prev$;
+};
+
 const select$ = ({ DOM }: { DOM: DOMSource }): xs<Action> => {
   const clickList$: xs<Event> = DOM.select('li').events('click');
   const select$: xs<Action> = clickList$
@@ -34,6 +46,8 @@ const toggle$ = ({ DOM }: { DOM: DOMSource }): xs<Action> => {
 
 const intent = ({ DOM }: { DOM: DOMSource }): xs<Action> => {
   const action$: xs<Action> = xs.merge(
+    next$({ DOM }),
+    prev$({ DOM }),
     select$({ DOM }),
     toggle$({ DOM })
   );
