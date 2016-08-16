@@ -9,7 +9,7 @@ const view = (state: State): VNode => {
     input({ attrs: { type: 'checkbox' } }), 'Toggle me',
     p(checked ? 'ON' : 'off'),
     div([
-      entryListView(entries),
+      entryListView(entries, selectedEntryId),
       entryDetailView(entries, selectedEntryId)
     ])
   ]);
