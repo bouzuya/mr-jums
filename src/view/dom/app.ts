@@ -10,7 +10,9 @@ const view = (state: State): VNode => {
     p(checked ? 'ON' : 'off'),
     div([
       entryListView(entries, selectedEntryId),
-      entryDetailView(entries, selectedEntryId)
+      entryDetailView(entries, selectedEntryId),
+      div('.next', ['J']),
+      div('.prev', ['K'])
     ])
   ]);
 };
