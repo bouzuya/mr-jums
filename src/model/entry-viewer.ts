@@ -1,6 +1,11 @@
 import { Entry } from '../type';
 
 export class EntryViewer {
+  private readonly _entries: Entry[];
+  private readonly _count: number;
+  private readonly _offsetEntryId: string | null;
+  private readonly _selectedEntryId: string | null;
+
   public static createForList(entries: Entry[]): EntryViewer {
     return new EntryViewer(
       entries,
@@ -20,51 +25,54 @@ export class EntryViewer {
   }
 
   private constructor(
-    private readonly entries: Entry[],
-    private readonly count: number,
-    private readonly offsetEntryId: string | null,
-    private readonly selectedEntryId: string | null
+    entries: Entry[],
+    count: number,
+    offsetEntryId: string | null,
+    selectedEntryId: string | null
   ) {
-    // do nothing
+    this._entries = entries;
+    this._count = count;
+    this._offsetEntryId = offsetEntryId;
+    this._selectedEntryId = selectedEntryId;
   }
 
   select(entryId: string): EntryViewer {
-    const filtered = this.filteredEntries(
-      this.entries, this.offsetEntryId, this.count
+    const filtered = this._filteredEntries(
+      this._entries, this._offsetEntryId, this._count
     );
     return new EntryViewer(
-      this.entries,
-      this.count,
-      this.offsetEntryId,
-      this.findEntryId(filtered, entryId)
+      this._entries,
+      this._count,
+      this._offsetEntryId,
+      this._findEntryId(filtered, entryId)
     );
   }
 
   next(): EntryViewer {
-    const filtered = this.filteredEntries(
-      this.entries, this.offsetEntryId, this.count
+    const filtered = this._filteredEntries(
+      this._entries, this._offsetEntryId, this._count
     );
     return new EntryViewer(
-      this.entries,
-      this.count,
-      this.offsetEntryId,
-      this.findNextEntryId(filtered, this.selectedEntryId)
+      this._entries,
+      this._count,
+      this._offsetEntryId,
+      this._findNextEntryId(filtered, this._selectedEntryId)
     );
   }
 
   prev(): EntryViewer {
-    const filtered = this.filteredEntries(
-      this.entries, this.offsetEntryId, this.count
+    const filtered = this._filteredEntries(
+      this._entries, this._offsetEntryId, this._count
     );
     return new EntryViewer(
-      this.entries,
-      this.count,
-      this.offsetEntryId,
-      this.findPrevEntryId(filtered, this.selectedEntryId)
+      this._entries,
+      this._count,
+      this._offsetEntryId,
+      this._findPrevEntryId(filtered, this._selectedEntryId)
     );
   }
 
-  private filteredEntries(
+  private _filteredEntries(
     entries: Entry[], offset: string | null, count: number
   ): Entry[] {
     if (offset === null) return [];
@@ -73,12 +81,12 @@ export class EntryViewer {
       .filter((_, index) => index < count);
   }
 
-  private findEntryId(entries: Entry[], entryId: string): string | null {
+  private _findEntryId(entries: Entry[], entryId: string): string | null {
     const index = entries.findIndex(({ id }) => id === entryId);
     return index < 0 ? null : entries[index].id;
   }
 
-  private findNextEntryId(
+  private _findNextEntryId(
     entries: Entry[],
     currentEntryId: string | null
   ): string | null {
@@ -87,7 +95,7 @@ export class EntryViewer {
     return index < 0 ? null : entries[index + 1].id;
   }
 
-  private findPrevEntryId(
+  private _findPrevEntryId(
     entries: Entry[],
     currentEntryId: string | null
   ): string | null {
