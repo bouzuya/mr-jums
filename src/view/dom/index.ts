@@ -1,13 +1,7 @@
 import xs from 'xstream';
 import { div, input, p, ul, li, VNode } from '@cycle/dom';
 import { Entry, State } from '../../type';
-
-const entryView = (entry: Entry): VNode => {
-  return div('.entry', [
-    div('.header', [entry.title]),
-    div('.body', [entry.body])
-  ]);
-};
+import { view as entryView } from './entry';
 
 const entriesView = (entries: Entry[]): VNode => {
   return div([
