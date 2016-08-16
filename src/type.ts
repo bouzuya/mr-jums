@@ -6,6 +6,7 @@ export interface Entry {
 
 export interface State {
   entries: Entry[];
+  offsetEntryIdInList: string | null;
   selectedEntryIdInList: string | null;
   selectedEntryId: string | null;
 }
