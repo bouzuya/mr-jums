@@ -9,8 +9,8 @@ const select = <T extends Action>(
 };
 
 const entries = [
-  { title: 'My blog is dead', body: 'Good-bye, bbn-cycle!' },
-  { title: 'My first entry', body: 'Hello, bbn-cycle!' }
+  { id: '2016-01-02', title: 'My blog is dead', body: 'Good-bye, bbn-cycle!' },
+  { id: '2016-01-01', title: 'My first entry', body: 'Hello, bbn-cycle!' }
 ];
 
 const model = (action$: xs<Action>): xs<State> => {
