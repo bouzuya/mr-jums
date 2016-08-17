@@ -41,6 +41,14 @@ export class EntryViewer {
     return this._focusedEntryId;
   }
 
+  get selectedEntry(): Entry | null {
+    const filtered = this._filteredEntries(
+      this._entries, this._offsetEntryId, this._count
+    );
+    const entry = filtered.find((entry) => entry.id === this._selectedEntryId);
+    return typeof entry === 'undefined' ? null : entry;
+  }
+
   get selectedEntryId(): string | null {
     return this._selectedEntryId;
   }
