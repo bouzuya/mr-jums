@@ -5,9 +5,9 @@ import { view as entryView } from './entry';
 const view = (
   entryViewer: EntryViewer
 ): VNode => {
-  const { filteredEntries, selectedEntryId } = entryViewer;
+  const { filteredEntries, focusedEntryId } = entryViewer;
   const entryListItems = filteredEntries.map((entry) => {
-    const isSelected = entry.id === selectedEntryId;
+    const isSelected = entry.id === focusedEntryId;
     const className = [
       '.entry-list-item',
       '.entry-id-' + entry.id,
