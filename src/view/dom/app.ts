@@ -2,6 +2,7 @@ import { div, VNode } from '@cycle/dom';
 import { State } from '../../type';
 import { view as entryListView } from './entry-list';
 import { view as entryDetailView } from './entry-detail';
+import { view as navView } from './nav';
 
 const view = (state: State): VNode => {
   const {
@@ -10,9 +11,7 @@ const view = (state: State): VNode => {
   return div('.app', [
     entryListView(entryViewer),
     entryDetailView(entryViewer),
-    div('.next', ['J']),
-    div('.prev', ['K']),
-    div('.enter', ['L'])
+    navView()
   ]);
 };
 
