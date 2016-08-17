@@ -5,13 +5,12 @@ import { view as entryDetailView } from './entry-detail';
 
 const view = (state: State): VNode => {
   const {
+    entryViewer,
     entries,
-    offsetEntryIdInList,
-    selectedEntryIdInList,
     selectedEntryId
   } = state;
   return div([
-    entryListView(entries, offsetEntryIdInList, selectedEntryIdInList),
+    entryListView(entryViewer),
     entryDetailView(entries, selectedEntryId),
     div('.next', ['J']),
     div('.prev', ['K']),
