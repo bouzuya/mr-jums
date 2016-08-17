@@ -63,9 +63,9 @@ const model = (action$: xs<Action>): xs<State> => {
       } else if (action.type === 'enter') {
         return entryViewer.select();
       } else if (action.type === 'next') {
-        return entryViewer.next();
+        return entryViewer.focusNext();
       } else if (action.type === 'prev') {
-        return entryViewer.prev();
+        return entryViewer.focusPrev();
       } else {
         // unknown action: do nothing
         return entryViewer;

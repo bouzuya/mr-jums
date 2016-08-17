@@ -32,7 +32,7 @@ export class EntryViewer {
   }
 
   get filteredEntries(): Entry[] {
-    return this._filteredEntries(
+    return this._currentPageEntries(
       this._entries, this._offsetEntryId, this._count
     );
   }
@@ -42,7 +42,7 @@ export class EntryViewer {
   }
 
   get selectedEntry(): Entry | null {
-    const filtered = this._filteredEntries(
+    const filtered = this._currentPageEntries(
       this._entries, this._offsetEntryId, this._count
     );
     const entry = filtered.find((entry) => entry.id === this._selectedEntryId);
@@ -56,7 +56,7 @@ export class EntryViewer {
   select(entryId?: string): EntryViewer {
     const id = typeof entryId === 'undefined' ? this._focusedEntryId : entryId;
     if (id === null) return this;
-    const filtered = this._filteredEntries(
+    const filtered = this._currentPageEntries(
       this._entries, this._offsetEntryId, this._count
     );
     return new EntryViewer(
@@ -68,8 +68,8 @@ export class EntryViewer {
     );
   }
 
-  next(): EntryViewer {
-    const filtered = this._filteredEntries(
+  focusNext(): EntryViewer {
+    const filtered = this._currentPageEntries(
       this._entries, this._offsetEntryId, this._count
     );
     return new EntryViewer(
@@ -81,8 +81,8 @@ export class EntryViewer {
     );
   }
 
-  prev(): EntryViewer {
-    const filtered = this._filteredEntries(
+  focusPrev(): EntryViewer {
+    const filtered = this._currentPageEntries(
       this._entries, this._offsetEntryId, this._count
     );
     return new EntryViewer(
@@ -94,7 +94,7 @@ export class EntryViewer {
     );
   }
 
-  private _filteredEntries(
+  private _currentPageEntries(
     entries: Entry[], offset: string | null, count: number
   ): Entry[] {
     if (offset === null) return [];
