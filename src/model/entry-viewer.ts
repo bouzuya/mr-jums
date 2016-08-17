@@ -4,22 +4,15 @@ export class EntryViewer {
   private readonly _entries: Entry[];
   private readonly _count: number;
   private readonly _offsetEntryId: string | null;
+  private readonly _focusedEntryId: string | null;
   private readonly _selectedEntryId: string | null;
 
-  public static createForList(entries: Entry[]): EntryViewer {
+  public static create(entries: Entry[]): EntryViewer {
     return new EntryViewer(
       entries,
       10,
       (entries.length > 0 ? entries[0].id : null),
-      null
-    );
-  }
-
-  public static createForDetail(entries: Entry[]): EntryViewer {
-    return new EntryViewer(
-      entries,
-      1,
-      null,
+      (entries.length > 0 ? entries[0].id : null),
       null
     );
   }
@@ -28,11 +21,13 @@ export class EntryViewer {
     entries: Entry[],
     count: number,
     offsetEntryId: string | null,
+    focusedEntryId: string | null,
     selectedEntryId: string | null
   ) {
     this._entries = entries;
     this._count = count;
     this._offsetEntryId = offsetEntryId;
+    this._focusedEntryId = focusedEntryId;
     this._selectedEntryId = selectedEntryId;
   }
 
@@ -42,11 +37,17 @@ export class EntryViewer {
     );
   }
 
+  get focusedEntryId(): string | null {
+    return this._focusedEntryId;
+  }
+
   get selectedEntryId(): string | null {
     return this._selectedEntryId;
   }
 
-  select(entryId: string): EntryViewer {
+  select(entryId?: string): EntryViewer {
+    const id = typeof entryId === 'undefined' ? this._focusedEntryId : entryId;
+    if (id === null) return this;
     const filtered = this._filteredEntries(
       this._entries, this._offsetEntryId, this._count
     );
@@ -54,7 +55,8 @@ export class EntryViewer {
       this._entries,
       this._count,
       this._offsetEntryId,
-      this._findEntryId(filtered, entryId)
+      this._findEntryId(filtered, id),
+      this._findEntryId(filtered, id)
     );
   }
 
@@ -66,7 +68,8 @@ export class EntryViewer {
       this._entries,
       this._count,
       this._offsetEntryId,
-      this._findNextEntryId(filtered, this._selectedEntryId)
+      this._findNextEntryId(filtered, this._focusedEntryId),
+      this._selectedEntryId
     );
   }
 
@@ -78,7 +81,8 @@ export class EntryViewer {
       this._entries,
       this._count,
       this._offsetEntryId,
-      this._findPrevEntryId(filtered, this._selectedEntryId)
+      this._findPrevEntryId(filtered, this._focusedEntryId),
+      this._selectedEntryId
     );
   }
 
