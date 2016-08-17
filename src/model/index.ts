@@ -71,8 +71,6 @@ const model = (action$: xs<Action>): xs<State> => {
 
   const entries$: xs<Entry[]> = xs.of(entries);
 
-  const offsetEntryIdInList$: xs<string | null> = xs.of(entries[0].id);
-
   const selectedEntryIdInList$: xs<string | null> =
     entries$
       .map((entries) => {
@@ -116,21 +114,15 @@ const model = (action$: xs<Action>): xs<State> => {
     .combine(
     entryViewer$,
     entries$,
-    offsetEntryIdInList$,
-    selectedEntryIdInList$,
     selectedEntryId$
     )
     .map(([
       entryViewer,
       entries,
-      offsetEntryIdInList,
-      selectedEntryIdInList,
       selectedEntryId
     ]) => ({
       entryViewer,
       entries,
-      offsetEntryIdInList,
-      selectedEntryIdInList,
       selectedEntryId
     }));
   return state$;

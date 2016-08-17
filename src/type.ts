@@ -11,7 +11,5 @@ export interface Entry {
 export interface State {
   entryViewer: EntryViewer;
   entries: Entry[];
-  offsetEntryIdInList: string | null;
-  selectedEntryIdInList: string | null;
   selectedEntryId: string | null;
 }
