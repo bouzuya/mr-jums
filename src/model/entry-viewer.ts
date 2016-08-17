@@ -42,6 +42,10 @@ export class EntryViewer {
     );
   }
 
+  get selectedEntryId(): string | null {
+    return this._selectedEntryId;
+  }
+
   select(entryId: string): EntryViewer {
     const filtered = this._filteredEntries(
       this._entries, this._offsetEntryId, this._count
