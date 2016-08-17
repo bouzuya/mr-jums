@@ -36,6 +36,12 @@ export class EntryViewer {
     this._selectedEntryId = selectedEntryId;
   }
 
+  get filteredEntries(): Entry[] {
+    return this._filteredEntries(
+      this._entries, this._offsetEntryId, this._count
+    );
+  }
+
   select(entryId: string): EntryViewer {
     const filtered = this._filteredEntries(
       this._entries, this._offsetEntryId, this._count
