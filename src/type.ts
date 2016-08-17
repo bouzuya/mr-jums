@@ -10,6 +10,4 @@ export interface Entry {
 
 export interface State {
   entryViewer: EntryViewer;
-  entries: Entry[];
-  selectedEntryId: string | null;
 }

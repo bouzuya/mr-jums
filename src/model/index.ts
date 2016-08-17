@@ -7,7 +7,7 @@ import {
   PrevAction,
   SelectAction
 } from '../action';
-import { Entry, EntryViewer, State } from '../type';
+import { EntryViewer, State } from '../type';
 
 const select = <T extends Action>(
   action$: xs<Action>, type: ActionType
@@ -52,6 +52,7 @@ const entries = [
 const model = (action$: xs<Action>): xs<State> => {
   const entryViewer$: xs<EntryViewer> = xs
     .merge(
+    select<EnterAction>(action$, 'enter'),
     select<SelectAction>(action$, 'select'),
     select<NextAction>(action$, 'next'),
     select<PrevAction>(action$, 'prev')
@@ -59,6 +60,8 @@ const model = (action$: xs<Action>): xs<State> => {
     .fold((entryViewer, action) => {
       if (action.type === 'select') {
         return entryViewer.select(action.entryId);
+      } else if (action.type === 'enter') {
+        return entryViewer.select();
       } else if (action.type === 'next') {
         return entryViewer.next();
       } else if (action.type === 'prev') {
@@ -67,64 +70,10 @@ const model = (action$: xs<Action>): xs<State> => {
         // unknown action: do nothing
         return entryViewer;
       }
-    }, EntryViewer.createForList(entries));
+    }, EntryViewer.create(entries));
 
-  const entries$: xs<Entry[]> = xs.of(entries);
-
-  const selectedEntryIdInList$: xs<string | null> =
-    entries$
-      .map((entries) => {
-        return xs
-          .merge(
-          select<SelectAction>(action$, 'select'),
-          select<NextAction>(action$, 'next'),
-          select<PrevAction>(action$, 'prev')
-          )
-          .map((action) => ({ action, entries }));
-      })
-      .flatten()
-      .fold<string | null>((selectedEntryIdInList, { action, entries }) => {
-        if (action.type === 'select') return action.entryId;
-        if (entries.length === 0) return null;
-        const index = entries
-          .findIndex(({ id }) => id === selectedEntryIdInList);
-        if (action.type === 'next') {
-          if (selectedEntryIdInList === null) return entries[0].id;
-          return index < 0 ? null : entries[index + 1].id;
-        } else {
-          if (selectedEntryIdInList === null) return null;
-          return index <= 0 ? null : entries[index - 1].id;
-        }
-      }, null);
-
-  const selectedEntryId$: xs<string | null> =
-    xs.merge(
-      selectedEntryIdInList$
-        .map((entryId) => {
-          return select<EnterAction>(action$, 'enter')
-            .map(() => ({ entryId }));
-        })
-        .flatten(),
-      select<SelectAction>(action$, 'select')
-    )
-      .map<string | null>(({ entryId }) => entryId)
-      .startWith(null);
-
-  const state$: xs<State> = xs
-    .combine(
-    entryViewer$,
-    entries$,
-    selectedEntryId$
-    )
-    .map(([
-      entryViewer,
-      entries,
-      selectedEntryId
-    ]) => ({
-      entryViewer,
-      entries,
-      selectedEntryId
-    }));
+  const state$: xs<State> = entryViewer$
+    .map((entryViewer) => ({ entryViewer }));
   return state$;
 };
 
