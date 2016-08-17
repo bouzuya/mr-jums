@@ -50,9 +50,24 @@ const entries = [
 ];
 
 const model = (action$: xs<Action>): xs<State> => {
-  const entryViewer$: xs<EntryViewer> = xs.of(
-    EntryViewer.createForList(entries)
-  );
+  const entryViewer$: xs<EntryViewer> = xs
+    .merge(
+    select<SelectAction>(action$, 'select'),
+    select<NextAction>(action$, 'next'),
+    select<PrevAction>(action$, 'prev')
+    )
+    .fold((entryViewer, action) => {
+      if (action.type === 'select') {
+        return entryViewer.select(action.entryId);
+      } else if (action.type === 'next') {
+        return entryViewer.next();
+      } else if (action.type === 'prev') {
+        return entryViewer.prev();
+      } else {
+        // unknown action: do nothing
+        return entryViewer;
+      }
+    }, EntryViewer.createForList(entries));
 
   const entries$: xs<Entry[]> = xs.of(entries);
 
