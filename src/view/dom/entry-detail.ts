@@ -6,7 +6,7 @@ const view = (
   entryViewer: EntryViewer
 ): VNode | null => {
   if (entryViewer.selectedEntry === null) return null;
-  return div([entryView(entryViewer.selectedEntry)]);
+  return div('.entry-detail', [entryView(entryViewer.selectedEntry)]);
 };
 
 export { view };

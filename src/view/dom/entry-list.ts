@@ -15,7 +15,7 @@ const view = (
     ].join('');
     return li(className, [entryView(entry)]);
   });
-  return div([
+  return div('.entry-list', [
     ul('.entry-list', entryListItems)
   ]);
 };

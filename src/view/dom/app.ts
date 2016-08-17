@@ -7,7 +7,7 @@ const view = (state: State): VNode => {
   const {
     entryViewer
   } = state;
-  return div([
+  return div('.app', [
     entryListView(entryViewer),
     entryDetailView(entryViewer),
     div('.next', ['J']),
