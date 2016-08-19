@@ -70,8 +70,8 @@ export class EntryViewer {
     return new EntryViewer(
       this._entries,
       this._count,
-      newFocusedEntryId,
       newOffsetEntryId,
+      newFocusedEntryId,
       this._selectedEntryId
     );
   }
