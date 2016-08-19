@@ -69,14 +69,29 @@ export class EntryViewer {
   }
 
   focusNext(): EntryViewer {
-    const filtered = this._currentPageEntries(
-      this._entries, this._offsetEntryId, this._count
-    );
+    const entries = this._entries;
+    const focusedEntryId = this._focusedEntryId;
+    const offsetEntryId = this._offsetEntryId;
+    const count = this._count;
+    const focusedEntryIndex = entries
+      .findIndex(({ id }) => id === focusedEntryId);
+    if (focusedEntryIndex < 0) throw new Error();
+    const currentPageFirstEntryIndex = entries
+      .findIndex(({ id }) => id === offsetEntryId);
+    if (currentPageFirstEntryIndex < 0) throw new Error();
+    const currentPageLastEntryIndex = currentPageFirstEntryIndex + count - 1;
+    const isLastPage = currentPageLastEntryIndex === entries.length - 1;
+    const isLastEntryInPage = currentPageLastEntryIndex === focusedEntryIndex;
+    const isLastEntry = focusedEntryIndex === entries.length - 1;
+    const nextOffsetEntryId = !isLastPage && isLastEntryInPage
+      ? entries[currentPageFirstEntryIndex + 1].id : offsetEntryId;
+    const nextFocusedEntryId = isLastEntry
+      ? focusedEntryId : entries[focusedEntryIndex + 1].id;
     return new EntryViewer(
       this._entries,
       this._count,
-      this._offsetEntryId,
-      this._findNextEntryId(filtered, this._focusedEntryId),
+      nextOffsetEntryId,
+      nextFocusedEntryId,
       this._selectedEntryId
     );
   }
@@ -108,15 +123,6 @@ export class EntryViewer {
     return index < 0 ? null : entries[index].id;
   }
 
-  private _findNextEntryId(
-    entries: Entry[],
-    currentEntryId: string | null
-  ): string | null {
-    if (currentEntryId === null) return entries[0].id;
-    const index = entries.findIndex(({ id }) => id === currentEntryId);
-    return index < 0 ? null : entries[index + 1].id;
-  }
-
   private _findPrevEntryId(
     entries: Entry[],
     currentEntryId: string | null
@@ -125,4 +131,5 @@ export class EntryViewer {
     const index = entries.findIndex(({ id }) => id === currentEntryId);
     return index <= 0 ? null : entries[index - 1].id;
   }
+
 }
