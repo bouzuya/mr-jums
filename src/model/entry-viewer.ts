@@ -150,6 +150,40 @@ export class EntryViewer {
       ? selectionUpdated : selectionUpdated.focus(newSelectedEntryId);
   }
 
+  // TODO: test
+  selectNext(): EntryViewer {
+    if (this._selectedEntryId === null) {
+      return this._selectedEntryId === null
+        ? this : this.focus(this._selectedEntryId);
+    }
+    const selectedEntryIndex = this._entries
+      .findIndex(({ id }) => id === this._selectedEntryId);
+    if (selectedEntryIndex < 0) throw new Error();
+    if (selectedEntryIndex + 1 >= this._entries.length) {
+      return this._selectedEntryId === null
+        ? this : this.focus(this._selectedEntryId);
+    }
+    const nextSelectedEntryId = this._entries[selectedEntryIndex + 1].id;
+    return this.select(nextSelectedEntryId);
+  }
+
+  // TODO: test
+  selectPrev(): EntryViewer {
+    if (this._selectedEntryId === null) {
+      return this._selectedEntryId === null
+        ? this : this.focus(this._selectedEntryId);
+    }
+    const selectedEntryIndex = this._entries
+      .findIndex(({ id }) => id === this._selectedEntryId);
+    if (selectedEntryIndex < 0) throw new Error();
+    if (selectedEntryIndex - 1 < 0) {
+      return this._selectedEntryId === null
+        ? this : this.focus(this._selectedEntryId);
+    }
+    const prevSelectedEntryId = this._entries[selectedEntryIndex - 1].id;
+    return this.select(prevSelectedEntryId);
+  }
+
   private _currentPageEntries(
     entries: Entry[], offset: string | null, count: number
   ): Entry[] {
