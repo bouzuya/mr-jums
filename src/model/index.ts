@@ -50,30 +50,41 @@ const entries = [
 ];
 
 const model = (action$: xs<Action>): xs<State> => {
-  const entryViewer$: xs<EntryViewer> = xs
+  const state$: xs<State> = xs
     .merge(
     select<EnterAction>(action$, 'enter'),
     select<SelectAction>(action$, 'select'),
     select<NextAction>(action$, 'next'),
     select<PrevAction>(action$, 'prev')
     )
-    .fold((entryViewer, action) => {
+    .fold((state, action) => {
+      const { entryViewer, menu } = state;
       if (action.type === 'select') {
-        return entryViewer.select(action.entryId);
+        return Object.assign({}, state, {
+          entryViewer: entryViewer.select(action.entryId),
+          menu: false
+        });
       } else if (action.type === 'enter') {
-        return entryViewer.select();
+        return Object.assign({}, state, {
+          entryViewer: entryViewer.select(),
+          menu: false
+        });
       } else if (action.type === 'next') {
-        return entryViewer.focusNext();
+        return Object.assign({}, state, {
+          entryViewer: menu ? entryViewer.focusNext() : entryViewer.selectNext()
+        });
       } else if (action.type === 'prev') {
-        return entryViewer.focusPrev();
+        return Object.assign({}, state, {
+          entryViewer: menu ? entryViewer.focusPrev() : entryViewer.selectPrev()
+        });
       } else {
         // unknown action: do nothing
-        return entryViewer;
+        return state;
       }
-    }, EntryViewer.create(entries));
-
-  const state$: xs<State> = entryViewer$
-    .map((entryViewer) => ({ entryViewer }));
+    }, {
+      entryViewer: EntryViewer.create(entries),
+      menu: true
+    });
   return state$;
 };
 

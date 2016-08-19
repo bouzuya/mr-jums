@@ -10,4 +10,5 @@ export interface Entry {
 
 export interface State {
   entryViewer: EntryViewer;
+  menu: boolean;
 }
