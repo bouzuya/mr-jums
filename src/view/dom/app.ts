@@ -6,9 +6,10 @@ import { view as navView } from './nav';
 
 const view = (state: State): VNode => {
   const {
-    entryViewer
+    entryViewer,
+    menu
   } = state;
-  return div('.app', [
+  return div('.app' + (menu ? '.is-menu' : ''), [
     entryListView(entryViewer),
     entryDetailView(entryViewer),
     navView()
