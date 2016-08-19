@@ -97,14 +97,27 @@ export class EntryViewer {
   }
 
   focusPrev(): EntryViewer {
-    const filtered = this._currentPageEntries(
-      this._entries, this._offsetEntryId, this._count
-    );
+    const entries = this._entries;
+    const focusedEntryId = this._focusedEntryId;
+    const offsetEntryId = this._offsetEntryId;
+    const focusedEntryIndex = entries
+      .findIndex(({ id }) => id === focusedEntryId);
+    if (focusedEntryIndex < 0) throw new Error();
+    const currentPageFirstEntryIndex = entries
+      .findIndex(({ id }) => id === offsetEntryId);
+    if (currentPageFirstEntryIndex < 0) throw new Error();
+    const isFirstPage = currentPageFirstEntryIndex === 0;
+    const isFirstEntryInPage = currentPageFirstEntryIndex === focusedEntryIndex;
+    const isFirstEntry = focusedEntryIndex === 0;
+    const prevOffsetEntryId = !isFirstPage && isFirstEntryInPage
+      ? entries[currentPageFirstEntryIndex - 1].id : offsetEntryId;
+    const prevFocusedEntryId = isFirstEntry
+      ? focusedEntryId : entries[focusedEntryIndex - 1].id;
     return new EntryViewer(
       this._entries,
       this._count,
-      this._offsetEntryId,
-      this._findPrevEntryId(filtered, this._focusedEntryId),
+      prevOffsetEntryId,
+      prevFocusedEntryId,
       this._selectedEntryId
     );
   }
@@ -122,14 +135,4 @@ export class EntryViewer {
     const index = entries.findIndex(({ id }) => id === entryId);
     return index < 0 ? null : entries[index].id;
   }
-
-  private _findPrevEntryId(
-    entries: Entry[],
-    currentEntryId: string | null
-  ): string | null {
-    if (currentEntryId === null) return entries[entries.length - 1].id;
-    const index = entries.findIndex(({ id }) => id === currentEntryId);
-    return index <= 0 ? null : entries[index - 1].id;
-  }
-
 }
