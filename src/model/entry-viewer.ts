@@ -76,22 +76,6 @@ export class EntryViewer {
     );
   }
 
-  select(entryId?: string): EntryViewer {
-    const id = typeof entryId === 'undefined' ? this._focusedEntryId : entryId;
-    if (id === null) return this;
-    const newSelectedEntryId = this._entries.some((entry) => entry.id === id)
-      ? id : this._selectedEntryId;
-    const selectionUpdated = new EntryViewer(
-      this._entries,
-      this._count,
-      this._offsetEntryId,
-      this._focusedEntryId,
-      newSelectedEntryId
-    );
-    return newSelectedEntryId === null
-      ? selectionUpdated : selectionUpdated.focus(newSelectedEntryId);
-  }
-
   focusNext(): EntryViewer {
     const entries = this._entries;
     const focusedEntryId = this._focusedEntryId;
@@ -148,6 +132,22 @@ export class EntryViewer {
       prevFocusedEntryId,
       this._selectedEntryId
     );
+  }
+
+  select(entryId?: string): EntryViewer {
+    const id = typeof entryId === 'undefined' ? this._focusedEntryId : entryId;
+    if (id === null) return this;
+    const newSelectedEntryId = this._entries.some((entry) => entry.id === id)
+      ? id : this._selectedEntryId;
+    const selectionUpdated = new EntryViewer(
+      this._entries,
+      this._count,
+      this._offsetEntryId,
+      this._focusedEntryId,
+      newSelectedEntryId
+    );
+    return newSelectedEntryId === null
+      ? selectionUpdated : selectionUpdated.focus(newSelectedEntryId);
   }
 
   private _currentPageEntries(
