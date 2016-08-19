@@ -7,11 +7,11 @@ const view = (
 ): VNode => {
   const { filteredEntries, focusedEntryId } = entryViewer;
   const entryListItems = filteredEntries.map((entry) => {
-    const isSelected = entry.id === focusedEntryId;
+    const isFocused = entry.id === focusedEntryId;
     const className = [
       '.entry-list-item',
       '.entry-id-' + entry.id,
-      isSelected ? '.is-selected' : ''
+      isFocused ? '.is-focused' : ''
     ].join('');
     return li(className, [entryView(entry)]);
   });
