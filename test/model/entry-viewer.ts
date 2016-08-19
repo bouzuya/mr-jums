@@ -5,49 +5,56 @@ import { EntryViewer } from '../../src/model/entry-viewer';
 
 const { test } = beater();
 
-test('focus', () => {
+const newEntryViewer = (): EntryViewer => {
   const entries = new Array(31).fill(0).map((_, i) => 31 - i).map((n) => {
     const s = n < 10 ? '0' + n : n.toString(10);
     return { id: `2016-01-${s}`, title: `Entry ${s}`, body: `Entry Body ${s}` };
   });
-  assert(entries.length === 31);
-  assert(entries[0].id === '2016-01-31');
+  return EntryViewer.create(entries);
+};
 
+test('helper: newEntryViewer', () => {
+  const data = newEntryViewer();
+  assert(data.filteredEntries.length === 10);
+  assert(data.filteredEntries[0].id === '2016-01-31');
+  assert(data.focusedEntryId === '2016-01-31');
+  assert(data.selectedEntry === null);
+  assert(data.selectedEntryId === null);
+});
+
+test('empty', () => {
   const empty = EntryViewer.create([]);
   assert(empty.filteredEntries.length === 0);
   assert(empty.focusedEntryId === null);
   assert(empty.selectedEntry === null);
   assert(empty.selectedEntryId === null);
+});
 
-  const next0 = EntryViewer.create(entries);
-  assert(next0.filteredEntries.length === 10);
-  assert(next0.filteredEntries[0].id === '2016-01-31');
-  assert(next0.focusedEntryId === '2016-01-31');
-  assert(next0.selectedEntry === null);
-  assert(next0.selectedEntryId === null);
+test('focus', () => {
+  const data = newEntryViewer();
 
-  const focus20160131 = next0.focus('2016-01-31');
+  const focus20160131 = data.focus('2016-01-31');
   assert(focus20160131.filteredEntries.length === 10);
   assert(focus20160131.filteredEntries[0].id === '2016-01-31');
   assert(focus20160131.focusedEntryId === '2016-01-31');
   assert(focus20160131.selectedEntry === null);
   assert(focus20160131.selectedEntryId === null);
 
-  const focus20160121 = next0.focus('2016-01-21');
+  const focus20160121 = data.focus('2016-01-21');
   assert(focus20160121.filteredEntries.length === 10);
   assert(focus20160121.filteredEntries[0].id === '2016-01-21');
   assert(focus20160121.focusedEntryId === '2016-01-21');
   assert(focus20160121.selectedEntry === null);
   assert(focus20160121.selectedEntryId === null);
 
-  const focus20160101 = next0.focus('2016-01-01');
+  const focus20160101 = data.focus('2016-01-01');
   assert(focus20160101.filteredEntries.length === 1);
   assert(focus20160101.filteredEntries[0].id === '2016-01-01');
   assert(focus20160101.focusedEntryId === '2016-01-01');
   assert(focus20160101.selectedEntry === null);
   assert(focus20160101.selectedEntryId === null);
 
-  const focus19700101 = next0.focus('1970-01-01'); // not found
+  const focus19700101 = data.focus('1970-01-01'); // not found
   assert(focus19700101.filteredEntries.length === 10);
   assert(focus19700101.filteredEntries[0].id === '2016-01-31');
   assert(focus19700101.focusedEntryId === '2016-01-31');
@@ -56,48 +63,30 @@ test('focus', () => {
 });
 
 test('focusNext', () => {
-  const entries = new Array(31).fill(0).map((_, i) => 31 - i).map((n) => {
-    const s = n < 10 ? '0' + n : n.toString(10);
-    return { id: `2016-01-${s}`, title: `Entry ${s}`, body: `Entry Body ${s}` };
-  });
-  assert(entries.length === 31);
-  assert(entries[0].id === '2016-01-31');
+  const data = newEntryViewer();
 
-  const empty = EntryViewer.create([]);
-  assert(empty.filteredEntries.length === 0);
-  assert(empty.focusedEntryId === null);
-  assert(empty.selectedEntry === null);
-  assert(empty.selectedEntryId === null);
-
-  const next0 = EntryViewer.create(entries);
-  assert(next0.filteredEntries.length === 10);
-  assert(next0.filteredEntries[0].id === '2016-01-31');
-  assert(next0.focusedEntryId === '2016-01-31');
-  assert(next0.selectedEntry === null);
-  assert(next0.selectedEntryId === null);
-
-  const next1 = next0.focusNext();
+  const next1 = data.focusNext();
   assert(next1.filteredEntries.length === 10);
   assert(next1.filteredEntries[0].id === '2016-01-31');
   assert(next1.focusedEntryId === '2016-01-30');
   assert(next1.selectedEntry === null);
   assert(next1.selectedEntryId === null);
 
-  const next10 = new Array(10).fill(0).reduce((e, _) => e.focusNext(), next0);
+  const next10 = new Array(10).fill(0).reduce((e, _) => e.focusNext(), data);
   assert(next10.filteredEntries.length === 10);
   assert(next10.filteredEntries[0].id === '2016-01-30');
   assert(next10.focusedEntryId === '2016-01-21');
   assert(next10.selectedEntry === null);
   assert(next10.selectedEntryId === null);
 
-  const next30 = new Array(30).fill(0).reduce((e, _) => e.focusNext(), next0);
+  const next30 = new Array(30).fill(0).reduce((e, _) => e.focusNext(), data);
   assert(next30.filteredEntries.length === 10);
   assert(next30.filteredEntries[0].id === '2016-01-10');
   assert(next30.focusedEntryId === '2016-01-01');
   assert(next30.selectedEntry === null);
   assert(next30.selectedEntryId === null);
 
-  const next31 = new Array(31).fill(0).reduce((e, _) => e.focusNext(), next0);
+  const next31 = new Array(31).fill(0).reduce((e, _) => e.focusNext(), data);
   assert(next31.filteredEntries.length === 10);
   assert(next31.filteredEntries[0].id === '2016-01-10');
   assert(next31.focusedEntryId === '2016-01-01');
@@ -106,27 +95,9 @@ test('focusNext', () => {
 });
 
 test('focusPrev', () => {
-  const entries = new Array(31).fill(0).map((_, i) => 31 - i).map((n) => {
-    const s = n < 10 ? '0' + n : n.toString(10);
-    return { id: `2016-01-${s}`, title: `Entry ${s}`, body: `Entry Body ${s}` };
-  });
-  assert(entries.length === 31);
-  assert(entries[0].id === '2016-01-31');
+  const data = newEntryViewer();
 
-  const empty = EntryViewer.create([]);
-  assert(empty.filteredEntries.length === 0);
-  assert(empty.focusedEntryId === null);
-  assert(empty.selectedEntry === null);
-  assert(empty.selectedEntryId === null);
-
-  const prev0 = EntryViewer.create(entries);
-  assert(prev0.filteredEntries.length === 10);
-  assert(prev0.filteredEntries[0].id === '2016-01-31');
-  assert(prev0.focusedEntryId === '2016-01-31');
-  assert(prev0.selectedEntry === null);
-  assert(prev0.selectedEntryId === null);
-
-  const next30 = new Array(30).fill(0).reduce((e, _) => e.focusNext(), prev0);
+  const next30 = new Array(30).fill(0).reduce((e, _) => e.focusNext(), data);
   assert(next30.filteredEntries.length === 10);
   assert(next30.filteredEntries[0].id === '2016-01-10');
   assert(next30.focusedEntryId === '2016-01-01');
