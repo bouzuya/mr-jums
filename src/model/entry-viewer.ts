@@ -80,9 +80,10 @@ export class EntryViewer {
       .findIndex(({ id }) => id === offsetEntryId);
     if (currentPageFirstEntryIndex < 0) throw new Error();
     const currentPageLastEntryIndex = currentPageFirstEntryIndex + count - 1;
-    const isLastPage = currentPageLastEntryIndex === entries.length - 1;
+    const lastEntryIndex = entries.length - 1;
+    const isLastPage = currentPageLastEntryIndex === lastEntryIndex;
     const isLastEntryInPage = currentPageLastEntryIndex === focusedEntryIndex;
-    const isLastEntry = focusedEntryIndex === entries.length - 1;
+    const isLastEntry = focusedEntryIndex === lastEntryIndex;
     const nextOffsetEntryId = !isLastPage && isLastEntryInPage
       ? entries[currentPageFirstEntryIndex + 1].id : offsetEntryId;
     const nextFocusedEntryId = isLastEntry
