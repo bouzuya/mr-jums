@@ -58,15 +58,7 @@ export class EntryViewer {
     const offsetEntryId = this._offsetEntryId;
     const count = this._count;
     const focusedEntryIndex = entries.findIndex(({ id }) => id === entryId);
-    if (focusedEntryIndex < 0) {
-      return new EntryViewer(
-        this._entries,
-        this._count,
-        this._focusedEntryId,
-        this._offsetEntryId,
-        this._selectedEntryId
-      );
-    }
+    if (focusedEntryIndex < 0) return this;
     const newFocusedEntryId = entries[focusedEntryIndex].id;
     const offsetEntryIndex = entries
       .findIndex(({ id }) => id === offsetEntryId);
@@ -87,16 +79,17 @@ export class EntryViewer {
   select(entryId?: string): EntryViewer {
     const id = typeof entryId === 'undefined' ? this._focusedEntryId : entryId;
     if (id === null) return this;
-    const filtered = this._currentPageEntries(
-      this._entries, this._offsetEntryId, this._count
-    );
-    return new EntryViewer(
+    const newSelectedEntryId = this._entries.some((entry) => entry.id === id)
+      ? id : this._selectedEntryId;
+    const selectionUpdated = new EntryViewer(
       this._entries,
       this._count,
       this._offsetEntryId,
-      this._findEntryId(filtered, id),
-      this._findEntryId(filtered, id)
+      this._focusedEntryId,
+      newSelectedEntryId
     );
+    return newSelectedEntryId === null
+      ? selectionUpdated : selectionUpdated.focus(newSelectedEntryId);
   }
 
   focusNext(): EntryViewer {
@@ -164,10 +157,5 @@ export class EntryViewer {
     return entries
       .filter(({ id }) => id <= offset) // entries order by desc
       .filter((_, index) => index < count);
-  }
-
-  private _findEntryId(entries: Entry[], entryId: string): string | null {
-    const index = entries.findIndex(({ id }) => id === entryId);
-    return index < 0 ? null : entries[index].id;
   }
 }
