@@ -5,6 +5,56 @@ import { EntryViewer } from '../../src/model/entry-viewer';
 
 const { test } = beater();
 
+test('focus', () => {
+  const entries = new Array(31).fill(0).map((_, i) => 31 - i).map((n) => {
+    const s = n < 10 ? '0' + n : n.toString(10);
+    return { id: `2016-01-${s}`, title: `Entry ${s}`, body: `Entry Body ${s}` };
+  });
+  assert(entries.length === 31);
+  assert(entries[0].id === '2016-01-31');
+
+  const empty = EntryViewer.create([]);
+  assert(empty.filteredEntries.length === 0);
+  assert(empty.focusedEntryId === null);
+  assert(empty.selectedEntry === null);
+  assert(empty.selectedEntryId === null);
+
+  const next0 = EntryViewer.create(entries);
+  assert(next0.filteredEntries.length === 10);
+  assert(next0.filteredEntries[0].id === '2016-01-31');
+  assert(next0.focusedEntryId === '2016-01-31');
+  assert(next0.selectedEntry === null);
+  assert(next0.selectedEntryId === null);
+
+  const focus20160131 = next0.focus('2016-01-31');
+  assert(focus20160131.filteredEntries.length === 10);
+  assert(focus20160131.filteredEntries[0].id === '2016-01-31');
+  assert(focus20160131.focusedEntryId === '2016-01-31');
+  assert(focus20160131.selectedEntry === null);
+  assert(focus20160131.selectedEntryId === null);
+
+  const focus20160121 = next0.focus('2016-01-21');
+  assert(focus20160121.filteredEntries.length === 10);
+  assert(focus20160121.filteredEntries[0].id === '2016-01-21');
+  assert(focus20160121.focusedEntryId === '2016-01-21');
+  assert(focus20160121.selectedEntry === null);
+  assert(focus20160121.selectedEntryId === null);
+
+  const focus20160101 = next0.focus('2016-01-01');
+  assert(focus20160101.filteredEntries.length === 1);
+  assert(focus20160101.filteredEntries[0].id === '2016-01-01');
+  assert(focus20160101.focusedEntryId === '2016-01-01');
+  assert(focus20160101.selectedEntry === null);
+  assert(focus20160101.selectedEntryId === null);
+
+  const focus19700101 = next0.focus('1970-01-01'); // not found
+  assert(focus19700101.filteredEntries.length === 10);
+  assert(focus19700101.filteredEntries[0].id === '2016-01-31');
+  assert(focus19700101.focusedEntryId === '2016-01-31');
+  assert(focus19700101.selectedEntry === null);
+  assert(focus19700101.selectedEntryId === null);
+});
+
 test('focusNext', () => {
   const entries = new Array(31).fill(0).map((_, i) => 31 - i).map((n) => {
     const s = n < 10 ? '0' + n : n.toString(10);

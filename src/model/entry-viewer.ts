@@ -53,6 +53,37 @@ export class EntryViewer {
     return this._selectedEntryId;
   }
 
+  focus(entryId: string): EntryViewer {
+    const entries = this._entries;
+    const offsetEntryId = this._offsetEntryId;
+    const count = this._count;
+    const focusedEntryIndex = entries.findIndex(({ id }) => id === entryId);
+    if (focusedEntryIndex < 0) {
+      return new EntryViewer(
+        this._entries,
+        this._count,
+        this._focusedEntryId,
+        this._offsetEntryId,
+        this._selectedEntryId
+      );
+    }
+    const newFocusedEntryId = entries[focusedEntryIndex].id;
+    const offsetEntryIndex = entries
+      .findIndex(({ id }) => id === offsetEntryId);
+    if (offsetEntryIndex < 0) throw new Error();
+    const focusedEntryIsInPage = offsetEntryIndex <= focusedEntryIndex
+      && focusedEntryIndex <= offsetEntryIndex + count - 1;
+    const newOffsetEntryId = focusedEntryIsInPage
+      ? offsetEntryId : newFocusedEntryId;
+    return new EntryViewer(
+      this._entries,
+      this._count,
+      newFocusedEntryId,
+      newOffsetEntryId,
+      this._selectedEntryId
+    );
+  }
+
   select(entryId?: string): EntryViewer {
     const id = typeof entryId === 'undefined' ? this._focusedEntryId : entryId;
     if (id === null) return this;
