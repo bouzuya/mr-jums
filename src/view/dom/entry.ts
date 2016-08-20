@@ -1,10 +1,12 @@
-import { div, VNode } from '@cycle/dom';
+import { VNode, div, span } from '@cycle/dom';
 import { Entry } from '../../type';
 
 const view = (entry: Entry): VNode => {
   return div('.entry', [
-    div('.header', [entry.title]),
-    div('.body', [entry.body])
+    div('.header', [
+      span('.id', [entry.id]),
+      span('.title', [entry.title])
+    ])
   ]);
 };
 
