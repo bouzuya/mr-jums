@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@cycle/dom": "12.1.0",
+    "@cycle/http": "10.1.0",
     "@cycle/xstream-run": "3.0.4",
     "xstream": "5.3.4"
   },
