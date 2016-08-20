@@ -3,6 +3,8 @@ import {
   Action,
   ActionType,
   EnterAction,
+  FetchPostsRequestAction,
+  FetchPostsSuccessAction,
   MenuAction,
   NextAction,
   PrevAction,
@@ -50,10 +52,13 @@ const entries = [
   { id: '2016-01-01', title: 'My first entry', body: 'Hello, bbn-cycle!' }
 ];
 
-const model = (action$: xs<Action>): xs<State> => {
+const model = (
+  action$: xs<Action>
+): { state$: xs<State>; request$: xs<any>; } => {
   const state$: xs<State> = xs
     .merge(
     select<EnterAction>(action$, 'enter'),
+    select<FetchPostsSuccessAction>(action$, 'fetch-posts-success'),
     select<MenuAction>(action$, 'menu'),
     select<SelectAction>(action$, 'select'),
     select<NextAction>(action$, 'next'),
@@ -65,6 +70,13 @@ const model = (action$: xs<Action>): xs<State> => {
         return Object.assign({}, state, {
           entryViewer: entryViewer.select(action.entryId),
           menu: false
+        });
+      } else if (action.type === 'fetch-posts-success') {
+        const posts = action.posts
+          .map(({ date, title }) => ({ id: date, title }))
+          .sort(({ id: a }, { id: b}) => a < b ? 1 : (a === b ? 0 : 1));
+        return Object.assign({}, state, {
+          entryViewer: EntryViewer.create(posts)
         });
       } else if (action.type === 'menu') {
         return Object.assign({}, state, { menu: true });
@@ -89,7 +101,9 @@ const model = (action$: xs<Action>): xs<State> => {
       entryViewer: EntryViewer.create(entries),
       menu: true
     });
-  return state$;
+  const request$ = select<FetchPostsRequestAction>(
+    action$, 'fetch-posts-request').map(({ request }) => request);
+  return { state$, request$ };
 };
 
 export { model };
