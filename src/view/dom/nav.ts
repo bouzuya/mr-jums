@@ -1,11 +1,12 @@
-import { VNode, div } from '@cycle/dom';
+import { VNode, div, del } from '@cycle/dom';
+import { State } from '../../type';
 
-const view = (): VNode => {
+const view = ({ menu }: State): VNode => {
   return div('.nav', [
-    div('.menu', ['H']),
+    (menu ? del([div(['H'])]) : div('.menu', ['H'])),
     div('.next', ['J']),
     div('.prev', ['K']),
-    div('.enter', ['L'])
+    (menu ? div('.enter', ['L']) : del([div(['L'])]))
   ]);
 };
 

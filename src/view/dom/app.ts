@@ -12,7 +12,7 @@ const view = (state: State): VNode => {
   return div('.app' + (menu ? '.is-menu' : ''), [
     entryListView(entryViewer),
     entryDetailView(entryViewer),
-    navView()
+    navView(state)
   ]);
 };
 
