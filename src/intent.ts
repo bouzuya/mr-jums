@@ -1,6 +1,36 @@
 import xs from 'xstream';
-import { Action } from './action';
+import { Action, FetchPostsSuccessAction } from './action';
 import { DOMSource } from '@cycle/dom';
+import { HTTPSource, Response as HTTPResponse } from '@cycle/http';
+
+const fetchPostsRequest$ = ({ DOM }: { DOM: DOMSource }): xs<Action> => {
+  const click$: xs<Event> = DOM.select('div.reload').events('click');
+  const action$: xs<Action> = click$
+    .map<Action>(() => ({
+      type: 'fetch-posts-request',
+      request: {
+        url: 'http://blog.bouzuya.net/posts.json',
+        category: 'posts'
+      }
+    }));
+  return action$;
+};
+
+const fetchPostsSuccess$ = ({ HTTP }: { HTTP: HTTPSource; }): xs<Action> => {
+  const response$: xs<HTTPResponse> = HTTP.select('posts').flatten();
+  const action$: xs<Action> = response$
+    .map<FetchPostsSuccessAction>((response) => ({
+      type: 'fetch-posts-success',
+      posts: response.body as { // TODO
+        date: string; // yyyy-mm-dd in +09:00
+        minutes: number;
+        pubdate: string; // yyyy-mm-ddThh:mm:ss+09:00
+        tags: string[];
+        title: string;
+      }[]
+    }));
+  return action$;
+};
 
 const menu$ = ({ DOM }: { DOM: DOMSource }): xs<Action> => {
   const click$: xs<Event> = DOM.select('div.menu').events('click');
@@ -48,13 +78,15 @@ const select$ = ({ DOM }: { DOM: DOMSource }): xs<Action> => {
   return select$;
 };
 
-const intent = ({ DOM }: { DOM: DOMSource }): xs<Action> => {
+const intent = (sources: { DOM: DOMSource; HTTP: HTTPSource }): xs<Action> => {
   const action$: xs<Action> = xs.merge(
-    enter$({ DOM }),
-    menu$({ DOM }),
-    next$({ DOM }),
-    prev$({ DOM }),
-    select$({ DOM })
+    enter$(sources),
+    fetchPostsRequest$(sources),
+    fetchPostsSuccess$(sources),
+    menu$(sources),
+    next$(sources),
+    prev$(sources),
+    select$(sources)
   );
   return action$;
 };
