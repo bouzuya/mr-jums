@@ -3,6 +3,7 @@ import {
   Action,
   ActionType,
   EnterAction,
+  MenuAction,
   NextAction,
   PrevAction,
   SelectAction
@@ -53,6 +54,7 @@ const model = (action$: xs<Action>): xs<State> => {
   const state$: xs<State> = xs
     .merge(
     select<EnterAction>(action$, 'enter'),
+    select<MenuAction>(action$, 'menu'),
     select<SelectAction>(action$, 'select'),
     select<NextAction>(action$, 'next'),
     select<PrevAction>(action$, 'prev')
@@ -64,6 +66,8 @@ const model = (action$: xs<Action>): xs<State> => {
           entryViewer: entryViewer.select(action.entryId),
           menu: false
         });
+      } else if (action.type === 'menu') {
+        return Object.assign({}, state, { menu: true });
       } else if (action.type === 'enter') {
         return Object.assign({}, state, {
           entryViewer: entryViewer.select(),
