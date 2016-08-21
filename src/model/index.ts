@@ -10,6 +10,11 @@ import {
   PrevAction,
   SelectAction
 } from '../action';
+import {
+  Event,
+  RequestEvent,
+  StateEvent
+} from '../event';
 import { EntryViewer, State } from '../type';
 
 const select = <T extends Action>(
@@ -52,9 +57,7 @@ const entries = [
   { id: '2016-01-01', title: 'My first entry', body: 'Hello, bbn-cycle!' }
 ];
 
-const model = (
-  action$: xs<Action>
-): { state$: xs<State>; request$: xs<any>; } => {
+const model = (action$: xs<Action>): xs<Event> => {
   const state$: xs<State> = xs
     .merge(
     select<EnterAction>(action$, 'enter'),
@@ -103,7 +106,11 @@ const model = (
     });
   const request$ = select<FetchPostsRequestAction>(
     action$, 'fetch-posts-request').map(({ request }) => request);
-  return { state$, request$ };
+  const event$ = xs.merge(
+    request$.map<RequestEvent>((request) => ({ type: 'request', request })),
+    state$.map<StateEvent>((state) => ({ type: 'state', state }))
+  );
+  return event$;
 };
 
 export { model };

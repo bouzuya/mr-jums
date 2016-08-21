@@ -1,12 +1,23 @@
 import xs from 'xstream';
 import { view as domView } from './dom';
-import { State } from '../type';
+import {
+  Event,
+  EventType,
+  RequestEvent,
+  StateEvent
+} from '../event';
 
-const view = (
-  event$s: { state$: xs<State>; request$: xs<any>; }
-): { DOM: xs<any>; HTTP: xs<any>; } => {
-  const { state$, request$ } = event$s;
-  const sinks = { DOM: domView(state$), HTTP: request$ };
+const select = <T extends Event>(
+  event$: xs<Event>, type: EventType
+): xs<T> => {
+  return event$.filter((event) => event.type === type) as xs<T>;
+};
+
+const view = (event$: xs<Event>): { DOM: xs<any>; HTTP: xs<any>; } => {
+  const sinks = {
+    DOM: domView(select<StateEvent>(event$, 'state')),
+    HTTP: select<RequestEvent>(event$, 'request').map(({ request }) => request)
+  };
   return sinks;
 };
 
