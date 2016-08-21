@@ -1,5 +1,5 @@
 import xs from 'xstream';
-import { Action, FetchPostsSuccessAction } from './action';
+import { Action, FetchPostsSuccessAction } from '../action';
 import { DOMSource } from '@cycle/dom';
 import { HTTPSource, Response as HTTPResponse } from '@cycle/http';
 
