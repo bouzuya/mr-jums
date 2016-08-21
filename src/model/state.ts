@@ -10,7 +10,7 @@ import {
   SelectCommand
 } from '../command';
 import { StateEvent } from '../event';
-import { EntryViewer } from '../type';
+import { EntryViewer, State } from '../type';
 
 const select = <T extends Command>(
   command$: xs<Command>, type: CommandType
@@ -52,6 +52,51 @@ const entries = [
   { id: '2016-01-01', title: 'My first entry', body: 'Hello, bbn-cycle!' }
 ];
 
+const doSelect = (state: State, command: SelectCommand): State => {
+  const { entryViewer } = state;
+  return Object.assign({}, state, {
+    entryViewer: entryViewer.select(command.entryId),
+    menu: false
+  });
+};
+
+const fetchPostsSuccess = (
+  state: State, command: FetchPostsSuccessCommand
+): State => {
+  const posts = command.posts
+    .map(({ date, title }) => ({ id: date, title }))
+    .sort(({ id: a }, { id: b}) => a < b ? 1 : (a === b ? 0 : 1));
+  return Object.assign({}, state, {
+    entryViewer: EntryViewer.create(posts)
+  });
+};
+
+const menu = (state: State, _: MenuCommand): State => {
+  return Object.assign({}, state, { menu: true });
+};
+
+const enter = (state: State, _: EnterCommand): State => {
+  const { entryViewer } = state;
+  return Object.assign({}, state, {
+    entryViewer: entryViewer.select(),
+    menu: false
+  });
+};
+
+const next = (state: State, _: NextCommand): State => {
+  const { entryViewer } = state;
+  return Object.assign({}, state, {
+    entryViewer: menu ? entryViewer.focusNext() : entryViewer.selectNext()
+  });
+};
+
+const prev = (state: State, _: PrevCommand): State => {
+  const { entryViewer } = state;
+  return Object.assign({}, state, {
+    entryViewer: menu ? entryViewer.focusPrev() : entryViewer.selectPrev()
+  });
+};
+
 const model = (command$: xs<Command>): xs<StateEvent> => {
   const state$: xs<StateEvent> = xs
     .merge(
@@ -63,34 +108,18 @@ const model = (command$: xs<Command>): xs<StateEvent> => {
     select<PrevCommand>(command$, 'prev')
     )
     .fold((state, command) => {
-      const { entryViewer, menu } = state;
       if (command.type === 'select') {
-        return Object.assign({}, state, {
-          entryViewer: entryViewer.select(command.entryId),
-          menu: false
-        });
+        return doSelect(state, command);
       } else if (command.type === 'fetch-posts-success') {
-        const posts = command.posts
-          .map(({ date, title }) => ({ id: date, title }))
-          .sort(({ id: a }, { id: b}) => a < b ? 1 : (a === b ? 0 : 1));
-        return Object.assign({}, state, {
-          entryViewer: EntryViewer.create(posts)
-        });
+        return fetchPostsSuccess(state, command);
       } else if (command.type === 'menu') {
-        return Object.assign({}, state, { menu: true });
+        return menu(state, command);
       } else if (command.type === 'enter') {
-        return Object.assign({}, state, {
-          entryViewer: entryViewer.select(),
-          menu: false
-        });
+        return enter(state, command);
       } else if (command.type === 'next') {
-        return Object.assign({}, state, {
-          entryViewer: menu ? entryViewer.focusNext() : entryViewer.selectNext()
-        });
+        return next(state, command);
       } else if (command.type === 'prev') {
-        return Object.assign({}, state, {
-          entryViewer: menu ? entryViewer.focusPrev() : entryViewer.selectPrev()
-        });
+        return prev(state, command);
       } else {
         // unknown command: do nothing
         return state;
