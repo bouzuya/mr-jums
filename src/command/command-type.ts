@@ -1,4 +1,4 @@
-export type ActionType =
+export type CommandType =
   'enter' |
   'fetch-posts-failure' |
   'fetch-posts-request' |

@@ -1,6 +1,6 @@
-import { Action } from './action';
+import { Command } from './command';
 
-export interface FetchPostsSuccessAction extends Action {
+export interface FetchPostsSuccessCommand extends Command {
   type: 'fetch-posts-success';
   posts: {
     date: string; // yyyy-mm-dd in +09:00

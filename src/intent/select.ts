@@ -1,10 +1,10 @@
 import xs from 'xstream';
-import { Action } from '../action';
+import { Command } from '../command';
 import { DOMSource } from '@cycle/dom';
 
-const intent = ({ DOM }: { DOM: DOMSource }): xs<Action> => {
+const intent = ({ DOM }: { DOM: DOMSource }): xs<Command> => {
   const clickList$: xs<Event> = DOM.select('li').events('click');
-  const select$: xs<Action> = clickList$
+  const select$: xs<Command> = clickList$
     .map((event) => {
       let target = event.target as Element;
       while (target && target.tagName !== 'LI') {
@@ -20,7 +20,7 @@ const intent = ({ DOM }: { DOM: DOMSource }): xs<Action> => {
       return entryId;
     })
     .filter((entryId) => typeof entryId !== 'undefined')
-    .map<Action>((entryId: string) => ({ type: 'select', entryId }));
+    .map<Command>((entryId: string) => ({ type: 'select', entryId }));
   return select$;
 };
 

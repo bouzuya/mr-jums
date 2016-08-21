@@ -1,11 +1,11 @@
 import xs from 'xstream';
-import { Action, FetchPostsSuccessAction } from '../action';
+import { Command, FetchPostsSuccessCommand } from '../command';
 import { HTTPSource, Response as HTTPResponse } from '@cycle/http';
 
-const intent = ({ HTTP }: { HTTP: HTTPSource; }): xs<Action> => {
+const intent = ({ HTTP }: { HTTP: HTTPSource; }): xs<Command> => {
   const response$: xs<HTTPResponse> = HTTP.select('posts').flatten();
-  const action$: xs<Action> = response$
-    .map<FetchPostsSuccessAction>((response) => ({
+  const command$: xs<Command> = response$
+    .map<FetchPostsSuccessCommand>((response) => ({
       type: 'fetch-posts-success',
       posts: response.body as { // TODO
         date: string; // yyyy-mm-dd in +09:00
@@ -15,7 +15,7 @@ const intent = ({ HTTP }: { HTTP: HTTPSource; }): xs<Action> => {
         title: string;
       }[]
     }));
-  return action$;
+  return command$;
 };
 
 export { intent };

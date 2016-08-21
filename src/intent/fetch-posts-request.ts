@@ -1,18 +1,18 @@
 import xs from 'xstream';
-import { Action } from '../action';
+import { Command } from '../command';
 import { DOMSource } from '@cycle/dom';
 
-const intent = ({ DOM }: { DOM: DOMSource }): xs<Action> => {
+const intent = ({ DOM }: { DOM: DOMSource }): xs<Command> => {
   const click$: xs<Event> = DOM.select('div.reload').events('click');
-  const action$: xs<Action> = click$
-    .map<Action>(() => ({
+  const command$: xs<Command> = click$
+    .map<Command>(() => ({
       type: 'fetch-posts-request',
       request: {
         url: 'http://blog.bouzuya.net/posts.json',
         category: 'posts'
       }
     }));
-  return action$;
+  return command$;
 };
 
 export { intent };

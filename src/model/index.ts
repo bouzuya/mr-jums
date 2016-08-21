@@ -1,15 +1,15 @@
 import xs from 'xstream';
 import {
-  Action,
-  ActionType,
-  EnterAction,
-  FetchPostsRequestAction,
-  FetchPostsSuccessAction,
-  MenuAction,
-  NextAction,
-  PrevAction,
-  SelectAction
-} from '../action';
+  Command,
+  CommandType,
+  EnterCommand,
+  FetchPostsRequestCommand,
+  FetchPostsSuccessCommand,
+  MenuCommand,
+  NextCommand,
+  PrevCommand,
+  SelectCommand
+} from '../command';
 import {
   Event,
   RequestEvent,
@@ -17,10 +17,10 @@ import {
 } from '../event';
 import { EntryViewer, State } from '../type';
 
-const select = <T extends Action>(
-  action$: xs<Action>, type: ActionType
+const select = <T extends Command>(
+  command$: xs<Command>, type: CommandType
 ): xs<T> => {
-  return action$.filter((action) => action.type === type) as xs<T>;
+  return command$.filter((command) => command.type === type) as xs<T>;
 };
 
 const entries = [
@@ -57,55 +57,55 @@ const entries = [
   { id: '2016-01-01', title: 'My first entry', body: 'Hello, bbn-cycle!' }
 ];
 
-const model = (action$: xs<Action>): xs<Event> => {
+const model = (command$: xs<Command>): xs<Event> => {
   const state$: xs<State> = xs
     .merge(
-    select<EnterAction>(action$, 'enter'),
-    select<FetchPostsSuccessAction>(action$, 'fetch-posts-success'),
-    select<MenuAction>(action$, 'menu'),
-    select<SelectAction>(action$, 'select'),
-    select<NextAction>(action$, 'next'),
-    select<PrevAction>(action$, 'prev')
+    select<EnterCommand>(command$, 'enter'),
+    select<FetchPostsSuccessCommand>(command$, 'fetch-posts-success'),
+    select<MenuCommand>(command$, 'menu'),
+    select<SelectCommand>(command$, 'select'),
+    select<NextCommand>(command$, 'next'),
+    select<PrevCommand>(command$, 'prev')
     )
-    .fold((state, action) => {
+    .fold((state, command) => {
       const { entryViewer, menu } = state;
-      if (action.type === 'select') {
+      if (command.type === 'select') {
         return Object.assign({}, state, {
-          entryViewer: entryViewer.select(action.entryId),
+          entryViewer: entryViewer.select(command.entryId),
           menu: false
         });
-      } else if (action.type === 'fetch-posts-success') {
-        const posts = action.posts
+      } else if (command.type === 'fetch-posts-success') {
+        const posts = command.posts
           .map(({ date, title }) => ({ id: date, title }))
           .sort(({ id: a }, { id: b}) => a < b ? 1 : (a === b ? 0 : 1));
         return Object.assign({}, state, {
           entryViewer: EntryViewer.create(posts)
         });
-      } else if (action.type === 'menu') {
+      } else if (command.type === 'menu') {
         return Object.assign({}, state, { menu: true });
-      } else if (action.type === 'enter') {
+      } else if (command.type === 'enter') {
         return Object.assign({}, state, {
           entryViewer: entryViewer.select(),
           menu: false
         });
-      } else if (action.type === 'next') {
+      } else if (command.type === 'next') {
         return Object.assign({}, state, {
           entryViewer: menu ? entryViewer.focusNext() : entryViewer.selectNext()
         });
-      } else if (action.type === 'prev') {
+      } else if (command.type === 'prev') {
         return Object.assign({}, state, {
           entryViewer: menu ? entryViewer.focusPrev() : entryViewer.selectPrev()
         });
       } else {
-        // unknown action: do nothing
+        // unknown command: do nothing
         return state;
       }
     }, {
       entryViewer: EntryViewer.create(entries),
       menu: true
     });
-  const request$ = select<FetchPostsRequestAction>(
-    action$, 'fetch-posts-request').map(({ request }) => request);
+  const request$ = select<FetchPostsRequestCommand>(
+    command$, 'fetch-posts-request').map(({ request }) => request);
   const event$ = xs.merge(
     request$.map<RequestEvent>((request) => ({ type: 'request', request })),
     state$.map<StateEvent>((state) => ({ type: 'state', state }))

@@ -1,5 +1,5 @@
 import xs from 'xstream';
-import { Action } from '../action';
+import { Command } from '../command';
 import { DOMSource } from '@cycle/dom';
 import { HTTPSource } from '@cycle/http';
 
@@ -11,8 +11,8 @@ import { intent as next$ } from './next';
 import { intent as prev$ } from './prev';
 import { intent as select$ } from './select';
 
-const intent = (sources: { DOM: DOMSource; HTTP: HTTPSource }): xs<Action> => {
-  const action$: xs<Action> = xs.merge(
+const intent = (sources: { DOM: DOMSource; HTTP: HTTPSource }): xs<Command> => {
+  const command$: xs<Command> = xs.merge(
     enter$(sources),
     fetchPostsRequest$(sources),
     fetchPostsSuccess$(sources),
@@ -21,7 +21,7 @@ const intent = (sources: { DOM: DOMSource; HTTP: HTTPSource }): xs<Action> => {
     prev$(sources),
     select$(sources)
   );
-  return action$;
+  return command$;
 };
 
 export { intent };
