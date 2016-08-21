@@ -1,5 +1,6 @@
 import xs from 'xstream';
 import { view as domView } from './dom';
+import { view as httpView } from './http';
 import {
   Event,
   EventType,
@@ -16,7 +17,7 @@ const select = <T extends Event>(
 const view = (event$: xs<Event>): { DOM: xs<any>; HTTP: xs<any>; } => {
   const sinks = {
     DOM: domView(select<StateEvent>(event$, 'state')),
-    HTTP: select<RequestEvent>(event$, 'request').map(({ request }) => request)
+    HTTP: httpView(select<RequestEvent>(event$, 'request'))
   };
   return sinks;
 };
