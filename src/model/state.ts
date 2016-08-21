@@ -1,7 +1,5 @@
 import xs from 'xstream';
 import {
-  Command,
-  CommandType,
   EnterCommand,
   FetchPostsSuccessCommand,
   MenuCommand,
@@ -11,12 +9,8 @@ import {
 } from '../command';
 import { StateEvent } from '../event';
 import { EntryViewer, State } from '../type';
-
-const select = <T extends Command>(
-  command$: xs<Command>, type: CommandType
-): xs<T> => {
-  return command$.filter((command) => command.type === type) as xs<T>;
-};
+import { Command, Event, Message } from './message';
+import { select } from './select';
 
 const entries = [
   { id: '2016-01-31', title: 'Entry 31', body: 'Entry Body 31' },
@@ -97,7 +91,7 @@ const prev = (state: State, _: PrevCommand): State => {
   });
 };
 
-const model = (command$: xs<Command>): xs<StateEvent> => {
+const model = (command$: xs<Message>): xs<StateEvent> => {
   const state$: xs<StateEvent> = xs
     .merge(
     select<EnterCommand>(command$, 'enter'),
@@ -132,4 +126,4 @@ const model = (command$: xs<Command>): xs<StateEvent> => {
   return state$;
 };
 
-export { model };
+export { model, Command, Event };
