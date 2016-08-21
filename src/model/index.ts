@@ -15,7 +15,7 @@ import {
   RequestEvent,
   StateEvent
 } from '../event';
-import { EntryViewer, State } from '../type';
+import { EntryViewer } from '../type';
 
 const select = <T extends Command>(
   command$: xs<Command>, type: CommandType
@@ -57,8 +57,16 @@ const entries = [
   { id: '2016-01-01', title: 'My first entry', body: 'Hello, bbn-cycle!' }
 ];
 
-const model = (command$: xs<Command>): xs<Event> => {
-  const state$: xs<State> = xs
+const request$ = (command$: xs<Command>): xs<RequestEvent> => {
+  const request$ = select<FetchPostsRequestCommand>(
+    command$, 'fetch-posts-request')
+    .map(({ request }) => request)
+    .map<RequestEvent>((request) => ({ type: 'request', request }));
+  return request$;
+};
+
+const state$ = (command$: xs<Command>): xs<StateEvent> => {
+  const state$: xs<StateEvent> = xs
     .merge(
     select<EnterCommand>(command$, 'enter'),
     select<FetchPostsSuccessCommand>(command$, 'fetch-posts-success'),
@@ -103,12 +111,15 @@ const model = (command$: xs<Command>): xs<Event> => {
     }, {
       entryViewer: EntryViewer.create(entries),
       menu: true
-    });
-  const request$ = select<FetchPostsRequestCommand>(
-    command$, 'fetch-posts-request').map(({ request }) => request);
+    })
+    .map<StateEvent>((state) => ({ type: 'state', state }));
+  return state$;
+};
+
+const model = (command$: xs<Command>): xs<Event> => {
   const event$ = xs.merge(
-    request$.map<RequestEvent>((request) => ({ type: 'request', request })),
-    state$.map<StateEvent>((state) => ({ type: 'state', state }))
+    request$(command$),
+    state$(command$)
   );
   return event$;
 };
