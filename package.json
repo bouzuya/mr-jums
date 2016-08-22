@@ -60,16 +60,18 @@
     "url": "git://github.com/bouzuya/bbn-cycle.git"
   },
   "scripts": {
-    "build": "npm-run-all -s 'build:ts' 'build:es2015' -p 'copy:*'",
+    "build": "npm-run-all -s 'build:ts' 'build:es2015' -p 'build:less' 'copy:*'",
     "build:es2015": "babel .tmp/es2015/ -d .tmp/es5/",
     "build:ts": "tsc",
-    "clean": "rimraf .tmp lib",
+    "build:less": "lessc --no-js --strict-imports --strict-math=on --strict-units=on src/view/index.less ./public/index.css",
+    "clean": "rimraf .tmp lib public/index.css",
     "copy:dts": "cpx '.tmp/es2015/src/**/*.d.ts' 'lib/'",
     "copy:js": "cpx '.tmp/es5/src/**/*.js' 'lib/'",
     "prepublish": "npm-run-all -s 'clean' 'build'",
     "test": "beater",
     "watch": "npm-run-all -p 'watch:*'",
     "watch:es2015": "npm run 'build:es2015' -- --watch",
+    "watch:less": "watch --wait 2 'npm run build:less' 'src/view'",
     "watch:server": "webpack-dev-server --config webpack.watch.config.js",
     "watch:test": "watch --wait 2 'npm test' '.tmp/es5/'",
     "watch:ts": "npm run 'build:ts' -- --watch"
