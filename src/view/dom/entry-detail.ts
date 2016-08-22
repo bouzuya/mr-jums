@@ -1,12 +1,12 @@
 import { VNode, div } from '@cycle/dom';
-import { EntryViewer } from '../../type';
+import { EntryDetail } from '../../type';
 import { view as entryView } from './entry';
 
 const view = (
-  entryViewer: EntryViewer
+  entry: EntryDetail | null
 ): VNode | null => {
-  if (entryViewer.selectedEntry === null) return null;
-  return div('.entry-detail', [entryView(entryViewer.selectedEntry)]);
+  if (entry === null) return null;
+  return div('.entry-detail', [entryView(entry)]);
 };
 
 export { view };
