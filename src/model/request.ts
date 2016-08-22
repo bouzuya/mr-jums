@@ -5,11 +5,14 @@ import { Command, Event, Message } from './message';
 import { RequestEvent, StateEvent } from '../event';
 import { State } from '../type';
 
-const model = (message$: xs<Message>): xs<RequestEvent> => {
-  const fetchPostsRequest$ = select<FetchPostsRequestCommand>(
+const fetchPostsRequest$ = (message$: xs<Message>): xs<any> => {
+  return select<FetchPostsRequestCommand>(
     message$, 'fetch-posts-request')
     .map(({ request }) => request);
-  const fetchPostRequest$ = message$
+};
+
+const fetchPostRequest$ = (message$: xs<Message>): xs<any> => {
+  return message$
     .filter((message) => message.type === 'state')
     .map<StateEvent>((message) => message as StateEvent)
     .map<State>(({ state }) => state)
@@ -30,7 +33,13 @@ const model = (message$: xs<Message>): xs<RequestEvent> => {
         category: 'post'
       };
     });
-  const request$ = xs.merge(fetchPostsRequest$, fetchPostRequest$)
+};
+
+const model = (message$: xs<Message>): xs<RequestEvent> => {
+  const request$ = xs.merge(
+    fetchPostsRequest$(message$),
+    fetchPostRequest$(message$)
+  )
     .map<RequestEvent>((request) => ({ type: 'request', request }));
   return request$;
 };
