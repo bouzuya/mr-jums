@@ -1,6 +1,7 @@
 import xs from 'xstream';
 import {
   EnterCommand,
+  FetchPostSuccessCommand,
   FetchPostsSuccessCommand,
   MenuCommand,
   NextCommand,
@@ -54,6 +55,14 @@ const doSelect = (state: State, command: SelectCommand): State => {
   });
 };
 
+const fetchPostSuccess = (
+  state: State, command: FetchPostSuccessCommand
+): State => {
+  const { date, html, minutes, pubdate, tags, title } = command.post;
+  const entry = { id: date, html, minutes, pubdate, tags, title };
+  return Object.assign({}, state, { entry });
+};
+
 const fetchPostsSuccess = (
   state: State, command: FetchPostsSuccessCommand
 ): State => {
@@ -91,19 +100,32 @@ const prev = (state: State, _: PrevCommand): State => {
   });
 };
 
+type MyCommand =
+  EnterCommand |
+  FetchPostSuccessCommand |
+  FetchPostsSuccessCommand |
+  FetchPostsSuccessCommand |
+  MenuCommand |
+  SelectCommand |
+  NextCommand |
+  PrevCommand;
+
 const model = (command$: xs<Message>): xs<StateEvent> => {
   const state$: xs<StateEvent> = xs
-    .merge(
+    .merge<MyCommand>(
     select<EnterCommand>(command$, 'enter'),
+    select<FetchPostSuccessCommand>(command$, 'fetch-post-success'),
     select<FetchPostsSuccessCommand>(command$, 'fetch-posts-success'),
     select<MenuCommand>(command$, 'menu'),
     select<SelectCommand>(command$, 'select'),
     select<NextCommand>(command$, 'next'),
     select<PrevCommand>(command$, 'prev')
     )
-    .fold((state, command) => {
+    .fold((state: State, command: MyCommand) => {
       if (command.type === 'select') {
         return doSelect(state, command);
+      } else if (command.type === 'fetch-post-success') {
+        return fetchPostSuccess(state, command);
       } else if (command.type === 'fetch-posts-success') {
         return fetchPostsSuccess(state, command);
       } else if (command.type === 'menu') {
@@ -119,6 +141,7 @@ const model = (command$: xs<Message>): xs<StateEvent> => {
         return state;
       }
     }, {
+      entry: null,
       entryViewer: EntryViewer.create(entries),
       menu: true
     })
