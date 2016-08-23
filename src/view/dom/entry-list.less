@@ -1,2 +1,19 @@
 .entry-list() {
+  width: 25%;
+  height: 100%;
+  > .entry-list {
+    height: 100%;
+    > .entry-list-item {
+      height: 10%;
+      &.is-focused {
+        border: 1px solid #333;
+      }
+      &.is-selected {
+        background-color: #333;
+      }
+      > .entry {
+        height: 100%;
+      }
+    }
+  }
 }

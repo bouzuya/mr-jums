@@ -1,2 +1,48 @@
 .nav() {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 128px;
+  height: 128px;
+  background-color: #333;
+  .nav-button(@size: 44px) {
+    text-align: center;
+    line-height: @size;
+    position: absolute;
+    width: @size;
+    height: @size;
+  }
+  > .reload {
+    .nav-button(44px);
+    top: 50%;
+    left: 50%;
+    margin-top: -22px;
+    margin-left: -22px;
+    z-index: 1;
+  }
+  > .menu, > .menu-disabled {
+    .nav-button();
+    top: 50%;
+    left: 0;
+    margin-top: -22px;
+  }
+  > .next {
+    .nav-button();
+    bottom: 0;
+    left: 50%;
+    margin-left: -22px;
+  }
+  > .prev {
+    .nav-button();
+    top: 0;
+    left: 50%;
+    margin-left: -22px;
+  }
+  > .enter, > .enter-disabled {
+    .nav-button();
+    top: 50%;
+    right: 0;
+    margin-top: -22px;
+    margin-left: -22px;
+  }
 }

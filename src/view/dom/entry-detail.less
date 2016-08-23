@@ -1,2 +1,35 @@
 .entry-detail() {
+  width: 80%;
+  height: 100%;
+  overflow: auto;
+  > .entry {
+    margin: 0 auto;
+    padding-bottom: 128px; // for .nav
+    max-width: 720px;
+    > .header {
+      > .title {
+        display: block;
+      }
+      > .miuntes {
+        display: block;
+      }
+      > .pubdate {
+        display: block;
+      }
+      > .tags {
+        display: block;
+      }
+    }
+    > .body {
+      a {
+        background-color: #4e6a41;
+        color: #f4f7f2;
+      }
+      pre {
+        white-space: pre-wrap;
+        background-color: #333;
+        padding: 1rem;
+      }
+    }
+  }
 }
