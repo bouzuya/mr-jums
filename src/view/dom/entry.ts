@@ -23,9 +23,7 @@ const entryDetailView = (entryDetail: EntryDetail): VNode => {
       span('.pubdate', [entryDetail.pubdate]),
       span('.tags', entryDetail.tags.map((tag) => span([tag])))
     ]),
-    div('.body', [
-      span('.html', { props: { innerHTML: entryDetail.html } })
-    ])
+    div('.body', { props: { innerHTML: entryDetail.html } })
   ]);
 };
 
