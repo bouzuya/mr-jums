@@ -5,8 +5,7 @@ import { view as entryView } from './entry';
 const view = (
   entry: EntryDetail | null
 ): VNode | null => {
-  if (entry === null) return null;
-  return div('.entry-detail', [entryView(entry)]);
+  return div('.entry-detail', [entry === null ? null : entryView(entry)]);
 };
 
 export { view };
