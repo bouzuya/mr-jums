@@ -87,16 +87,18 @@ const enter = (state: State, _: EnterCommand): State => {
 };
 
 const next = (state: State, _: NextCommand): State => {
-  const { entryViewer } = state;
+  const { menu, entryViewer } = state;
   return Object.assign({}, state, {
-    entryViewer: menu ? entryViewer.focusNext() : entryViewer.selectNext()
+    entryViewer: menu === true
+      ? entryViewer.focusNext() : entryViewer.selectNext()
   });
 };
 
 const prev = (state: State, _: PrevCommand): State => {
-  const { entryViewer } = state;
+  const { menu, entryViewer } = state;
   return Object.assign({}, state, {
-    entryViewer: menu ? entryViewer.focusPrev() : entryViewer.selectPrev()
+    entryViewer: menu === true
+      ? entryViewer.focusPrev() : entryViewer.selectPrev()
   });
 };
 
