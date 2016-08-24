@@ -24,6 +24,7 @@
     "./test/model/entry-viewer/focus-next.ts",
     "./test/model/entry-viewer/focus-prev.ts",
     "./test/model/entry-viewer/helpers-new-entry-viewer.ts",
-    "./test/model/entry-viewer/select.ts"
+    "./test/model/entry-viewer/select.ts",
+    "./test/model/entry-viewer/select-next.ts"
   ]
 }

@@ -150,21 +150,37 @@ export class EntryViewer {
       ? selectionUpdated : selectionUpdated.focus(newSelectedEntryId);
   }
 
-  // TODO: test
   selectNext(): EntryViewer {
-    if (this._selectedEntryId === null) {
-      return this._selectedEntryId === null
-        ? this : this.focus(this._selectedEntryId);
-    }
-    const selectedEntryIndex = this._entries
-      .findIndex(({ id }) => id === this._selectedEntryId);
+    const entries = this._entries;
+    const selectedEntryId = this._selectedEntryId;
+    const offsetEntryId = this._offsetEntryId;
+    const count = this._count;
+    if (selectedEntryId === null) return this;
+    const selectedEntryIndex = entries
+      .findIndex(({ id }) => id === selectedEntryId);
     if (selectedEntryIndex < 0) throw new Error();
-    if (selectedEntryIndex + 1 >= this._entries.length) {
-      return this._selectedEntryId === null
-        ? this : this.focus(this._selectedEntryId);
-    }
-    const nextSelectedEntryId = this._entries[selectedEntryIndex + 1].id;
-    return this.select(nextSelectedEntryId);
+    const currentPageFirstEntryIndex = entries
+      .findIndex(({ id }) => id === offsetEntryId);
+    if (currentPageFirstEntryIndex < 0) throw new Error();
+    const lastEntryIndex = entries.length - 1;
+    const currentPageLastEntryIndex =
+      currentPageFirstEntryIndex + count - 1 > lastEntryIndex
+        ? lastEntryIndex
+        : currentPageFirstEntryIndex + count - 1;
+    const isLastPage = currentPageLastEntryIndex === lastEntryIndex;
+    const isLastEntryInPage = currentPageLastEntryIndex === selectedEntryIndex;
+    const isLastEntry = selectedEntryIndex === lastEntryIndex;
+    const nextOffsetEntryId = !isLastPage && isLastEntryInPage
+      ? entries[currentPageFirstEntryIndex + 1].id : offsetEntryId;
+    const nextSelectedEntryId = isLastEntry
+      ? selectedEntryId : entries[selectedEntryIndex + 1].id;
+    return new EntryViewer(
+      this._entries,
+      this._count,
+      nextOffsetEntryId,
+      nextSelectedEntryId,
+      nextSelectedEntryId
+    );
   }
 
   // TODO: test
