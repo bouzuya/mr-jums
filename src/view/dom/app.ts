@@ -10,11 +10,15 @@ const view = (state: State): VNode => {
     entryViewer,
     menu
   } = state;
-  return div('.app' + (menu ? '.is-menu' : ''), [
-    entryListView(entryViewer),
-    entryDetailView(entry),
-    navView(state)
-  ]);
+  return div({
+    props: {
+      className: ['app', (menu ? 'is-menu' : '')].join(' ').trim()
+    }
+  }, [
+      entryListView(entryViewer),
+      entryDetailView(entry),
+      navView(state)
+    ]);
 };
 
 export { view };

@@ -1,7 +1,6 @@
 @import "./entry-list";
 @import "./entry-detail";
 @import "./nav";
-
 .app() {
   width: 100vw;
   height: 100vh;
@@ -9,7 +8,16 @@
   margin: 0 auto;
   position: relative;
   display: flex;
-
+  &.is-menu {
+    > .entry-list {
+      width: 80%;
+      color: rgba(244, 247, 242, 1);
+    }
+    > .entry-detail {
+      width: 20%;
+      color: rgba(244, 247, 242, 0.5);
+    }
+  }
   > .entry-list {
     .entry-list();
   }
