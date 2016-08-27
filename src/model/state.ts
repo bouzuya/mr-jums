@@ -34,7 +34,7 @@ const fetchPostsSuccess = (
 ): State => {
   const posts = command.posts
     .map(({ date, title }) => ({ id: date, title }))
-    .sort(({ id: a }, { id: b}) => a < b ? 1 : (a === b ? 0 : 1));
+    .sort(({ id: a }, { id: b }) => a > b ? -1 : (a === b ? 0 : 1));
   return Object.assign({}, state, {
     entryViewer: EntryViewer.create(posts)
   });
