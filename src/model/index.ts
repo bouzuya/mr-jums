@@ -20,6 +20,10 @@ const parseInitialState = (state: StateData | undefined): State => {
   };
 };
 
+const isEvent = (message: Message): message is Event => {
+  return message.type === 'state' || message.type === 'request'
+};
+
 const model = (
   command$: xs<Command>,
   initialState: StateData | undefined
@@ -32,11 +36,11 @@ const model = (
     state$(subject, state)
   )
     .map((message) => {
-      subject.shamefullySendNext(message);
+      setTimeout(() => subject.shamefullySendNext(message));
       return message;
     });
   const event$ = message$
-    .filter((m) => m.type === 'state' || m.type === 'request')
+    .filter(isEvent)
     .map((event) => event as Event);
   return event$;
 };
