@@ -16,8 +16,10 @@ type MySinks = {
 };
 
 const main = (): void => {
+  const initialState: any = typeof window === 'undefined'
+    ? undefined : (<any>window).INITIAL_STATE;
   run(
-    (sources: MySources): MySinks => view(model(intent(sources))),
+    (sources: MySources): MySinks => view(model(intent(sources), initialState)),
     {
       DOM: makeDOMDriver('#app'),
       HTTP: makeHTTPDriver()
