@@ -5,6 +5,7 @@ import { HTTPSource, makeHTTPDriver } from '@cycle/http';
 import { intent } from './intent';
 import { model } from './model';
 import { view } from './view';
+import { StateData } from './type';
 
 type MySources = {
   DOM: DOMSource;
@@ -16,7 +17,7 @@ type MySinks = {
 };
 
 const main = (): void => {
-  const initialState: any = typeof window === 'undefined'
+  const initialState: StateData | undefined = typeof window === 'undefined'
     ? undefined : (<any>window).INITIAL_STATE;
   run(
     (sources: MySources): MySinks => view(model(intent(sources), initialState)),

@@ -19,3 +19,8 @@ export interface State {
   menu: boolean;
   entry: EntryDetail | null;
 }
+
+export interface StateData {
+  entry: EntryDetail | null;
+  entries: Entry[];
+}

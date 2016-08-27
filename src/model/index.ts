@@ -3,9 +3,9 @@ import { model as request$ } from './request';
 import { model as state$ } from './state';
 import { Command, Event, Message } from './message';
 
-import { EntryViewer, State } from '../type';
+import { EntryViewer, State, StateData } from '../type';
 
-const parseInitialState = (state: any): State => {
+const parseInitialState = (state: StateData | undefined): State => {
   if (typeof state === 'undefined') {
     return {
       entry: null,
@@ -21,7 +21,8 @@ const parseInitialState = (state: any): State => {
 };
 
 const model = (
-  command$: xs<Command>, initialState: any
+  command$: xs<Command>,
+  initialState: StateData | undefined
 ): xs<Event> => {
   const state: State = parseInitialState(initialState);
   const subject = xs.create<Message>();
