@@ -25,6 +25,7 @@
     "@cycle/dom": "12.1.0",
     "@cycle/http": "10.1.0",
     "@cycle/xstream-run": "3.0.4",
+    "cyclejs-history-driver": "github:bouzuya/cyclejs-history-driver#0.1.2",
     "xstream": "5.3.4"
   },
   "devDependencies": {
