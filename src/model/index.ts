@@ -1,4 +1,5 @@
 import xs from 'xstream';
+import { model as history$ } from './history';
 import { model as request$ } from './request';
 import { model as state$ } from './state';
 import { Command, Event, Message } from './message';
@@ -21,7 +22,9 @@ const parseInitialState = (state: StateData | undefined): State => {
 };
 
 const isEvent = (message: Message): message is Event => {
-  return message.type === 'state' || message.type === 'request'
+  return message.type === 'state' ||
+    message.type === 'request' ||
+    message.type == 'history';
 };
 
 const model = (
@@ -32,6 +35,7 @@ const model = (
   const subject = xs.create<Message>();
   const message$ = xs.merge<Message>(
     command$,
+    history$(subject),
     request$(subject),
     state$(subject, state)
   )
