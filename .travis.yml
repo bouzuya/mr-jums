@@ -1,5 +1,11 @@
 language: node_js
 node_js:
-  - "node"
-  - "6"
-  - "5"
+  - node
+  - '6'
+  - '5'
+deploy:
+  provider: heroku
+  api_key:
+    secure: cxq74H5HGh3gDaDnjHDkRirtE2zZufS6M+wivuXLqM2QYpSLohpjvlEpHbdwj0hSlX+ZlKWfCOfB02j70YCAsuTw4pVCGN6rjr/OBFPlVQztT7YcuT2f1LeJtifYCFfpiaXsua3v54iKUd2caHxhFojNLjqtQ/jt7Nfe6tEh1IqaQhgjj6nSVK0BDoqtT5NNu09iSr3SBn71MV4uL/olut9XYUdib28t28LabQnO0PduKHhFPV+D1A+JkFVknM2CBumA5jwuF2QL+nx7jpJCW/4she5MVRM9bn8BR0/IK9K3pWg8wyYvrYai9dPrRmedKoRqPkD0kbDbXuifyIygHIqE6yxmES1aff7jX+/WGDxYwhjGNEkhHrv2B2StLgUarEQQYIb3QK1yK1eb0PY01Ulpet19r88FKDLEWxrQbyCX3sCm9Og06b6WOCLaKnwhlxJwZAmAscNnkulwjkl349J7ppkm/BodJme+FnA+sWWmzPs/rkzjU+D1Y8d4FC/13fVnXRPXSCqa9L45MRkBhWElul0Tg7mT1OBdNDlLq5ctRpPP1/zpaAiz02iio4GK9HWqTZQdmcSj+ol+oLtmZbJPgpDQs308XeBC2PbTNA4UP43Ufip3W3LS/AinsGa/Y0VF8+rBhvGoHU9cOqRCFuZgOC8i1on50CgtjnzvsaA=
+  app: fast-citadel-97475
+  on: master
