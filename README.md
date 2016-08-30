@@ -1,6 +1,6 @@
-# bbn-cycle
+![bbn-cycle logo](https://cloud.githubusercontent.com/assets/1221346/18084759/6d28b41c-6ee3-11e6-8f62-5eb0d8f673c0.png)
 
-bbn: blog.bouzuya.net using Cycle.js
+bbn-cycle is a html generator for bbn: blog.bouzuya.net using Cycle.js
 
 ## Badges
 
