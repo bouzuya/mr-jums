@@ -3,6 +3,7 @@ import { run } from '@cycle/xstream-run';
 import { DOMSource, makeDOMDriver } from '@cycle/dom';
 import { HTTPSource, makeHTTPDriver } from '@cycle/http';
 import { HistorySource, makeHistoryDriver } from 'cyclejs-history-driver';
+import { makeTitleDriver } from './title-driver';
 import { intent } from './intent';
 import { model } from './model';
 import { view } from './view';
@@ -26,7 +27,8 @@ const main = (): void => {
     {
       DOM: makeDOMDriver('#app'),
       HISTORY: makeHistoryDriver(),
-      HTTP: makeHTTPDriver()
+      HTTP: makeHTTPDriver(),
+      TITLE: makeTitleDriver()
     }
   );
 };

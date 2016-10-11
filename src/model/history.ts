@@ -3,14 +3,20 @@ import { StateEvent } from '../event';
 import { Command, Event, Message } from './message';
 import { HistoryEvent } from '../event';
 
-const path$ = (message$: xs<Message>): xs<string> => {
+const path$ = (
+  message$: xs<Message>
+): xs<{ path: string; title: string; }> => {
   return message$
     .filter((m) => m.type === 'state')
     .map<StateEvent>((message) => <StateEvent>message)
     .map(({ state: { entry, menu } }) => {
-      return menu === true
+      const path = menu === true
         ? '/' : entry === null
           ? '/' : `/${entry.id.replace(/-/g, '/')}/`;
+      const title = menu === true
+        ? 'blog.bouzuya.net' : entry === null
+          ? 'blog.bouzuya.net' : `${entry.id} ${entry.title} - blog.bouzuya.net`;
+      return { path, title };
     });
 };
 
@@ -18,7 +24,9 @@ const model = (
   message$: xs<Message>
 ): xs<HistoryEvent> => {
   const push$ = path$(message$)
-    .map<HistoryEvent>((path) => ({ type: 'history', path }));
+    .map<HistoryEvent>(({ path, title }) => {
+      return { type: 'history', path, title };
+    });
   return push$;
 };
 
