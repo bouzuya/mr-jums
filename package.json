@@ -1,5 +1,5 @@
 {
-  "name": "bbn-cycle",
+  "name": "mr-jums",
   "description": "A client for blog.bouzuya.net using Cycle.js",
   "version": "0.1.0",
   "author": {
@@ -19,7 +19,7 @@
     ]
   },
   "bugs": {
-    "url": "https://github.com/bouzuya/bbn-cycle/issues"
+    "url": "https://github.com/bouzuya/mr-jums/issues"
   },
   "dependencies": {
     "@cycle/dom": "12.1.0",
@@ -53,13 +53,13 @@
     "webpack": "1.13.1",
     "webpack-dev-server": "1.14.1"
   },
-  "homepage": "https://github.com/bouzuya/bbn-cycle",
+  "homepage": "https://github.com/bouzuya/mr-jums",
   "keywords": [],
   "license": "MIT",
   "main": "lib/index.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/bouzuya/bbn-cycle.git"
+    "url": "git://github.com/bouzuya/mr-jums.git"
   },
   "scripts": {
     "build": "npm-run-all -s 'build:ts' 'build:es2015' -p 'build:less' 'copy:*'",
