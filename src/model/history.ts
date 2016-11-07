@@ -6,6 +6,7 @@ import { HistoryEvent } from '../event';
 const path$ = (
   message$: xs<Message>
 ): xs<{ path: string; title: string; }> => {
+  const bbn = 'blog.bouzuya.net';
   return message$
     .filter((m) => m.type === 'state')
     .map<StateEvent>((message) => <StateEvent>message)
@@ -14,8 +15,8 @@ const path$ = (
         ? '/' : entry === null
           ? '/' : `/${entry.id.replace(/-/g, '/')}/`;
       const title = menu === true
-        ? 'blog.bouzuya.net' : entry === null
-          ? 'blog.bouzuya.net' : `${entry.id} ${entry.title} - blog.bouzuya.net`;
+        ? bbn : entry === null
+          ? bbn : `${entry.id} ${entry.title} - ${bbn}`;
       return { path, title };
     });
 };
