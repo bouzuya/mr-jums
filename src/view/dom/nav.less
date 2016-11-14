@@ -1,4 +1,7 @@
+@import "./mixins/user-select";
+
 .nav() {
+  .user-select(none);
   position: absolute;
   bottom: 0;
   right: 0;
@@ -11,6 +14,7 @@
     position: absolute;
     width: @size;
     height: @size;
+    cursor: pointer;
   }
   > .reload {
     .nav-button(44px);
