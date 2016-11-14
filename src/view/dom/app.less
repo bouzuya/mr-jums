@@ -2,29 +2,58 @@
 @import "./entry-detail";
 @import "./nav";
 .app() {
-  width: 100vw;
-  height: 100vh;
-  max-width: 960px;
-  margin: 0 auto;
-  position: relative;
-  display: flex;
-  &.is-menu {
+  @media (max-width: 767px) {
+    width: 100vw;
+    height: 100vh;
+    max-width: 960px;
+    margin: 0 auto;
+    position: relative;
+    display: flex;
+    &.is-menu {
+      > .entry-list {
+        width: 100%;
+        color: rgba(244, 247, 242, 1);
+      }
+      > .entry-detail {
+        top: 100%;
+        color: rgba(244, 247, 242, 0.5);
+      }
+    }
     > .entry-list {
-      width: 80%;
-      color: rgba(244, 247, 242, 1);
+      .entry-list();
     }
     > .entry-detail {
-      width: 20%;
-      color: rgba(244, 247, 242, 0.5);
+      .entry-detail();
+    }
+    > .nav {
+      .nav();
     }
   }
-  > .entry-list {
-    .entry-list();
-  }
-  > .entry-detail {
-    .entry-detail();
-  }
-  > .nav {
-    .nav();
+  @media (min-width: 768px) {
+    width: 100vw;
+    height: 100vh;
+    max-width: 960px;
+    margin: 0 auto;
+    position: relative;
+    display: flex;
+    &.is-menu {
+      > .entry-list {
+        width: 80%;
+        color: rgba(244, 247, 242, 1);
+      }
+      > .entry-detail {
+        width: 20%;
+        color: rgba(244, 247, 242, 0.5);
+      }
+    }
+    > .entry-list {
+      .entry-list();
+    }
+    > .entry-detail {
+      .entry-detail();
+    }
+    > .nav {
+      .nav();
+    }
   }
 }
