@@ -1,10 +1,9 @@
+@import "./mixins/position";
 @import "./mixins/user-select";
 
 .nav() {
   .user-select(none);
-  position: absolute;
-  bottom: 0;
-  right: 0;
+  .position(absolute, auto, auto, 0, 0);
   width: 128px;
   height: 128px;
   background-color: #333;
