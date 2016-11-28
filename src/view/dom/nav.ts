@@ -2,11 +2,15 @@ import { VNode, div } from '@cycle/dom';
 import { State } from '../../type';
 
 const view = ({ menu }: State): VNode => {
+  const up = '\u25b2'; // U+25B2 BLACK UP-POINTING TRIANGLE
+  const down = '\u25bc'; // U+25BC BLACK DOWN-POINTING TRIANGLE
+  const right = '\u25b6'; // U+25B6 BLACK RIGHT-POINTING TRIANGLE
+  const left = '\u25c0'; // U+25C0 BLACK LEFT-POINTING TRIANGLE
   return div('.nav', [
-    (menu ? div('.menu-disabled', ['H']) : div('.menu', ['H'])),
-    div('.next', ['J']),
-    div('.prev', ['K']),
-    (menu ? div('.enter', ['L']) : div('.enter-disabled', ['L']))
+    (menu ? div('.menu-disabled', [left]) : div('.menu', [left])),
+    div('.next', [down]),
+    div('.prev', [up]),
+    (menu ? div('.enter', [right]) : div('.enter-disabled', [right]))
   ]);
 };
 
