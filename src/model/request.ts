@@ -34,25 +34,10 @@ const fetchPostRequest$ = (message$: xs<Message>): xs<any> => {
       };
     });
 };
-
-const initialFetchPostRequest$ = (message$: xs<Message>): xs<any> => {
-  return message$
-    .filter((message) => message.type === 'state')
-    .map<StateEvent>((message) => message as StateEvent)
-    .take(1)
-    .map(() => {
-      return {
-        url: 'http://blog.bouzuya.net/posts.json',
-        category: 'posts'
-      };
-    });
-};
-
 const model = (message$: xs<Message>): xs<RequestEvent> => {
   const request$ = xs.merge(
     fetchPostsRequest$(message$),
-    fetchPostRequest$(message$),
-    initialFetchPostRequest$(message$)
+    fetchPostRequest$(message$)
   )
     .map<RequestEvent>((request) => ({ type: 'request', request }));
   return request$;
