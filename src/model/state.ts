@@ -72,7 +72,6 @@ type MyCommand =
   EnterCommand |
   FetchPostSuccessCommand |
   FetchPostsSuccessCommand |
-  FetchPostsSuccessCommand |
   MenuCommand |
   SelectCommand |
   NextCommand |
