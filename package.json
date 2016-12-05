@@ -27,6 +27,7 @@
     "@cycle/xstream-run": "3.0.4",
     "cyclejs-history-driver": "github:bouzuya/cyclejs-history-driver#0.1.2",
     "express": "4.14.0",
+    "snabbdom-to-html": "3.0.0",
     "xstream": "5.3.4"
   },
   "devDependencies": {
