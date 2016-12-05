@@ -3,23 +3,8 @@ import { model as history$ } from './history';
 import { model as request$ } from './request';
 import { model as state$ } from './state';
 import { Command, Event, Message } from './message';
-
-import { EntryViewer, State, StateData } from '../type';
-
-const parseInitialState = (state: StateData | undefined): State => {
-  if (typeof state === 'undefined') {
-    return {
-      entry: null,
-      entryViewer: EntryViewer.create([]),
-      menu: true
-    };
-  }
-  return {
-    entry: state.entry,
-    entryViewer: EntryViewer.create(state.entries),
-    menu: state.entry === null
-  };
-};
+import { parseInitialState } from './parse-initial-state';
+import { State, StateData } from '../type';
 
 const isEvent = (message: Message): message is Event => {
   return message.type === 'state' ||
