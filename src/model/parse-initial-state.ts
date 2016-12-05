@@ -8,9 +8,11 @@ const parseInitialState = (state: StateData | undefined): State => {
       menu: true
     };
   }
+  const entryViewer = EntryViewer.create(state.entries);
   return {
     entry: state.entry,
-    entryViewer: EntryViewer.create(state.entries),
+    entryViewer: state.entry === null
+      ? entryViewer : entryViewer.select(state.entry.id),
     menu: state.entry === null
   };
 };
