@@ -19,6 +19,7 @@
   "files": [
     "./snabbdom-to-html.d.ts",
     "./src/index.ts",
+    "./src/server.ts",
     "./test/index.ts",
     "./test/model/entry-viewer/empty.ts",
     "./test/model/entry-viewer/focus.ts",
