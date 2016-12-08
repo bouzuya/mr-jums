@@ -1,3 +1,4 @@
+@import "./color";
 @import "./mixins/position";
 .entry-detail() {
   @media (max-width: 767px) {
@@ -11,7 +12,7 @@
     padding-left: 24px;
     > .entry {
       margin: 0 auto;
-      background-color: #4e6a41;
+      background-color: @green;
       box-sizing: border-box;
       padding: 8px 8px 128px 8px;
       max-width: 720px;
@@ -32,12 +33,12 @@
       }
       > .body {
         a {
-          background-color: #4e6a41;
-          color: #f4f7f2;
+          background-color: @green;
+          color: @white;
         }
         pre {
           white-space: pre-wrap;
-          background-color: #333;
+          background-color: @black;
           padding: 1rem;
         }
       }
@@ -68,12 +69,12 @@
       }
       > .body {
         a {
-          background-color: #4e6a41;
-          color: #f4f7f2;
+          background-color: @green;
+          color: @white;
         }
         pre {
           white-space: pre-wrap;
-          background-color: #333;
+          background-color: @black;
           padding: 1rem;
         }
       }

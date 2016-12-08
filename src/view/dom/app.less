@@ -1,3 +1,4 @@
+@import "./color";
 @import "./entry-list";
 @import "./entry-detail";
 @import "./nav";
@@ -15,11 +16,11 @@
     &.is-menu {
       > .entry-list {
         width: 100%;
-        color: rgba(244, 247, 242, 1);
+        color: @white;
       }
       > .entry-detail {
         left: 100%;
-        color: rgba(244, 247, 242, 0.5);
+        color: @white2;
       }
     }
     > .entry-list {
@@ -42,11 +43,11 @@
     &.is-menu {
       > .entry-list {
         width: 80%;
-        color: rgba(244, 247, 242, 1);
+        color: @white;
       }
       > .entry-detail {
         width: 20%;
-        color: rgba(244, 247, 242, 0.5);
+        color: @white2;
       }
     }
     > .entry-list {
