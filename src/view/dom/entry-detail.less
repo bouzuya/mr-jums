@@ -32,14 +32,41 @@
         }
       }
       > .body {
+        h1, h2, h3, h4, h5, h6 {
+          font-size: 1.2rem;
+          font-weight: bold;
+          margin: 1.5rem 0 0.5rem 0;
+        }
+        p {
+          font-size: 1.2rem;
+        }
         a {
           background-color: @green;
           color: @white;
         }
+        blockquote {
+          margin: 0 0 0 3rem;
+        }
         pre {
-          white-space: pre-wrap;
           background-color: @black;
+          border: 1px solid @white;
+          color: @white;
+          font-size: 1.2rem;
           padding: 1rem;
+          white-space: pre-wrap;
+        }
+        ul {
+          list-style-type: disc;
+          margin: 0 0 0 3rem;
+          padding: 0;
+        }
+        ol {
+          list-style-type: decimal;
+          margin: 0 0 0 3rem;
+          padding: 0;
+        }
+        img {
+          border: 1px solid @white;
         }
       }
     }
