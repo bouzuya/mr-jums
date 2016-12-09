@@ -1,9 +1,9 @@
 import { Entry } from '../../type';
 import { findEntry } from './find-entry';
 
-const findEntryId = (entries: Entry[], entryId: string): string | undefined => {
+const findEntryId = (entries: Entry[], entryId: string): string | null => {
   const entry = findEntry(entries, entryId);
-  return typeof entry === 'undefined' ? entry : entry.id;
+  return entry === null ? null : entry.id;
 };
 
 export { findEntryId };

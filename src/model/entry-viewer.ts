@@ -56,7 +56,7 @@ export class EntryViewer {
 
   focus(entryId: string): EntryViewer {
     const newFocusedEntryId = findEntryId(this._entries, entryId);
-    if (typeof newFocusedEntryId === 'undefined') return this;
+    if (newFocusedEntryId === null) return this;
     return new EntryViewer(
       this._entries,
       this._count,
