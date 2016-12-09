@@ -1,5 +1,7 @@
 import { Entry } from '../type';
 import { currentPageEntries } from './entry-viewer/current-page-entries';
+import { findEntryId } from './entry-viewer/find-entry-id';
+import { hasEntry } from './entry-viewer/has-entry';
 
 export class EntryViewer {
   private readonly _entries: Entry[];
@@ -43,10 +45,8 @@ export class EntryViewer {
   }
 
   get selectedEntry(): Entry | null {
-    const filtered = currentPageEntries(
-      this._entries, this._offsetEntryId, this._count
-    );
-    const entry = filtered.find((entry) => entry.id === this._selectedEntryId);
+    const entry = this.filteredEntries
+      .find((entry) => entry.id === this._selectedEntryId);
     return typeof entry === 'undefined' ? null : entry;
   }
 
@@ -55,23 +55,12 @@ export class EntryViewer {
   }
 
   focus(entryId: string): EntryViewer {
-    const entries = this._entries;
-    const offsetEntryId = this._offsetEntryId;
-    const count = this._count;
-    const focusedEntryIndex = entries.findIndex(({ id }) => id === entryId);
-    if (focusedEntryIndex < 0) return this;
-    const newFocusedEntryId = entries[focusedEntryIndex].id;
-    const offsetEntryIndex = entries
-      .findIndex(({ id }) => id === offsetEntryId);
-    if (offsetEntryIndex < 0) throw new Error();
-    const focusedEntryIsInPage = offsetEntryIndex <= focusedEntryIndex
-      && focusedEntryIndex <= offsetEntryIndex + count - 1;
-    const newOffsetEntryId = focusedEntryIsInPage
-      ? offsetEntryId : newFocusedEntryId;
+    const newFocusedEntryId = findEntryId(this._entries, entryId);
+    if (typeof newFocusedEntryId === 'undefined') return this;
     return new EntryViewer(
       this._entries,
       this._count,
-      newOffsetEntryId,
+      this._isInCurrentPage(entryId) ? this._offsetEntryId : newFocusedEntryId,
       newFocusedEntryId,
       this._selectedEntryId
     );
@@ -210,5 +199,9 @@ export class EntryViewer {
       prevSelectedEntryId,
       prevSelectedEntryId
     );
+  }
+
+  private _isInCurrentPage(entryId: string): boolean {
+    return hasEntry(this.filteredEntries, entryId);
   }
 }
