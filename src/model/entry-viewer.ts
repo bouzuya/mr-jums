@@ -1,4 +1,5 @@
 import { Entry } from '../type';
+import { currentPageEntries } from './entry-viewer/current-page-entries';
 
 export class EntryViewer {
   private readonly _entries: Entry[];
@@ -32,7 +33,7 @@ export class EntryViewer {
   }
 
   get filteredEntries(): Entry[] {
-    return this._currentPageEntries(
+    return currentPageEntries(
       this._entries, this._offsetEntryId, this._count
     );
   }
@@ -42,7 +43,7 @@ export class EntryViewer {
   }
 
   get selectedEntry(): Entry | null {
-    const filtered = this._currentPageEntries(
+    const filtered = currentPageEntries(
       this._entries, this._offsetEntryId, this._count
     );
     const entry = filtered.find((entry) => entry.id === this._selectedEntryId);
@@ -209,14 +210,5 @@ export class EntryViewer {
       prevSelectedEntryId,
       prevSelectedEntryId
     );
-  }
-
-  private _currentPageEntries(
-    entries: Entry[], offset: string | null, count: number
-  ): Entry[] {
-    if (offset === null) return [];
-    return entries
-      .filter(({ id }) => id <= offset) // entries order by desc
-      .filter((_, index) => index < count);
   }
 }
