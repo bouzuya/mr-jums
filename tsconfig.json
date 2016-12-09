@@ -21,6 +21,7 @@
     "./src/index.ts",
     "./src/server.ts",
     "./test/index.ts",
+    "./test/model/entry-list/index.ts",
     "./test/model/entry-viewer/current-page-entries.ts",
     "./test/model/entry-viewer/empty.ts",
     "./test/model/entry-viewer/find-entry.ts",
