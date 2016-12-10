@@ -1,4 +1,4 @@
-import { Entry } from '../type';
+import { Entry, EntryViewer } from '../type';
 import { findEntryId } from './entry-viewer/find-entry-id';
 import { hasEntry } from './entry-viewer/has-entry';
 import {
@@ -13,24 +13,24 @@ import {
   isLastEntryId
 } from './entry-list';
 
-export class EntryViewer {
+const create = (entries: Entry[]): EntryViewer => {
+  return new EntryViewerImpl(
+    createEntryList(entries),
+    10,
+    (entries.length > 0 ? entries[0].id : null),
+    (entries.length > 0 ? entries[0].id : null),
+    null
+  );
+};
+
+class EntryViewerImpl {
   private readonly _entryList: EntryList;
   private readonly _count: number;
   private readonly _offsetEntryId: string | null;
   private readonly _focusedEntryId: string | null;
   private readonly _selectedEntryId: string | null;
 
-  public static create(entries: Entry[]): EntryViewer {
-    return new EntryViewer(
-      createEntryList(entries),
-      10,
-      (entries.length > 0 ? entries[0].id : null),
-      (entries.length > 0 ? entries[0].id : null),
-      null
-    );
-  }
-
-  private constructor(
+  constructor(
     entryList: EntryList,
     count: number,
     offsetEntryId: string | null,
@@ -66,7 +66,7 @@ export class EntryViewer {
   focus(entryId: string): EntryViewer {
     const newFocusedEntryId = findEntryId(getEntries(this._entryList), entryId);
     if (newFocusedEntryId === null) return this;
-    return new EntryViewer(
+    return new EntryViewerImpl(
       this._entryList,
       this._count,
       this._isInCurrentPage(entryId) ? this._offsetEntryId : newFocusedEntryId,
@@ -98,7 +98,7 @@ export class EntryViewer {
     const nextFocusedEntry =
       isLastEntryId(entryList, focusedEntryId)
         ? getLastEntry(entryList) : entries[focusedEntryIndex + 1];
-    return new EntryViewer(
+    return new EntryViewerImpl(
       this._entryList,
       this._count,
       nextOffsetEntryId,
@@ -130,7 +130,7 @@ export class EntryViewer {
     const prevFocusedEntry =
       isFirstEntryId(entryList, focusedEntryId)
         ? getFirstEntry(entryList) : entries[focusedEntryIndex - 1];
-    return new EntryViewer(
+    return new EntryViewerImpl(
       this._entryList,
       this._count,
       prevOffsetEntryId,
@@ -143,7 +143,7 @@ export class EntryViewer {
     const id = typeof entryId === 'undefined' ? this._focusedEntryId : entryId;
     if (id === null) return this;
     if (hasEntry(getEntries(this._entryList), id) === false) return this;
-    return new EntryViewer(
+    return new EntryViewerImpl(
       this._entryList,
       this._count,
       this._offsetEntryId,
@@ -174,7 +174,7 @@ export class EntryViewer {
         ? entries[currentPageFirstEntryIndex + 1].id : offsetEntryId;
     const nextSelectedEntryId = isLastEntryId(entryList, selectedEntryId)
       ? getLastEntry(entryList).id : entries[selectedEntryIndex + 1].id;
-    return new EntryViewer(
+    return new EntryViewerImpl(
       this._entryList,
       this._count,
       nextOffsetEntryId,
@@ -205,7 +205,7 @@ export class EntryViewer {
         ? entries[currentPageFirstEntryIndex - 1].id : offsetEntryId;
     const prevSelectedEntryId = isFirstEntryId(entryList, selectedEntryId)
       ? getFirstEntry(entryList).id : entries[selectedEntryIndex - 1].id;
-    return new EntryViewer(
+    return new EntryViewerImpl(
       this._entryList,
       this._count,
       prevOffsetEntryId,
@@ -218,3 +218,5 @@ export class EntryViewer {
     return hasEntry(this.filteredEntries, entryId);
   }
 }
+
+export { create };

@@ -9,7 +9,8 @@ import {
   SelectCommand
 } from '../command';
 import { StateEvent } from '../event';
-import { EntryViewer, State } from '../type';
+import { create } from '../model/entry-viewer';
+import { State } from '../type';
 import { Command, Event, Message } from './message';
 import { select } from './select';
 
@@ -36,7 +37,7 @@ const fetchPostsSuccess = (
     .map(({ date, title }) => ({ id: date, title }))
     .sort(({ id: a }, { id: b }) => a > b ? -1 : (a === b ? 0 : 1));
   return Object.assign({}, state, {
-    entryViewer: EntryViewer.create(posts)
+    entryViewer: create(posts)
   });
 };
 

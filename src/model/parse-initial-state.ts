@@ -1,14 +1,15 @@
-import { EntryViewer, State, StateData } from '../type';
+import { create } from '../model/entry-viewer';
+import { State, StateData } from '../type';
 
 const parseInitialState = (state: StateData | undefined): State => {
   if (typeof state === 'undefined') {
     return {
       entry: null,
-      entryViewer: EntryViewer.create([]),
+      entryViewer: create([]),
       menu: true
     };
   }
-  const entryViewer = EntryViewer.create(state.entries);
+  const entryViewer = create(state.entries);
   return {
     entry: state.entry,
     entryViewer: state.entry === null
