@@ -1,7 +1,7 @@
 import { Entry } from '../../type';
 import {
   EmptyEntryList, EntryList, NonEmptyEntryList,
-  getPageEntries, getEntries, getFirstEntry, isEmptyEntryList
+  createEntryList, getPageEntries, getEntries, getFirstEntry, isEmptyEntryList
 } from '../entry-list';
 import { hasEntry } from '../entry-viewer/has-entry';
 
@@ -135,6 +135,17 @@ const hasEntryIdInCurrentPage = (
   }
 };
 
+const offset = (
+  pagedEntryList: PagedEntryList,
+  entryId: string
+): PagedEntryList => {
+  return createPagedEntryList(
+    createEntryList(getAllEntries(pagedEntryList)),
+    getMaxCountPerPage(pagedEntryList),
+    entryId
+  );
+};
+
 export {
   EntryList,
   EmptyEntryList,
@@ -147,5 +158,6 @@ export {
   hasEntryId,
   hasEntryIdInCurrentPage,
   isEmptyPagedEntryList,
-  isNonEmptyPagedEntryList
+  isNonEmptyPagedEntryList,
+  offset
 };
