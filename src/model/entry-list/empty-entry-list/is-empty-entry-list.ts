@@ -1,6 +1,6 @@
 import { EmptyEntryList } from './empty-entry-list';
-import { EntryList } from './entry-list';
-import { NonEmptyEntryList } from './non-empty-entry-list';
+import { EntryList } from '../entry-list';
+import { NonEmptyEntryList } from '../non-empty-entry-list';
 
 const isEmptyEntryList = (
   entryList: EntryList

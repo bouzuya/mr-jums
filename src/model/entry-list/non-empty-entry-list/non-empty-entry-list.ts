@@ -1,4 +1,4 @@
-import { Entry } from '../../type';
+import { Entry } from '../../../type';
 
 export interface NonEmptyEntryList {
   _type: 'non-empty-entry-list';
