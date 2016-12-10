@@ -23,6 +23,32 @@ const create = (entries: Entry[]): EntryViewer => {
   );
 };
 
+const isInCurrentPage = (
+  filteredEntries: Entry[], entryId: string
+): boolean => {
+  return hasEntry(filteredEntries, entryId);
+};
+
+const focus = (
+  entryId: string,
+  entryViewer: EntryViewer,
+  entryList: EntryList,
+  count: number,
+  offsetEntryId: string | null,
+  selectedEntryId: string | null
+): EntryViewer => {
+  const newFocusedEntryId = findEntryId(getEntries(entryList), entryId);
+  if (newFocusedEntryId === null) return entryViewer;
+  return new EntryViewerImpl(
+    entryList,
+    count,
+    isInCurrentPage(entryViewer.filteredEntries, entryId)
+      ? offsetEntryId : newFocusedEntryId,
+    newFocusedEntryId,
+    selectedEntryId
+  );
+};
+
 class EntryViewerImpl {
   private readonly _entryList: EntryList;
   private readonly _count: number;
@@ -64,13 +90,12 @@ class EntryViewerImpl {
   }
 
   focus(entryId: string): EntryViewer {
-    const newFocusedEntryId = findEntryId(getEntries(this._entryList), entryId);
-    if (newFocusedEntryId === null) return this;
-    return new EntryViewerImpl(
+    return focus(
+      entryId,
+      this,
       this._entryList,
       this._count,
-      this._isInCurrentPage(entryId) ? this._offsetEntryId : newFocusedEntryId,
-      newFocusedEntryId,
+      this._offsetEntryId,
       this._selectedEntryId
     );
   }
@@ -212,10 +237,6 @@ class EntryViewerImpl {
       prevSelectedEntryId,
       prevSelectedEntryId
     );
-  }
-
-  private _isInCurrentPage(entryId: string): boolean {
-    return hasEntry(this.filteredEntries, entryId);
   }
 }
 
