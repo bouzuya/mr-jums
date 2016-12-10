@@ -49,6 +49,78 @@ const focus = (
   );
 };
 
+const focusNext = (
+  entryViewer: EntryViewer,
+  entryList: EntryList,
+  count: number,
+  focusedEntryId: string | null,
+  offsetEntryId: string | null,
+  selectedEntryId: string | null
+): EntryViewer => {
+  if (isEmptyEntryList(entryList)) return entryViewer;
+  const entries = getEntries(entryList);
+  const currentPageEntryList = createEntryList(entryViewer.filteredEntries);
+  if (isEmptyEntryList(currentPageEntryList)) return entryViewer;
+  if (focusedEntryId === null) return entryViewer;
+  if (offsetEntryId === null) return entryViewer;
+  const focusedEntryIndex = entries
+    .findIndex(({ id }) => id === focusedEntryId);
+  if (focusedEntryIndex < 0) throw new Error();
+  const currentPageFirstEntryIndex = entries
+    .findIndex(({ id }) => id === offsetEntryId);
+  if (currentPageFirstEntryIndex < 0) throw new Error();
+  const nextOffsetEntryId =
+    getLastEntry(currentPageEntryList).id !== getLastEntry(entryList).id &&
+      isLastEntryId(currentPageEntryList, focusedEntryId)
+      ? entries[currentPageFirstEntryIndex + 1].id : offsetEntryId;
+  const nextFocusedEntry =
+    isLastEntryId(entryList, focusedEntryId)
+      ? getLastEntry(entryList) : entries[focusedEntryIndex + 1];
+  return new EntryViewerImpl(
+    entryList,
+    count,
+    nextOffsetEntryId,
+    nextFocusedEntry.id,
+    selectedEntryId
+  );
+};
+
+const focusPrev = (
+  entryViewer: EntryViewer,
+  entryList: EntryList,
+  count: number,
+  focusedEntryId: string | null,
+  offsetEntryId: string | null,
+  selectedEntryId: string | null
+): EntryViewer => {
+  if (isEmptyEntryList(entryList)) return entryViewer;
+  const entries = getEntries(entryList);
+  const currentPageEntryList = createEntryList(entryViewer.filteredEntries);
+  if (isEmptyEntryList(currentPageEntryList)) return entryViewer;
+  if (focusedEntryId === null) return entryViewer;
+  if (offsetEntryId === null) return entryViewer;
+  const focusedEntryIndex = entries
+    .findIndex(({ id }) => id === focusedEntryId);
+  if (focusedEntryIndex < 0) throw new Error();
+  const currentPageFirstEntryIndex = entries
+    .findIndex(({ id }) => id === offsetEntryId);
+  if (currentPageFirstEntryIndex < 0) throw new Error();
+  const prevOffsetEntryId =
+    getFirstEntry(currentPageEntryList).id !== getFirstEntry(entryList).id &&
+      isFirstEntryId(currentPageEntryList, focusedEntryId)
+      ? entries[currentPageFirstEntryIndex - 1].id : offsetEntryId;
+  const prevFocusedEntry =
+    isFirstEntryId(entryList, focusedEntryId)
+      ? getFirstEntry(entryList) : entries[focusedEntryIndex - 1];
+  return new EntryViewerImpl(
+    entryList,
+    count,
+    prevOffsetEntryId,
+    prevFocusedEntry.id,
+    selectedEntryId
+  );
+};
+
 class EntryViewerImpl {
   private readonly _entryList: EntryList;
   private readonly _count: number;
@@ -101,65 +173,23 @@ class EntryViewerImpl {
   }
 
   focusNext(): EntryViewer {
-    const entryList = this._entryList;
-    if (isEmptyEntryList(entryList)) return this;
-    const entries = getEntries(this._entryList);
-    const currentPageEntryList = createEntryList(this.filteredEntries);
-    if (isEmptyEntryList(currentPageEntryList)) return this;
-    const focusedEntryId = this._focusedEntryId;
-    if (focusedEntryId === null) return this;
-    const offsetEntryId = this._offsetEntryId;
-    if (offsetEntryId === null) return this;
-    const focusedEntryIndex = entries
-      .findIndex(({ id }) => id === focusedEntryId);
-    if (focusedEntryIndex < 0) throw new Error();
-    const currentPageFirstEntryIndex = entries
-      .findIndex(({ id }) => id === offsetEntryId);
-    if (currentPageFirstEntryIndex < 0) throw new Error();
-    const nextOffsetEntryId =
-      getLastEntry(currentPageEntryList).id !== getLastEntry(entryList).id &&
-        isLastEntryId(currentPageEntryList, focusedEntryId)
-        ? entries[currentPageFirstEntryIndex + 1].id : offsetEntryId;
-    const nextFocusedEntry =
-      isLastEntryId(entryList, focusedEntryId)
-        ? getLastEntry(entryList) : entries[focusedEntryIndex + 1];
-    return new EntryViewerImpl(
+    return focusNext(
+      this,
       this._entryList,
       this._count,
-      nextOffsetEntryId,
-      nextFocusedEntry.id,
+      this._focusedEntryId,
+      this._offsetEntryId,
       this._selectedEntryId
     );
   }
 
   focusPrev(): EntryViewer {
-    const entryList = this._entryList;
-    if (isEmptyEntryList(entryList)) return this;
-    const entries = getEntries(this._entryList);
-    const currentPageEntryList = createEntryList(this.filteredEntries);
-    if (isEmptyEntryList(currentPageEntryList)) return this;
-    const focusedEntryId = this._focusedEntryId;
-    if (focusedEntryId === null) return this;
-    const offsetEntryId = this._offsetEntryId;
-    if (offsetEntryId === null) return this;
-    const focusedEntryIndex = entries
-      .findIndex(({ id }) => id === focusedEntryId);
-    if (focusedEntryIndex < 0) throw new Error();
-    const currentPageFirstEntryIndex = entries
-      .findIndex(({ id }) => id === offsetEntryId);
-    if (currentPageFirstEntryIndex < 0) throw new Error();
-    const prevOffsetEntryId =
-      getFirstEntry(currentPageEntryList).id !== getFirstEntry(entryList).id &&
-        isFirstEntryId(currentPageEntryList, focusedEntryId)
-        ? entries[currentPageFirstEntryIndex - 1].id : offsetEntryId;
-    const prevFocusedEntry =
-      isFirstEntryId(entryList, focusedEntryId)
-        ? getFirstEntry(entryList) : entries[focusedEntryIndex - 1];
-    return new EntryViewerImpl(
+    return focusPrev(
+      this,
       this._entryList,
       this._count,
-      prevOffsetEntryId,
-      prevFocusedEntry.id,
+      this._focusedEntryId,
+      this._offsetEntryId,
       this._selectedEntryId
     );
   }
