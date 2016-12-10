@@ -105,6 +105,36 @@ const getOffsetEntryId = (
   return _offset;
 };
 
+const hasEntryId = (
+  pagedEntryList: PagedEntryList,
+  entryId: string
+): boolean => {
+  if (isEmptyPagedEntryList(pagedEntryList)) {
+    return false;
+  } else if (isNonEmptyPagedEntryList(pagedEntryList)) {
+    return getAllEntries(pagedEntryList).some(({ id }) => {
+      return id === entryId;
+    });
+  } else {
+    throw new Error();
+  }
+};
+
+const hasEntryIdInCurrentPage = (
+  pagedEntryList: PagedEntryList,
+  entryId: string
+): boolean => {
+  if (isEmptyPagedEntryList(pagedEntryList)) {
+    return false;
+  } else if (isNonEmptyPagedEntryList(pagedEntryList)) {
+    return getCurrentPageEntries(pagedEntryList).some(({ id }) => {
+      return id === entryId;
+    });
+  } else {
+    throw new Error();
+  }
+};
+
 export {
   EntryList,
   EmptyEntryList,
@@ -114,6 +144,8 @@ export {
   getCurrentPageEntries,
   getMaxCountPerPage,
   getOffsetEntryId,
+  hasEntryId,
+  hasEntryIdInCurrentPage,
   isEmptyPagedEntryList,
   isNonEmptyPagedEntryList
 };
