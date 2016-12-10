@@ -2,6 +2,12 @@ import { Entry } from '../type';
 import { currentPageEntries } from './entry-viewer/current-page-entries';
 import { findEntryId } from './entry-viewer/find-entry-id';
 import { hasEntry } from './entry-viewer/has-entry';
+import {
+  createEntryList,
+  getLastEntry,
+  isEmptyEntryList,
+  isLastEntry
+} from './entry-list';
 
 export class EntryViewer {
   private readonly _entries: Entry[];
@@ -68,32 +74,32 @@ export class EntryViewer {
 
   focusNext(): EntryViewer {
     const entries = this._entries;
+    const entryList = createEntryList(entries);
+    if (isEmptyEntryList(entryList)) return this;
+    const currentPageEntryList = createEntryList(this.filteredEntries);
+    if (isEmptyEntryList(currentPageEntryList)) return this;
     const focusedEntryId = this._focusedEntryId;
+    if (focusedEntryId === null) return this;
     const offsetEntryId = this._offsetEntryId;
-    const count = this._count;
+    if (offsetEntryId === null) return this;
     const focusedEntryIndex = entries
       .findIndex(({ id }) => id === focusedEntryId);
     if (focusedEntryIndex < 0) throw new Error();
     const currentPageFirstEntryIndex = entries
       .findIndex(({ id }) => id === offsetEntryId);
     if (currentPageFirstEntryIndex < 0) throw new Error();
-    const lastEntryIndex = entries.length - 1;
-    const currentPageLastEntryIndex =
-      currentPageFirstEntryIndex + count - 1 > lastEntryIndex
-        ? lastEntryIndex
-        : currentPageFirstEntryIndex + count - 1;
-    const isLastPage = currentPageLastEntryIndex === lastEntryIndex;
-    const isLastEntryInPage = currentPageLastEntryIndex === focusedEntryIndex;
-    const isLastEntry = focusedEntryIndex === lastEntryIndex;
-    const nextOffsetEntryId = !isLastPage && isLastEntryInPage
-      ? entries[currentPageFirstEntryIndex + 1].id : offsetEntryId;
-    const nextFocusedEntryId = isLastEntry
-      ? focusedEntryId : entries[focusedEntryIndex + 1].id;
+    const nextOffsetEntryId =
+      getLastEntry(currentPageEntryList).id !== getLastEntry(entryList).id &&
+        isLastEntry(currentPageEntryList, focusedEntryId)
+        ? entries[currentPageFirstEntryIndex + 1].id : offsetEntryId;
+    const nextFocusedEntry =
+      isLastEntry(entryList, focusedEntryId)
+        ? getLastEntry(entryList) : entries[focusedEntryIndex + 1];
     return new EntryViewer(
       this._entries,
       this._count,
       nextOffsetEntryId,
-      nextFocusedEntryId,
+      nextFocusedEntry.id,
       this._selectedEntryId
     );
   }
