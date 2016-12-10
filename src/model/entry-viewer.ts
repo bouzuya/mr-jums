@@ -182,25 +182,28 @@ export class EntryViewer {
     );
   }
 
-
   selectPrev(): EntryViewer {
     const entries = this._entries;
+    const entryList = createEntryList(entries);
+    if (isEmptyEntryList(entryList)) return this;
+    const currentPageEntryList = createEntryList(this.filteredEntries);
+    if (isEmptyEntryList(currentPageEntryList)) return this;
     const selectedEntryId = this._selectedEntryId;
-    const offsetEntryId = this._offsetEntryId;
     if (selectedEntryId === null) return this;
+    const offsetEntryId = this._offsetEntryId;
+    if (offsetEntryId === null) return this;
     const selectedEntryIndex = entries
       .findIndex(({ id }) => id === selectedEntryId);
     if (selectedEntryIndex < 0) throw new Error();
     const currentPageFirstEntryIndex = entries
       .findIndex(({ id }) => id === offsetEntryId);
     if (currentPageFirstEntryIndex < 0) throw new Error();
-    const isFirstPage = currentPageFirstEntryIndex === 0;
-    const isFirstEntryInPage = currentPageFirstEntryIndex === selectedEntryIndex;
-    const isFirstEntry = selectedEntryIndex === 0;
-    const prevOffsetEntryId = !isFirstPage && isFirstEntryInPage
-      ? entries[currentPageFirstEntryIndex - 1].id : offsetEntryId;
-    const prevSelectedEntryId = isFirstEntry
-      ? selectedEntryId : entries[selectedEntryIndex - 1].id;
+    const prevOffsetEntryId =
+      getFirstEntry(currentPageEntryList).id !== getFirstEntry(entryList).id &&
+        isFirstEntry(currentPageEntryList, selectedEntryId)
+        ? entries[currentPageFirstEntryIndex - 1].id : offsetEntryId;
+    const prevSelectedEntryId = isFirstEntry(entryList, selectedEntryId)
+      ? getFirstEntry(entryList).id : entries[selectedEntryIndex - 1].id;
     return new EntryViewer(
       this._entries,
       this._count,
