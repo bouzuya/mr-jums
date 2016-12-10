@@ -1,7 +1,13 @@
 import { Entry } from '../../type';
 import {
   EmptyEntryList, EntryList, NonEmptyEntryList,
-  createEntryList, getPageEntries, getEntries, getFirstEntry, isEmptyEntryList
+  createEntryList,
+  getPageEntries,
+  getEntries,
+  getFirstEntry,
+  isEmptyEntryList,
+  isLastEntryId as isLastEntryId1,
+  isFirstEntryId as isFirstEntryId1
 } from '../entry-list';
 import { hasEntry } from '../entry-viewer/has-entry';
 
@@ -146,6 +152,42 @@ const offset = (
   );
 };
 
+const isFirstEntryId = (
+  pagedEntryList: PagedEntryList,
+  entryId: string
+): boolean => {
+  const entryList = createEntryList(getAllEntries(pagedEntryList));
+  if (isEmptyEntryList(entryList)) return false;
+  return isFirstEntryId1(entryList, entryId);
+};
+
+const isFirstEntryIdInCurrentPage = (
+  pagedEntryList: PagedEntryList,
+  entryId: string
+): boolean => {
+  const entryList = createEntryList(getCurrentPageEntries(pagedEntryList));
+  if (isEmptyEntryList(entryList)) return false;
+  return isFirstEntryId1(entryList, entryId);
+};
+
+const isLastEntryId = (
+  pagedEntryList: PagedEntryList,
+  entryId: string
+): boolean => {
+  const entryList = createEntryList(getAllEntries(pagedEntryList));
+  if (isEmptyEntryList(entryList)) return false;
+  return isLastEntryId1(entryList, entryId);
+};
+
+const isLastEntryIdInCurrentPage = (
+  pagedEntryList: PagedEntryList,
+  entryId: string
+): boolean => {
+  const entryList = createEntryList(getCurrentPageEntries(pagedEntryList));
+  if (isEmptyEntryList(entryList)) return false;
+  return isLastEntryId1(entryList, entryId);
+};
+
 export {
   EntryList,
   EmptyEntryList,
@@ -158,6 +200,10 @@ export {
   hasEntryId,
   hasEntryIdInCurrentPage,
   isEmptyPagedEntryList,
+  isFirstEntryId,
+  isFirstEntryIdInCurrentPage,
+  isLastEntryId,
+  isLastEntryIdInCurrentPage,
   isNonEmptyPagedEntryList,
   offset
 };
