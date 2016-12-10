@@ -87,11 +87,33 @@ const getCurrentPageEntries = (pagedEntryList: PagedEntryList): Entry[] => {
   }
 };
 
+const getMaxCountPerPage = (pagedEntryList: PagedEntryList): number => {
+  if (isEmptyPagedEntryList(pagedEntryList)) {
+    return 0;
+  } else if (isNonEmptyPagedEntryList(pagedEntryList)) {
+    const { _count } = pagedEntryList;
+    return _count;
+  } else {
+    throw new Error();
+  }
+};
+
+const getOffsetEntryId = (
+  nonEmptyPagedEntryList: NonEmptyPagedEntryList
+): string => {
+  const { _offset } = nonEmptyPagedEntryList;
+  return _offset;
+};
+
 export {
   EntryList,
   EmptyEntryList,
   NonEmptyEntryList,
   createPagedEntryList,
   getAllEntries,
-  getCurrentPageEntries
+  getCurrentPageEntries,
+  getMaxCountPerPage,
+  getOffsetEntryId,
+  isEmptyPagedEntryList,
+  isNonEmptyPagedEntryList
 };
