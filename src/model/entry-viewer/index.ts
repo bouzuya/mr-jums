@@ -1,5 +1,5 @@
-import { Entry, EntryViewer } from '../type';
-import { hasEntry } from './entry-viewer/has-entry';
+import { Entry, EntryViewer } from '../../type';
+import { hasEntry } from './has-entry';
 import {
   EntryList,
   createEntryList,
@@ -9,11 +9,11 @@ import {
   isEmptyEntryList,
   isFirstEntryId,
   isLastEntryId
-} from './entry-list';
+} from '../entry-list';
 import {
   createPagedEntryList,
   getCurrentPageEntries
-} from './paged-entry-list';
+} from '../paged-entry-list';
 
 const getCurrentPageEntryList = (entryViewer: EntryViewer): EntryList => {
   return createEntryList(entryViewer.filteredEntries);
