@@ -1,5 +1,4 @@
 import { Entry, EntryViewer } from '../type';
-import { findEntryId } from './entry-viewer/find-entry-id';
 import { hasEntry } from './entry-viewer/has-entry';
 import {
   EntryList,
@@ -53,8 +52,8 @@ const focusNext = (
   entryViewer: EntryViewer,
   entryList: EntryList,
   count: number,
-  focusedEntryId: string | null,
   offsetEntryId: string | null,
+  focusedEntryId: string | null,
   selectedEntryId: string | null
 ): EntryViewer => {
   if (isEmptyEntryList(entryList)) return entryViewer;
@@ -89,8 +88,8 @@ const focusPrev = (
   entryViewer: EntryViewer,
   entryList: EntryList,
   count: number,
-  focusedEntryId: string | null,
   offsetEntryId: string | null,
+  focusedEntryId: string | null,
   selectedEntryId: string | null
 ): EntryViewer => {
   if (isEmptyEntryList(entryList)) return entryViewer;
@@ -197,8 +196,8 @@ class EntryViewerImpl {
       this,
       this._entryList,
       this._count,
-      this._focusedEntryId,
       this._offsetEntryId,
+      this._focusedEntryId,
       this._selectedEntryId
     );
   }
@@ -208,8 +207,8 @@ class EntryViewerImpl {
       this,
       this._entryList,
       this._count,
-      this._focusedEntryId,
       this._offsetEntryId,
+      this._focusedEntryId,
       this._selectedEntryId
     );
   }
