@@ -37,14 +37,14 @@ const focus = (
   offsetEntryId: string | null,
   selectedEntryId: string | null
 ): EntryViewer => {
-  const newFocusedEntryId = findEntryId(getEntries(entryList), entryId);
-  if (newFocusedEntryId === null) return entryViewer;
+  if (hasEntry(getEntries(entryList), entryId) === false) return entryViewer;
+  const newOffsetEntryId = isInCurrentPage(entryViewer.filteredEntries, entryId)
+    ? offsetEntryId : entryId;
   return new EntryViewerImpl(
     entryList,
     count,
-    isInCurrentPage(entryViewer.filteredEntries, entryId)
-      ? offsetEntryId : newFocusedEntryId,
-    newFocusedEntryId,
+    newOffsetEntryId,
+    entryId,
     selectedEntryId
   );
 };
