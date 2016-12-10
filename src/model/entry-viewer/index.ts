@@ -11,8 +11,13 @@ import {
   isLastEntryId
 } from '../entry-list';
 import {
+  PagedEntryList,
   createPagedEntryList,
-  getCurrentPageEntries
+  getAllEntries,
+  getCurrentPageEntries,
+  getMaxCountPerPage,
+  getOffsetEntryId,
+  isEmptyPagedEntryList
 } from '../paged-entry-list';
 
 const getCurrentPageEntryList = (entryViewer: EntryViewer): EntryList => {
@@ -21,9 +26,11 @@ const getCurrentPageEntryList = (entryViewer: EntryViewer): EntryList => {
 
 const create = (entries: Entry[]): EntryViewer => {
   return new EntryViewerImpl(
-    createEntryList(entries),
-    10,
-    (entries.length > 0 ? entries[0].id : null),
+    createPagedEntryList(
+      createEntryList(entries),
+      10,
+      (entries.length > 0 ? entries[0].id : null)
+    ),
     (entries.length > 0 ? entries[0].id : null),
     null
   );
@@ -38,18 +45,22 @@ const isInCurrentPage = (
 const focus = (
   entryId: string,
   entryViewer: EntryViewer,
-  entryList: EntryList,
-  count: number,
-  offsetEntryId: string | null,
+  pagedEntryList: PagedEntryList,
   selectedEntryId: string | null
 ): EntryViewer => {
-  if (hasEntry(getEntries(entryList), entryId) === false) return entryViewer;
+  if (isEmptyPagedEntryList(pagedEntryList)) return entryViewer;
+  const entries = getAllEntries(pagedEntryList);
+  if (hasEntry(entries, entryId) === false) return entryViewer;
+  const entryList = createEntryList(entries);
+  const offsetEntryId = getOffsetEntryId(pagedEntryList);
   const newOffsetEntryId = isInCurrentPage(entryViewer.filteredEntries, entryId)
     ? offsetEntryId : entryId;
   return new EntryViewerImpl(
-    entryList,
-    count,
-    newOffsetEntryId,
+    createPagedEntryList(
+      entryList,
+      getMaxCountPerPage(pagedEntryList),
+      newOffsetEntryId
+    ),
     entryId,
     selectedEntryId
   );
@@ -57,18 +68,18 @@ const focus = (
 
 const focusNext = (
   entryViewer: EntryViewer,
-  entryList: EntryList,
-  count: number,
-  offsetEntryId: string | null,
+  pagedEntryList: PagedEntryList,
   focusedEntryId: string | null,
   selectedEntryId: string | null
 ): EntryViewer => {
+  if (isEmptyPagedEntryList(pagedEntryList)) return entryViewer;
+  const entries = getAllEntries(pagedEntryList);
+  const entryList = createEntryList(entries);
   if (isEmptyEntryList(entryList)) return entryViewer;
-  const entries = getEntries(entryList);
+  const offsetEntryId = getOffsetEntryId(pagedEntryList);
   const currentPageEntryList = getCurrentPageEntryList(entryViewer);
   if (isEmptyEntryList(currentPageEntryList)) return entryViewer;
   if (focusedEntryId === null) return entryViewer;
-  if (offsetEntryId === null) return entryViewer;
   const focusedEntryIndex = entries
     .findIndex(({ id }) => id === focusedEntryId);
   if (focusedEntryIndex < 0) throw new Error();
@@ -83,9 +94,11 @@ const focusNext = (
     isLastEntryId(entryList, focusedEntryId)
       ? getLastEntry(entryList) : entries[focusedEntryIndex + 1];
   return new EntryViewerImpl(
-    entryList,
-    count,
-    nextOffsetEntryId,
+    createPagedEntryList(
+      entryList,
+      getMaxCountPerPage(pagedEntryList),
+      nextOffsetEntryId
+    ),
     nextFocusedEntry.id,
     selectedEntryId
   );
@@ -93,12 +106,13 @@ const focusNext = (
 
 const focusPrev = (
   entryViewer: EntryViewer,
-  entryList: EntryList,
-  count: number,
-  offsetEntryId: string | null,
+  pagedEntryList: PagedEntryList,
   focusedEntryId: string | null,
   selectedEntryId: string | null
 ): EntryViewer => {
+  if (isEmptyPagedEntryList(pagedEntryList)) return entryViewer;
+  const entryList = createEntryList(getAllEntries(pagedEntryList));
+  const offsetEntryId = getOffsetEntryId(pagedEntryList);
   if (isEmptyEntryList(entryList)) return entryViewer;
   const entries = getEntries(entryList);
   const currentPageEntryList = getCurrentPageEntryList(entryViewer);
@@ -119,9 +133,11 @@ const focusPrev = (
     isFirstEntryId(entryList, focusedEntryId)
       ? getFirstEntry(entryList) : entries[focusedEntryIndex - 1];
   return new EntryViewerImpl(
-    entryList,
-    count,
-    prevOffsetEntryId,
+    createPagedEntryList(
+      entryList,
+      getMaxCountPerPage(pagedEntryList),
+      prevOffsetEntryId
+    ),
     prevFocusedEntry.id,
     selectedEntryId
   );
@@ -130,18 +146,21 @@ const focusPrev = (
 const selectAndFocus = (
   entryId: string | undefined,
   entryViewer: EntryViewer,
-  entryList: EntryList,
-  count: number,
-  offsetEntryId: string | null,
+  pagedEntryList: PagedEntryList,
   focusedEntryId: string | null
 ): EntryViewer => {
+  if (isEmptyPagedEntryList(pagedEntryList)) return entryViewer;
+  const entryList = createEntryList(getAllEntries(pagedEntryList));
+  const offsetEntryId = getOffsetEntryId(pagedEntryList);
   const id = typeof entryId === 'undefined' ? focusedEntryId : entryId;
   if (id === null) return entryViewer;
   if (hasEntry(getEntries(entryList), id) === false) return entryViewer;
   return new EntryViewerImpl(
-    entryList,
-    count,
-    offsetEntryId,
+    createPagedEntryList(
+      entryList,
+      getMaxCountPerPage(pagedEntryList),
+      offsetEntryId
+    ),
     focusedEntryId,
     id
   ).focus(id);
@@ -149,11 +168,12 @@ const selectAndFocus = (
 
 const selectAndFocusNext = (
   entryViewer: EntryViewer,
-  entryList: EntryList,
-  count: number,
-  offsetEntryId: string | null,
+  pagedEntryList: PagedEntryList,
   selectedEntryId: string | null
 ): EntryViewer => {
+  if (isEmptyPagedEntryList(pagedEntryList)) return entryViewer;
+  const entryList = createEntryList(getAllEntries(pagedEntryList));
+  const offsetEntryId = getOffsetEntryId(pagedEntryList);
   if (isEmptyEntryList(entryList)) return entryViewer;
   const entries = getEntries(entryList);
   const currentPageEntryList = getCurrentPageEntryList(entryViewer);
@@ -173,9 +193,11 @@ const selectAndFocusNext = (
   const nextSelectedEntryId = isLastEntryId(entryList, selectedEntryId)
     ? getLastEntry(entryList).id : entries[selectedEntryIndex + 1].id;
   return new EntryViewerImpl(
-    entryList,
-    count,
-    nextOffsetEntryId,
+    createPagedEntryList(
+      entryList,
+      getMaxCountPerPage(pagedEntryList),
+      nextOffsetEntryId
+    ),
     nextSelectedEntryId,
     nextSelectedEntryId
   );
@@ -183,11 +205,12 @@ const selectAndFocusNext = (
 
 const selectAndFocusPrev = (
   entryViewer: EntryViewer,
-  entryList: EntryList,
-  count: number,
-  offsetEntryId: string | null,
+  pagedEntryList: PagedEntryList,
   selectedEntryId: string | null
 ): EntryViewer => {
+  if (isEmptyPagedEntryList(pagedEntryList)) return entryViewer;
+  const entryList = createEntryList(getAllEntries(pagedEntryList));
+  const offsetEntryId = getOffsetEntryId(pagedEntryList);
   if (isEmptyEntryList(entryList)) return entryViewer;
   const entries = getEntries(entryList);
   const currentPageEntryList = getCurrentPageEntryList(entryViewer);
@@ -207,42 +230,33 @@ const selectAndFocusPrev = (
   const prevSelectedEntryId = isFirstEntryId(entryList, selectedEntryId)
     ? getFirstEntry(entryList).id : entries[selectedEntryIndex - 1].id;
   return new EntryViewerImpl(
-    entryList,
-    count,
-    prevOffsetEntryId,
+    createPagedEntryList(
+      entryList,
+      getMaxCountPerPage(pagedEntryList),
+      prevOffsetEntryId
+    ),
     prevSelectedEntryId,
     prevSelectedEntryId
   );
 };
 
 class EntryViewerImpl {
-  private readonly _entryList: EntryList;
-  private readonly _count: number;
-  private readonly _offsetEntryId: string | null;
+  private readonly _pagedEntryList: PagedEntryList;
   private readonly _focusedEntryId: string | null;
   private readonly _selectedEntryId: string | null;
 
   constructor(
-    entryList: EntryList,
-    count: number,
-    offsetEntryId: string | null,
+    pagedEntryList: PagedEntryList,
     focusedEntryId: string | null,
     selectedEntryId: string | null
   ) {
-    this._entryList = entryList;
-    this._count = count;
-    this._offsetEntryId = offsetEntryId;
+    this._pagedEntryList = pagedEntryList;
     this._focusedEntryId = focusedEntryId;
     this._selectedEntryId = selectedEntryId;
   }
 
   get filteredEntries(): Entry[] {
-    const pagedEntryList = createPagedEntryList(
-      this._entryList,
-      this._count,
-      this._offsetEntryId
-    );
-    return getCurrentPageEntries(pagedEntryList);
+    return getCurrentPageEntries(this._pagedEntryList);
   }
 
   get focusedEntryId(): string | null {
@@ -263,9 +277,7 @@ class EntryViewerImpl {
     return focus(
       entryId,
       this,
-      this._entryList,
-      this._count,
-      this._offsetEntryId,
+      this._pagedEntryList,
       this._selectedEntryId
     );
   }
@@ -273,9 +285,7 @@ class EntryViewerImpl {
   focusNext(): EntryViewer {
     return focusNext(
       this,
-      this._entryList,
-      this._count,
-      this._offsetEntryId,
+      this._pagedEntryList,
       this._focusedEntryId,
       this._selectedEntryId
     );
@@ -284,9 +294,7 @@ class EntryViewerImpl {
   focusPrev(): EntryViewer {
     return focusPrev(
       this,
-      this._entryList,
-      this._count,
-      this._offsetEntryId,
+      this._pagedEntryList,
       this._focusedEntryId,
       this._selectedEntryId
     );
@@ -296,9 +304,7 @@ class EntryViewerImpl {
     return selectAndFocus(
       entryId,
       this,
-      this._entryList,
-      this._count,
-      this._offsetEntryId,
+      this._pagedEntryList,
       this._focusedEntryId
     );
   }
@@ -306,9 +312,7 @@ class EntryViewerImpl {
   selectNext(): EntryViewer {
     return selectAndFocusNext(
       this,
-      this._entryList,
-      this._count,
-      this._offsetEntryId,
+      this._pagedEntryList,
       this._selectedEntryId
     );
   }
@@ -316,9 +320,7 @@ class EntryViewerImpl {
   selectPrev(): EntryViewer {
     return selectAndFocusPrev(
       this,
-      this._entryList,
-      this._count,
-      this._offsetEntryId,
+      this._pagedEntryList,
       this._selectedEntryId
     );
   }
