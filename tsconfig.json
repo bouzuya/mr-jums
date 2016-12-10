@@ -33,6 +33,7 @@
     "./test/model/entry-viewer/helpers-new-entry-viewer.ts",
     "./test/model/entry-viewer/select.ts",
     "./test/model/entry-viewer/select-next.ts",
-    "./test/model/entry-viewer/select-prev.ts"
+    "./test/model/entry-viewer/select-prev.ts",
+    "./test/model/paged-entry-list/index.ts"
   ]
 }
