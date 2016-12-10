@@ -6,7 +6,8 @@ export interface EmptyEntryList {
 
 export interface NonEmptyEntryList {
   _type: 'non-empty-entry-list';
-  _entries: Entry[]; // assert(_entries.length > 0);
+  // assert(_entries.length > 0) && assert(_entries are ordered by desc)
+  _entries: Entry[];
 }
 
 export type EntryList = EmptyEntryList | NonEmptyEntryList;
@@ -32,6 +33,7 @@ const isNonEmptyEntryList = (
   entryList: EntryList
 ): entryList is NonEmptyEntryList => {
   // assert(entryList._entries.length > 0);
+  // assert(entryList is ordered by desc)
   return entryList._type === 'non-empty-entry-list';
 };
 
@@ -64,14 +66,14 @@ const getLastEntry = (nonEmptyEntryList: NonEmptyEntryList): Entry => {
   return _entries[_entries.length - 1];
 };
 
-const isFirstEntry = (
+const isFirstEntryId = (
   nonEmptyEntryList: NonEmptyEntryList,
   entryId: string
 ): boolean => {
   return getFirstEntry(nonEmptyEntryList).id === entryId;
 };
 
-const isLastEntry = (
+const isLastEntryId = (
   nonEmptyEntryList: NonEmptyEntryList,
   entryId: string
 ): boolean => {
@@ -84,7 +86,7 @@ export {
   getFirstEntry,
   getLastEntry,
   isEmptyEntryList,
-  isFirstEntry,
-  isLastEntry,
+  isFirstEntryId,
+  isLastEntryId,
   isNonEmptyEntryList
 };

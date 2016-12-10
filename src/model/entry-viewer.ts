@@ -9,8 +9,8 @@ import {
   getFirstEntry,
   getLastEntry,
   isEmptyEntryList,
-  isFirstEntry,
-  isLastEntry
+  isFirstEntryId,
+  isLastEntryId
 } from './entry-list';
 
 export class EntryViewer {
@@ -94,10 +94,10 @@ export class EntryViewer {
     if (currentPageFirstEntryIndex < 0) throw new Error();
     const nextOffsetEntryId =
       getLastEntry(currentPageEntryList).id !== getLastEntry(entryList).id &&
-        isLastEntry(currentPageEntryList, focusedEntryId)
+        isLastEntryId(currentPageEntryList, focusedEntryId)
         ? entries[currentPageFirstEntryIndex + 1].id : offsetEntryId;
     const nextFocusedEntry =
-      isLastEntry(entryList, focusedEntryId)
+      isLastEntryId(entryList, focusedEntryId)
         ? getLastEntry(entryList) : entries[focusedEntryIndex + 1];
     return new EntryViewer(
       this._entryList,
@@ -126,10 +126,10 @@ export class EntryViewer {
     if (currentPageFirstEntryIndex < 0) throw new Error();
     const prevOffsetEntryId =
       getFirstEntry(currentPageEntryList).id !== getFirstEntry(entryList).id &&
-        isFirstEntry(currentPageEntryList, focusedEntryId)
+        isFirstEntryId(currentPageEntryList, focusedEntryId)
         ? entries[currentPageFirstEntryIndex - 1].id : offsetEntryId;
     const prevFocusedEntry =
-      isFirstEntry(entryList, focusedEntryId)
+      isFirstEntryId(entryList, focusedEntryId)
         ? getFirstEntry(entryList) : entries[focusedEntryIndex - 1];
     return new EntryViewer(
       this._entryList,
@@ -171,9 +171,9 @@ export class EntryViewer {
     if (currentPageFirstEntryIndex < 0) throw new Error();
     const nextOffsetEntryId =
       getLastEntry(currentPageEntryList).id !== getLastEntry(entryList).id &&
-        isLastEntry(currentPageEntryList, selectedEntryId)
+        isLastEntryId(currentPageEntryList, selectedEntryId)
         ? entries[currentPageFirstEntryIndex + 1].id : offsetEntryId;
-    const nextSelectedEntryId = isLastEntry(entryList, selectedEntryId)
+    const nextSelectedEntryId = isLastEntryId(entryList, selectedEntryId)
       ? getLastEntry(entryList).id : entries[selectedEntryIndex + 1].id;
     return new EntryViewer(
       this._entryList,
@@ -202,9 +202,9 @@ export class EntryViewer {
     if (currentPageFirstEntryIndex < 0) throw new Error();
     const prevOffsetEntryId =
       getFirstEntry(currentPageEntryList).id !== getFirstEntry(entryList).id &&
-        isFirstEntry(currentPageEntryList, selectedEntryId)
+        isFirstEntryId(currentPageEntryList, selectedEntryId)
         ? entries[currentPageFirstEntryIndex - 1].id : offsetEntryId;
-    const prevSelectedEntryId = isFirstEntry(entryList, selectedEntryId)
+    const prevSelectedEntryId = isFirstEntryId(entryList, selectedEntryId)
       ? getFirstEntry(entryList).id : entries[selectedEntryIndex - 1].id;
     return new EntryViewer(
       this._entryList,

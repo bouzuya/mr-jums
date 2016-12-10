@@ -8,8 +8,8 @@ import {
   getFirstEntry,
   getLastEntry,
   isEmptyEntryList,
-  isFirstEntry,
-  isLastEntry,
+  isFirstEntryId,
+  isLastEntryId,
   isNonEmptyEntryList
 } from '../../../src/model/entry-list';
 
@@ -34,8 +34,8 @@ test(category + 'NonEmptyEntryList ([entry1])', () => {
     assert.deepEqual(getEntries(entryList)[0], entry1);
     assert.deepEqual(getFirstEntry(entryList), entry1);
     assert.deepEqual(getLastEntry(entryList), entry1);
-    assert(isFirstEntry(entryList, entry1.id) === true);
-    assert(isLastEntry(entryList, entry1.id) === true);
+    assert(isFirstEntryId(entryList, entry1.id) === true);
+    assert(isLastEntryId(entryList, entry1.id) === true);
   } else {
     assert.fail();
   }
@@ -51,10 +51,10 @@ test(category + 'NonEmptyEntryList ([entry1, entry2])', () => {
     assert.deepEqual(getEntries(entryList)[1], entry2);
     assert.deepEqual(getFirstEntry(entryList), entry1);
     assert.deepEqual(getLastEntry(entryList), entry2);
-    assert(isFirstEntry(entryList, entry1.id) === true);
-    assert(isFirstEntry(entryList, entry2.id) === false);
-    assert(isLastEntry(entryList, entry1.id) === false);
-    assert(isLastEntry(entryList, entry2.id) === true);
+    assert(isFirstEntryId(entryList, entry1.id) === true);
+    assert(isFirstEntryId(entryList, entry2.id) === false);
+    assert(isLastEntryId(entryList, entry1.id) === false);
+    assert(isLastEntryId(entryList, entry2.id) === true);
   } else {
     assert.fail();
   }
