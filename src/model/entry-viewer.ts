@@ -1,5 +1,4 @@
 import { Entry } from '../type';
-import { currentPageEntries } from './entry-viewer/current-page-entries';
 import { findEntryId } from './entry-viewer/find-entry-id';
 import { hasEntry } from './entry-viewer/has-entry';
 import {
@@ -8,6 +7,7 @@ import {
   getEntries,
   getFirstEntry,
   getLastEntry,
+  getPageEntries,
   isEmptyEntryList,
   isFirstEntryId,
   isLastEntryId
@@ -45,9 +45,8 @@ export class EntryViewer {
   }
 
   get filteredEntries(): Entry[] {
-    return currentPageEntries(
-      getEntries(this._entryList), this._offsetEntryId, this._count
-    );
+    if (this._offsetEntryId === null) return [];
+    return getPageEntries(this._entryList, this._offsetEntryId, this._count);
   }
 
   get focusedEntryId(): string | null {

@@ -1,4 +1,5 @@
 import { Entry } from '../../type';
+import { currentPageEntries } from '../entry-viewer/current-page-entries';
 
 export interface EmptyEntryList {
   _type: 'empty-entry-list';
@@ -80,11 +81,20 @@ const isLastEntryId = (
   return getLastEntry(nonEmptyEntryList).id === entryId;
 };
 
+const getPageEntries = (
+  entryList: EntryList,
+  offsetEntryId: string,
+  maxCount: number
+): Entry[] => {
+  return currentPageEntries(getEntries(entryList), offsetEntryId, maxCount);
+};
+
 export {
   createEntryList,
   getEntries,
   getFirstEntry,
   getLastEntry,
+  getPageEntries,
   isEmptyEntryList,
   isFirstEntryId,
   isLastEntryId,
