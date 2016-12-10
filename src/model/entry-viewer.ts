@@ -121,6 +121,26 @@ const focusPrev = (
   );
 };
 
+const selectAndFocus = (
+  entryId: string | undefined,
+  entryViewer: EntryViewer,
+  entryList: EntryList,
+  count: number,
+  offsetEntryId: string | null,
+  focusedEntryId: string | null
+): EntryViewer => {
+  const id = typeof entryId === 'undefined' ? focusedEntryId : entryId;
+  if (id === null) return entryViewer;
+  if (hasEntry(getEntries(entryList), id) === false) return entryViewer;
+  return new EntryViewerImpl(
+    entryList,
+    count,
+    offsetEntryId,
+    focusedEntryId,
+    id
+  ).focus(id);
+};
+
 class EntryViewerImpl {
   private readonly _entryList: EntryList;
   private readonly _count: number;
@@ -195,16 +215,14 @@ class EntryViewerImpl {
   }
 
   select(entryId?: string): EntryViewer {
-    const id = typeof entryId === 'undefined' ? this._focusedEntryId : entryId;
-    if (id === null) return this;
-    if (hasEntry(getEntries(this._entryList), id) === false) return this;
-    return new EntryViewerImpl(
+    return selectAndFocus(
+      entryId,
+      this,
       this._entryList,
       this._count,
       this._offsetEntryId,
-      this._focusedEntryId,
-      id
-    ).focus(id);
+      this._focusedEntryId
+    );
   }
 
   selectNext(): EntryViewer {
