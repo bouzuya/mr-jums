@@ -3,9 +3,7 @@ import {
   createEntryList,
   getFirstEntry,
   getLastEntry,
-  isEmptyEntryList,
-  isFirstEntryId,
-  isLastEntryId
+  isEmptyEntryList
 } from '../entry-list';
 import {
   PagedEntryList,
@@ -16,6 +14,10 @@ import {
   hasEntryId,
   hasEntryIdInCurrentPage,
   isEmptyPagedEntryList,
+  isFirstEntryId,
+  isFirstEntryIdInCurrentPage,
+  isLastEntryId,
+  isLastEntryIdInCurrentPage,
   offset
 } from '../paged-entry-list';
 
@@ -71,10 +73,10 @@ const focusNext = (
   if (currentPageFirstEntryIndex < 0) throw new Error();
   const nextOffsetEntryId =
     getLastEntry(pageEntryList).id !== getLastEntry(entryList).id &&
-      isLastEntryId(pageEntryList, focusedEntryId)
+      isLastEntryIdInCurrentPage(pagedEntryList, focusedEntryId)
       ? entries[currentPageFirstEntryIndex + 1].id : offsetEntryId;
   const nextFocusedEntry =
-    isLastEntryId(entryList, focusedEntryId)
+    isLastEntryId(pagedEntryList, focusedEntryId)
       ? getLastEntry(entryList) : entries[focusedEntryIndex + 1];
   return new EntryViewerImpl(
     offset(pagedEntryList, nextOffsetEntryId),
@@ -106,10 +108,10 @@ const focusPrev = (
   if (currentPageFirstEntryIndex < 0) throw new Error();
   const prevOffsetEntryId =
     getFirstEntry(pageEntryList).id !== getFirstEntry(entryList).id &&
-      isFirstEntryId(pageEntryList, focusedEntryId)
+      isFirstEntryIdInCurrentPage(pagedEntryList, focusedEntryId)
       ? entries[currentPageFirstEntryIndex - 1].id : offsetEntryId;
   const prevFocusedEntry =
-    isFirstEntryId(entryList, focusedEntryId)
+    isFirstEntryId(pagedEntryList, focusedEntryId)
       ? getFirstEntry(entryList) : entries[focusedEntryIndex - 1];
   return new EntryViewerImpl(
     offset(pagedEntryList, prevOffsetEntryId),
@@ -157,9 +159,9 @@ const selectAndFocusNext = (
   if (currentPageFirstEntryIndex < 0) throw new Error();
   const nextOffsetEntryId =
     getLastEntry(pageEntryList).id !== getLastEntry(entryList).id &&
-      isLastEntryId(pageEntryList, selectedEntryId)
+      isLastEntryIdInCurrentPage(pagedEntryList, selectedEntryId)
       ? entries[currentPageFirstEntryIndex + 1].id : offsetEntryId;
-  const nextSelectedEntryId = isLastEntryId(entryList, selectedEntryId)
+  const nextSelectedEntryId = isLastEntryId(pagedEntryList, selectedEntryId)
     ? getLastEntry(entryList).id : entries[selectedEntryIndex + 1].id;
   return new EntryViewerImpl(
     offset(pagedEntryList, nextOffsetEntryId),
@@ -190,9 +192,9 @@ const selectAndFocusPrev = (
   if (currentPageFirstEntryIndex < 0) throw new Error();
   const prevOffsetEntryId =
     getFirstEntry(pageEntryList).id !== getFirstEntry(entryList).id &&
-      isFirstEntryId(pageEntryList, selectedEntryId)
+      isFirstEntryIdInCurrentPage(pagedEntryList, selectedEntryId)
       ? entries[currentPageFirstEntryIndex - 1].id : offsetEntryId;
-  const prevSelectedEntryId = isFirstEntryId(entryList, selectedEntryId)
+  const prevSelectedEntryId = isFirstEntryId(pagedEntryList, selectedEntryId)
     ? getFirstEntry(entryList).id : entries[selectedEntryIndex - 1].id;
   return new EntryViewerImpl(
     offset(pagedEntryList, prevOffsetEntryId),
