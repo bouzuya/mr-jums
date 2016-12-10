@@ -4,8 +4,10 @@ import { findEntryId } from './entry-viewer/find-entry-id';
 import { hasEntry } from './entry-viewer/has-entry';
 import {
   createEntryList,
+  getFirstEntry,
   getLastEntry,
   isEmptyEntryList,
+  isFirstEntry,
   isLastEntry
 } from './entry-list';
 
@@ -106,26 +108,32 @@ export class EntryViewer {
 
   focusPrev(): EntryViewer {
     const entries = this._entries;
+    const entryList = createEntryList(entries);
+    if (isEmptyEntryList(entryList)) return this;
+    const currentPageEntryList = createEntryList(this.filteredEntries);
+    if (isEmptyEntryList(currentPageEntryList)) return this;
     const focusedEntryId = this._focusedEntryId;
+    if (focusedEntryId === null) return this;
     const offsetEntryId = this._offsetEntryId;
+    if (offsetEntryId === null) return this;
     const focusedEntryIndex = entries
       .findIndex(({ id }) => id === focusedEntryId);
     if (focusedEntryIndex < 0) throw new Error();
     const currentPageFirstEntryIndex = entries
       .findIndex(({ id }) => id === offsetEntryId);
     if (currentPageFirstEntryIndex < 0) throw new Error();
-    const isFirstPage = currentPageFirstEntryIndex === 0;
-    const isFirstEntryInPage = currentPageFirstEntryIndex === focusedEntryIndex;
-    const isFirstEntry = focusedEntryIndex === 0;
-    const prevOffsetEntryId = !isFirstPage && isFirstEntryInPage
-      ? entries[currentPageFirstEntryIndex - 1].id : offsetEntryId;
-    const prevFocusedEntryId = isFirstEntry
-      ? focusedEntryId : entries[focusedEntryIndex - 1].id;
+    const prevOffsetEntryId =
+      getFirstEntry(currentPageEntryList).id !== getFirstEntry(entryList).id &&
+        isFirstEntry(currentPageEntryList, focusedEntryId)
+        ? entries[currentPageFirstEntryIndex - 1].id : offsetEntryId;
+    const prevFocusedEntry =
+      isFirstEntry(entryList, focusedEntryId)
+        ? getFirstEntry(entryList) : entries[focusedEntryIndex - 1];
     return new EntryViewer(
       this._entries,
       this._count,
       prevOffsetEntryId,
-      prevFocusedEntryId,
+      prevFocusedEntry.id,
       this._selectedEntryId
     );
   }
