@@ -153,28 +153,26 @@ export class EntryViewer {
 
   selectNext(): EntryViewer {
     const entries = this._entries;
+    const entryList = createEntryList(entries);
+    if (isEmptyEntryList(entryList)) return this;
+    const currentPageEntryList = createEntryList(this.filteredEntries);
+    if (isEmptyEntryList(currentPageEntryList)) return this;
     const selectedEntryId = this._selectedEntryId;
-    const offsetEntryId = this._offsetEntryId;
-    const count = this._count;
     if (selectedEntryId === null) return this;
+    const offsetEntryId = this._offsetEntryId;
+    if (offsetEntryId === null) return this;
     const selectedEntryIndex = entries
       .findIndex(({ id }) => id === selectedEntryId);
     if (selectedEntryIndex < 0) throw new Error();
     const currentPageFirstEntryIndex = entries
       .findIndex(({ id }) => id === offsetEntryId);
     if (currentPageFirstEntryIndex < 0) throw new Error();
-    const lastEntryIndex = entries.length - 1;
-    const currentPageLastEntryIndex =
-      currentPageFirstEntryIndex + count - 1 > lastEntryIndex
-        ? lastEntryIndex
-        : currentPageFirstEntryIndex + count - 1;
-    const isLastPage = currentPageLastEntryIndex === lastEntryIndex;
-    const isLastEntryInPage = currentPageLastEntryIndex === selectedEntryIndex;
-    const isLastEntry = selectedEntryIndex === lastEntryIndex;
-    const nextOffsetEntryId = !isLastPage && isLastEntryInPage
-      ? entries[currentPageFirstEntryIndex + 1].id : offsetEntryId;
-    const nextSelectedEntryId = isLastEntry
-      ? selectedEntryId : entries[selectedEntryIndex + 1].id;
+    const nextOffsetEntryId =
+      getLastEntry(currentPageEntryList).id !== getLastEntry(entryList).id &&
+        isLastEntry(currentPageEntryList, selectedEntryId)
+        ? entries[currentPageFirstEntryIndex + 1].id : offsetEntryId;
+    const nextSelectedEntryId = isLastEntry(entryList, selectedEntryId)
+      ? getLastEntry(entryList).id : entries[selectedEntryIndex + 1].id;
     return new EntryViewer(
       this._entries,
       this._count,
