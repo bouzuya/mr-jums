@@ -31,6 +31,12 @@ const view = (state: StateData): VNode => {
           content: '#4e6a41'
         }
       }),
+      meta({
+        props: {
+          name: 'google-site-verification',
+          content: 'WIpgFHN5YFkpju_QBxqY2IoTI6QV2OP0Xhc5WGq9U0g'
+        }
+      }),
       link({
         props: {
           rel: 'stylesheet', type: 'text/css', href: '/index.css'
