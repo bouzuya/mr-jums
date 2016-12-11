@@ -1,4 +1,4 @@
-import { EntryViewerImpl } from './entry-viewer-impl';
+import { createImpl } from './entry-viewer-impl';
 import { EntryViewer } from '../../type';
 import {
   hasEntryId,
@@ -16,7 +16,7 @@ const selectAndFocus = (
     ? entryViewer.focusedEntryId : entryId;
   if (id === null) return entryViewer;
   if (hasEntryId(pagedEntryList, id) === false) return entryViewer;
-  return focus(new EntryViewerImpl(
+  return focus(createImpl(
     pagedEntryList,
     entryViewer.focusedEntryId,
     id

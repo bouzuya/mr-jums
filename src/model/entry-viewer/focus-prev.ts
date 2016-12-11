@@ -1,4 +1,4 @@
-import { EntryViewerImpl } from './entry-viewer-impl';
+import { createImpl } from './entry-viewer-impl';
 import { EntryViewer } from '../../type';
 import {
   createEntryList,
@@ -43,7 +43,7 @@ const focusPrev = (
         pagedEntryList, entryViewer.focusedEntryId
       ); // TODO: getPrevEntry
   if (prevFocusedEntry === null) return entryViewer;
-  return new EntryViewerImpl(
+  return createImpl(
     offset(pagedEntryList, prevOffsetEntryId),
     prevFocusedEntry.id,
     entryViewer.selectedEntryId

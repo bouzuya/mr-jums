@@ -1,24 +1,33 @@
-import { Entry } from '../../type';
 import {
+  EmptyPagedEntryList,
+  NonEmptyPagedEntryList,
   PagedEntryList,
+  EntryViewer
+} from '../../type';
+import {
   getCurrentPageEntries,
 } from '../paged-entry-list';
 
-export class EntryViewerImpl {
-  public readonly filteredEntries: Entry[];
-  public readonly selectedEntry: Entry | null;
-  public readonly _pagedEntryList: PagedEntryList;
-
-  constructor(
-    pagedEntryList: PagedEntryList,
-    public readonly focusedEntryId: string | null,
-    public readonly selectedEntryId: string | null
-  ) {
-    const filteredEntries = getCurrentPageEntries(pagedEntryList);
-    const entry = filteredEntries.find((entry) => entry.id === selectedEntryId);
-    const selectedEntry = typeof entry === 'undefined' ? null : entry;
-    this._pagedEntryList = pagedEntryList;
-    this.filteredEntries = filteredEntries;
-    this.selectedEntry = selectedEntry;
+const createImpl = (
+  pagedEntryList: PagedEntryList,
+  focusedEntryId: string | null,
+  selectedEntryId: string | null
+): EntryViewer => {
+  const filteredEntries = getCurrentPageEntries(pagedEntryList);
+  const entry = filteredEntries.find((entry) => entry.id === selectedEntryId);
+  const selectedEntry = typeof entry === 'undefined' ? null : entry;
+  return {
+    filteredEntries,
+    selectedEntry,
+    _pagedEntryList: pagedEntryList,
+    focusedEntryId,
+    selectedEntryId
   }
-}
+};
+
+export {
+  EmptyPagedEntryList,
+  NonEmptyPagedEntryList,
+  PagedEntryList,
+  createImpl
+};

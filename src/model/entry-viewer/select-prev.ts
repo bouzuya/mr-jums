@@ -1,5 +1,5 @@
 import { EntryViewer } from '../../type';
-import { EntryViewerImpl } from './entry-viewer-impl';
+import { createImpl } from './entry-viewer-impl';
 import {
   createEntryList,
   getFirstEntry,
@@ -42,7 +42,7 @@ const selectAndFocusPrev = (
     ? getFirstEntry(entryList)
     : findPrevEntry(pagedEntryList, entryViewer.selectedEntryId);
   if (prevSelectedEntry === null) return entryViewer;
-  return new EntryViewerImpl(
+  return createImpl(
     offset(pagedEntryList, prevOffsetEntryId),
     prevSelectedEntry.id,
     prevSelectedEntry.id

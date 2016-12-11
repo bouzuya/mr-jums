@@ -1,4 +1,4 @@
-import { EntryViewerImpl } from './entry-viewer-impl';
+import { createImpl } from './entry-viewer-impl';
 import { EntryViewer } from '../../type';
 import {
   getOffsetEntryId,
@@ -17,7 +17,7 @@ const focus = (
   if (hasEntryId(pagedEntryList, entryId) === false) return entryViewer;
   const newOffsetEntryId = hasEntryIdInCurrentPage(pagedEntryList, entryId)
     ? getOffsetEntryId(pagedEntryList) : entryId;
-  return new EntryViewerImpl(
+  return createImpl(
     offset(pagedEntryList, newOffsetEntryId),
     entryId,
     entryViewer.selectedEntryId

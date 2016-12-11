@@ -1,7 +1,7 @@
 import { Entry, EntryViewer } from '../../type';
 import { createEntryList } from '../entry-list';
 import { createPagedEntryList } from '../paged-entry-list';
-import { EntryViewerImpl } from './entry-viewer-impl';
+import { createImpl } from './entry-viewer-impl';
 import { focus } from './focus';
 import { focusNext } from './focus-next';
 import { focusPrev } from './focus-prev';
@@ -10,7 +10,7 @@ import { selectNext } from './select-next';
 import { selectPrev } from './select-prev';
 
 const create = (entries: Entry[]): EntryViewer => {
-  return new EntryViewerImpl(
+  return createImpl(
     createPagedEntryList(
       createEntryList(entries),
       10,
