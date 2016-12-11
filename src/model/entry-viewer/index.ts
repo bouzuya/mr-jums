@@ -4,6 +4,7 @@ import { createPagedEntryList } from '../paged-entry-list';
 import { EntryViewerImpl } from './entry-viewer-impl';
 import { focus } from './focus';
 import { focusNext } from './focus-next';
+import { focusPrev } from './focus-prev';
 import { select } from './select';
 
 const create = (entries: Entry[]): EntryViewer => {
@@ -18,4 +19,4 @@ const create = (entries: Entry[]): EntryViewer => {
   );
 };
 
-export { create, focus, focusNext, select };
+export { create, focus, focusNext, focusPrev, select };
