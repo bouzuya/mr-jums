@@ -1,3 +1,3 @@
-export interface EmptyEntryList {
-  _type: 'empty-entry-list';
-}
+import { EmptyEntryList } from '../../../type';
+
+export { EmptyEntryList };

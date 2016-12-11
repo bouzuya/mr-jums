@@ -1,4 +1,9 @@
-import { Entry } from '../../type';
+import {
+  EmptyPagedEntryList,
+  Entry,
+  NonEmptyPagedEntryList,
+  PagedEntryList
+} from '../../type';
 import {
   EmptyEntryList, EntryList, NonEmptyEntryList,
   createEntryList,
@@ -12,19 +17,6 @@ import {
   isLastEntryId as isLastEntryId1,
   isFirstEntryId as isFirstEntryId1
 } from '../entry-list';
-
-export interface NonEmptyPagedEntryList {
-  _type: 'non-empty-paged-entry-list';
-  _entryList: EntryList;
-  _offset: string;
-  _count: number;
-}
-
-export interface EmptyPagedEntryList {
-  _type: 'empty-paged-entry-list';
-}
-
-export type PagedEntryList = EmptyPagedEntryList | NonEmptyPagedEntryList;
 
 const emptyPagedEntryList: EmptyPagedEntryList = {
   _type: 'empty-paged-entry-list'
@@ -210,6 +202,7 @@ export {
   EntryList,
   EmptyEntryList,
   NonEmptyEntryList,
+  PagedEntryList,
   createPagedEntryList,
   findNextEntry,
   findPrevEntry,
