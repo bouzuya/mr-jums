@@ -2,6 +2,8 @@ import { Entry } from '../../type';
 import {
   EmptyEntryList, EntryList, NonEmptyEntryList,
   createEntryList,
+  findNextEntry as findNextEntry1,
+  findPrevEntry as findPrevEntry1,
   getPageEntries,
   getEntries,
   getFirstEntry,
@@ -188,11 +190,29 @@ const isLastEntryIdInCurrentPage = (
   return isLastEntryId1(entryList, entryId);
 };
 
+const findNextEntry = (
+  pagedEntryList: PagedEntryList,
+  entryId: string
+): Entry | null => {
+  const entryList = createEntryList(getAllEntries(pagedEntryList));
+  return findNextEntry1(entryList, entryId);
+};
+
+const findPrevEntry = (
+  pagedEntryList: PagedEntryList,
+  entryId: string
+): Entry | null => {
+  const entryList = createEntryList(getAllEntries(pagedEntryList));
+  return findPrevEntry1(entryList, entryId);
+};
+
 export {
   EntryList,
   EmptyEntryList,
   NonEmptyEntryList,
   createPagedEntryList,
+  findNextEntry,
+  findPrevEntry,
   getAllEntries,
   getCurrentPageEntries,
   getMaxCountPerPage,
