@@ -1,4 +1,5 @@
 import * as express from 'express';
+import * as compression from 'compression';
 import * as fetch from 'isomorphic-fetch';
 import * as morgan from 'morgan';
 import { join } from 'path';
@@ -107,6 +108,7 @@ const init = ({ name, params }: Route): Promise<StateData> => {
 const main = () => {
   const server = express();
   server.use(morgan('combined'));
+  server.use(compression());
   // __dirname === '/lib'
   server.use(express.static(join(__dirname, '..', 'public')));
   server.use((req, res) => {
