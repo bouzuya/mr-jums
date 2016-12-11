@@ -7,6 +7,7 @@ import { focusNext } from './focus-next';
 import { focusPrev } from './focus-prev';
 import { select } from './select';
 import { selectNext } from './select-next';
+import { selectPrev } from './select-prev';
 
 const create = (entries: Entry[]): EntryViewer => {
   return new EntryViewerImpl(
@@ -20,4 +21,4 @@ const create = (entries: Entry[]): EntryViewer => {
   );
 };
 
-export { create, focus, focusNext, focusPrev, select, selectNext };
+export { create, focus, focusNext, focusPrev, select, selectNext, selectPrev };

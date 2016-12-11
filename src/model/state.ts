@@ -12,7 +12,7 @@ import { StateEvent } from '../event';
 import {
   create,
   focusNext, focusPrev,
-  select as entryViewerSelect, selectNext
+  select as entryViewerSelect, selectNext, selectPrev
 } from '../model/entry-viewer';
 import { State } from '../type';
 import { Command, Event, Message } from './message';
@@ -69,7 +69,7 @@ const prev = (state: State, _: PrevCommand): State => {
   const { menu, entryViewer } = state;
   return Object.assign({}, state, {
     entryViewer: menu === true
-      ? focusPrev(entryViewer) : entryViewer.selectPrev()
+      ? focusPrev(entryViewer) : selectPrev(entryViewer)
   });
 };
 
