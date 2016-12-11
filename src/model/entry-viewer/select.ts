@@ -1,4 +1,4 @@
-import { createImpl } from './entry-viewer-impl';
+import { createImpl } from './create-impl';
 import { EntryViewer } from '../../type';
 import {
   hasEntryId,
