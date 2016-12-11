@@ -2,13 +2,14 @@ import * as assert from 'power-assert';
 import beater from 'beater';
 
 import { newEntryViewer } from './helpers';
+import { select } from '../../../src/model/entry-viewer/select';
 
 const { test } = beater();
 
 test('model > entry-viewer > selectNext', () => {
   const data = newEntryViewer();
 
-  const next0 = data.select();
+  const next0 = select(data);
   assert(next0.filteredEntries.length === 10);
   assert(next0.filteredEntries[0].id === '2016-01-31');
   assert(next0.focusedEntryId === '2016-01-31');

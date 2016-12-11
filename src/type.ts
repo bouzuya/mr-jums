@@ -18,7 +18,6 @@ export interface EntryViewer {
   focus(entryId: string): EntryViewer;
   focusNext(): EntryViewer;
   focusPrev(): EntryViewer;
-  select(entryId?: string): EntryViewer;
   selectNext(): EntryViewer;
   selectPrev(): EntryViewer;
 }

@@ -9,7 +9,7 @@ import {
   SelectCommand
 } from '../command';
 import { StateEvent } from '../event';
-import { create } from '../model/entry-viewer';
+import { create, select as entryViewerSelect } from '../model/entry-viewer';
 import { State } from '../type';
 import { Command, Event, Message } from './message';
 import { select } from './select';
@@ -17,7 +17,7 @@ import { select } from './select';
 const doSelect = (state: State, command: SelectCommand): State => {
   const { entryViewer } = state;
   return Object.assign({}, state, {
-    entryViewer: entryViewer.select(command.entryId),
+    entryViewer: entryViewerSelect(entryViewer, command.entryId),
     menu: false
   });
 };
@@ -48,7 +48,7 @@ const menu = (state: State, _: MenuCommand): State => {
 const enter = (state: State, _: EnterCommand): State => {
   const { entryViewer } = state;
   return Object.assign({}, state, {
-    entryViewer: entryViewer.select(),
+    entryViewer: entryViewerSelect(entryViewer),
     menu: false
   });
 };

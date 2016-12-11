@@ -1,4 +1,4 @@
-import { create } from '../model/entry-viewer';
+import { create, select as entryViewerSelect } from '../model/entry-viewer';
 import { State, StateData } from '../type';
 
 const parseInitialState = (state: StateData | undefined): State => {
@@ -13,7 +13,7 @@ const parseInitialState = (state: StateData | undefined): State => {
   return {
     entry: state.entry,
     entryViewer: state.entry === null
-      ? entryViewer : entryViewer.select(state.entry.id),
+      ? entryViewer : entryViewerSelect(entryViewer, state.entry.id),
     menu: state.entry === null
   };
 };
