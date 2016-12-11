@@ -3,22 +3,23 @@ import beater from 'beater';
 
 import { Entry } from '../../../src/type';
 import {
-  currentPageEntries
-} from '../../../src/model/entry-viewer/current-page-entries';
+  createEntryList,
+  getPageEntries
+} from '../../../src/model/entry-list';
 
 const { test } = beater();
 
-const category = 'model > entry-viewer > current-page-entries > ';
+const category = 'model > entry-list > get-page-entries > ';
 
 test(category + '*', () => {
-  const entries: Entry[] = [
+  const entriesData: Entry[] = [
     { id: '2016-01-03', title: 'title3' },
     { id: '2016-01-02', title: 'title2' },
     { id: '2016-01-01', title: 'title1' }
   ];
-  const f = currentPageEntries;
-  assert(f([], '2016-01-01', 1).length === 0);
-  assert(f(entries, null, 1).length === 0);
+  const entries = createEntryList(entriesData);
+  const f = getPageEntries;
+  assert(f(createEntryList([]), '2016-01-01', 1).length === 0);
   assert(f(entries, '2016-01-01', -1).length === 0);
   assert(f(entries, '2016-01-03', 1).length === 1);
   assert(f(entries, '2016-01-03', 1)[0].id === '2016-01-03');
