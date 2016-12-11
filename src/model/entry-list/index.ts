@@ -9,6 +9,8 @@ import {
   getFirstEntry
 } from './non-empty-entry-list';
 import { createEntryList } from './create-entry-list';
+import { findNextEntry } from './find-next-entry';
+import { findPrevEntry } from './find-prev-entry';
 import { getEntries } from './get-entries';
 import { getPageEntries } from './get-page-entries';
 
@@ -17,6 +19,8 @@ export {
   EntryList,
   NonEmptyEntryList,
   createEntryList,
+  findNextEntry,
+  findPrevEntry,
   getEntries,
   getFirstEntry,
   getLastEntry,
