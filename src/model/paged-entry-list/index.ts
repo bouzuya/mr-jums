@@ -7,11 +7,11 @@ import {
   getPageEntries,
   getEntries,
   getFirstEntry,
+  hasEntry,
   isEmptyEntryList,
   isLastEntryId as isLastEntryId1,
   isFirstEntryId as isFirstEntryId1
 } from '../entry-list';
-import { hasEntry } from '../entry-viewer/has-entry';
 
 export interface NonEmptyPagedEntryList {
   _type: 'non-empty-paged-entry-list';
@@ -50,7 +50,7 @@ const createNonEmptyPagedEntryList = (
     _entryList: allEntryList,
     _offset: offsetEntryId === null
       ? getFirstEntry(allEntryList).id
-      : hasEntry(getEntries(allEntryList), offsetEntryId)
+      : hasEntry(allEntryList, offsetEntryId)
         ? offsetEntryId : getFirstEntry(allEntryList).id,
     _count: maxCountPerPage
   };

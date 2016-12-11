@@ -13,6 +13,7 @@ import { findNextEntry } from './find-next-entry';
 import { findPrevEntry } from './find-prev-entry';
 import { getEntries } from './get-entries';
 import { getPageEntries } from './get-page-entries';
+import { hasEntry } from './has-entry';
 
 export {
   EmptyEntryList,
@@ -25,6 +26,7 @@ export {
   getFirstEntry,
   getLastEntry,
   getPageEntries,
+  hasEntry,
   isEmptyEntryList,
   isFirstEntryId,
   isLastEntryId,
