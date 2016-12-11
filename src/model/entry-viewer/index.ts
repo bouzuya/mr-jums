@@ -2,6 +2,7 @@ import { Entry, EntryViewer } from '../../type';
 import { createEntryList } from '../entry-list';
 import { createPagedEntryList } from '../paged-entry-list';
 import { EntryViewerImpl } from './entry-viewer-impl';
+import { focus } from './focus';
 import { select } from './select';
 
 const create = (entries: Entry[]): EntryViewer => {
@@ -16,4 +17,4 @@ const create = (entries: Entry[]): EntryViewer => {
   );
 };
 
-export { create, select };
+export { create, focus, select };
