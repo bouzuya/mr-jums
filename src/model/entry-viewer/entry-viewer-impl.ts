@@ -190,25 +190,19 @@ const selectAndFocusPrev = (
 
 export class EntryViewerImpl {
   private readonly _pagedEntryList: PagedEntryList;
-  private readonly _focusedEntryId: string | null;
   private readonly _selectedEntryId: string | null;
 
   constructor(
     pagedEntryList: PagedEntryList,
-    focusedEntryId: string | null,
+    public focusedEntryId: string | null,
     selectedEntryId: string | null
   ) {
     this._pagedEntryList = pagedEntryList;
-    this._focusedEntryId = focusedEntryId;
     this._selectedEntryId = selectedEntryId;
   }
 
   get filteredEntries(): Entry[] {
     return getCurrentPageEntries(this._pagedEntryList);
-  }
-
-  get focusedEntryId(): string | null {
-    return this._focusedEntryId;
   }
 
   get selectedEntry(): Entry | null {
@@ -234,7 +228,7 @@ export class EntryViewerImpl {
     return focusNext(
       this,
       this._pagedEntryList,
-      this._focusedEntryId,
+      this.focusedEntryId,
       this._selectedEntryId
     );
   }
@@ -243,7 +237,7 @@ export class EntryViewerImpl {
     return focusPrev(
       this,
       this._pagedEntryList,
-      this._focusedEntryId,
+      this.focusedEntryId,
       this._selectedEntryId
     );
   }
@@ -253,7 +247,7 @@ export class EntryViewerImpl {
       entryId,
       this,
       this._pagedEntryList,
-      this._focusedEntryId
+      this.focusedEntryId
     );
   }
 
