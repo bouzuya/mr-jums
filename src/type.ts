@@ -15,7 +15,6 @@ export interface EntryViewer {
   focusedEntryId: string | null;
   selectedEntry: Entry | null;
   selectedEntryId: string | null;
-  focusNext(): EntryViewer;
   focusPrev(): EntryViewer;
   selectNext(): EntryViewer;
   selectPrev(): EntryViewer;

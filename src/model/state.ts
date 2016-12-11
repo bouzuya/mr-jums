@@ -9,7 +9,7 @@ import {
   SelectCommand
 } from '../command';
 import { StateEvent } from '../event';
-import { create, select as entryViewerSelect } from '../model/entry-viewer';
+import { create, focusNext, select as entryViewerSelect } from '../model/entry-viewer';
 import { State } from '../type';
 import { Command, Event, Message } from './message';
 import { select } from './select';
@@ -57,7 +57,7 @@ const next = (state: State, _: NextCommand): State => {
   const { menu, entryViewer } = state;
   return Object.assign({}, state, {
     entryViewer: menu === true
-      ? entryViewer.focusNext() : entryViewer.selectNext()
+      ? focusNext(entryViewer) : entryViewer.selectNext()
   });
 };
 
