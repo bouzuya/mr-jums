@@ -1,10 +1,7 @@
-import * as fetch from 'isomorphic-fetch';
+import { fetch } from './globals';
 import { VNode } from '@cycle/dom';
 import { StateData } from '../type';
 import { view as htmlView } from '../view/dom/html';
-
-const myFetch: typeof fetch = typeof global === 'undefined'
-  ? fetch : (<any>global).fetch.bind(global);
 
 type Params = { year: string, month: string; date: string; };
 
@@ -39,7 +36,7 @@ const route = (path: string): Route => {
 
 const requestJson = (path: string): Promise<string> => {
   const url = `http://blog.bouzuya.net${path}`;
-  return myFetch(url).then((response) => response.text());
+  return fetch(url).then((response) => response.text());
 };
 
 const fetchDetail = ({ year, month, date }: Params): Promise<any> => {
