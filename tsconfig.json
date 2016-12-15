@@ -19,7 +19,7 @@
   "files": [
     "./snabbdom-to-html.d.ts",
     "./src/index.ts",
-    "./src/server.ts",
+    "./src/server/index.ts",
     "./test/index.ts",
     "./test/model/entry-list/index.ts",
     "./test/model/entry-list/get-page-entries.ts",

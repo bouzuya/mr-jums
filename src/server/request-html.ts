@@ -1,11 +1,7 @@
-import * as express from 'express';
-import * as compression from 'compression';
 import * as fetch from 'isomorphic-fetch';
-import * as morgan from 'morgan';
-import { join } from 'path';
 import { VNode } from '@cycle/dom';
-import { StateData } from './type';
-import { view as htmlView } from './view/dom/html';
+import { StateData } from '../type';
+import { view as htmlView } from '../view/dom/html';
 
 const myFetch: typeof fetch = typeof global === 'undefined'
   ? fetch : (<any>global).fetch.bind(global);
@@ -41,19 +37,19 @@ const route = (path: string): Route => {
   }
 };
 
-const request = (path: string): Promise<string> => {
+const requestJson = (path: string): Promise<string> => {
   const url = `http://blog.bouzuya.net${path}`;
   return myFetch(url).then((response) => response.text());
 };
 
 const fetchDetail = ({ year, month, date }: Params): Promise<any> => {
   const path = `/${year}/${month}/${date}.json`;
-  return request(path).then((jsonString) => JSON.parse(jsonString));
+  return requestJson(path).then((jsonString) => JSON.parse(jsonString));
 };
 
 const fetchList = (): Promise<any> => {
   const path = '/posts.json';
-  return request(path).then((jsonString) => JSON.parse(jsonString));
+  return requestJson(path).then((jsonString) => JSON.parse(jsonString));
 };
 
 const parseEntryList = (entries: any): Promise<StateData> => {
@@ -110,24 +106,11 @@ const init = ({ name, params }: Route): Promise<StateData> => {
   return inits[name](params);
 };
 
-const main = () => {
-  const server = express();
-  server.use(morgan('combined'));
-  server.use(compression());
-  // __dirname === '/lib'
-  server.use(express.static(join(__dirname, '..', 'public')));
-  server.use((req, res) => {
-    return void Promise.resolve(req.originalUrl)
-      .then((path) => route(path))
-      .then((matchedRoute) => init(matchedRoute))
-      .then((state) => render(state))
-      .then(
-      (html) => ({ status: 200, body: html }),
-      () => ({ status: 500, body: JSON.stringify({ message: 'ERROR' }) })
-      )
-      .then(({ status, body }) => void res.status(status).send(body));
-  });
-  server.listen(parseInt((process.env.PORT || '4000'), 10));
+const requestHtml = (path: string): Promise<string> => {
+  return Promise.resolve(path)
+    .then((path) => route(path))
+    .then((matchedRoute) => init(matchedRoute))
+    .then((state) => render(state));
 };
 
-main();
+export { requestHtml };

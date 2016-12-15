@@ -84,7 +84,7 @@
     "copy:images": "cpx 'src/images/**/*' 'public/images/'",
     "copy:js": "cpx '.tmp/es5/src/**/*.js' 'lib/'",
     "prepublish": "npm-run-all -s 'clean' 'build'",
-    "server": "node lib/server.js",
+    "server": "node lib/server/index.js",
     "start": "npm-run-all -s 'clean' 'build' 'build:bundle' 'server'",
     "test": "beater",
     "watch": "npm-run-all -p 'watch:*'",
