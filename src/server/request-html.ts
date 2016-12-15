@@ -1,4 +1,4 @@
-import { fetch } from './globals';
+import { requestJson } from './request-json';
 import { VNode } from '@cycle/dom';
 import { StateData } from '../type';
 import { view as htmlView } from '../view/dom/html';
@@ -32,11 +32,6 @@ const route = (path: string): Route => {
       }
     };
   }
-};
-
-const requestJson = (path: string): Promise<string> => {
-  const url = `http://blog.bouzuya.net${path}`;
-  return fetch(url).then((response) => response.text());
 };
 
 const fetchDetail = ({ year, month, date }: Params): Promise<any> => {
