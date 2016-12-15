@@ -41,14 +41,19 @@ const route = (path: string): Route => {
   }
 };
 
+const request = (path: string): Promise<string> => {
+  const url = `http://blog.bouzuya.net${path}`;
+  return myFetch(url).then((response) => response.text());
+};
+
 const fetchDetail = ({ year, month, date }: Params): Promise<any> => {
-  const url = `http://blog.bouzuya.net/${year}/${month}/${date}.json`;
-  return myFetch(url).then((res) => res.json());
+  const path = `/${year}/${month}/${date}.json`;
+  return request(path).then((jsonString) => JSON.parse(jsonString));
 };
 
 const fetchList = (): Promise<any> => {
-  const url = 'http://blog.bouzuya.net/posts.json';
-  return myFetch(url).then((res) => res.json());
+  const path = '/posts.json';
+  return request(path).then((jsonString) => JSON.parse(jsonString));
 };
 
 const parseEntryList = (entries: any): Promise<StateData> => {
