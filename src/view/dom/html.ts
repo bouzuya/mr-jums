@@ -10,11 +10,11 @@ import {
   title
 } from '@cycle/dom';
 
-import { deserialize } from '../../model/state/deserialize';
-import { StateData } from '../../type';
+import { serialize } from '../../model/state/serialize';
+import { State } from '../../type';
 import { view as appView } from './app';
 
-const view = (state: StateData): VNode => {
+const view = (state: State): VNode => {
   return html({ lang: 'ja' }, [
     head([
       meta({ props: { charset: 'UTF-8' } }),
@@ -52,10 +52,10 @@ const view = (state: StateData): VNode => {
           rel: 'apple-touch-icon', sizes: '192x192', href: '/images/favicon.png'
         }
       }),
-      script(`window.INITIAL_STATE = ${JSON.stringify(state)}`)
+      script(`window.INITIAL_STATE = ${serialize(state)}`)
     ]),
     body([
-      div('#app', [appView(deserialize(state))]),
+      div('#app', [appView(state)]),
       script({ props: { src: '/index.js' } }, [])
     ])
   ]);
