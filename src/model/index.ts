@@ -3,7 +3,7 @@ import { model as history$ } from './history';
 import { model as request$ } from './request';
 import { model as state$ } from './state';
 import { Command, Event, Message } from './message';
-import { parseInitialState } from './parse-initial-state';
+import { deserialize } from './state/deserialize';
 import { State, StateData } from '../type';
 
 const isEvent = (message: Message): message is Event => {
@@ -16,7 +16,7 @@ const model = (
   command$: xs<Command>,
   initialState: StateData | undefined
 ): xs<Event> => {
-  const state: State = parseInitialState(initialState);
+  const state: State = deserialize(initialState);
   const subject = xs.create<Message>();
   const message$ = xs.merge<Message>(
     command$,

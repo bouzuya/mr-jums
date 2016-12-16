@@ -10,7 +10,7 @@ import {
   title
 } from '@cycle/dom';
 
-import { parseInitialState } from '../../model/parse-initial-state';
+import { deserialize } from '../../model/state/deserialize';
 import { StateData } from '../../type';
 import { view as appView } from './app';
 
@@ -55,7 +55,7 @@ const view = (state: StateData): VNode => {
       script(`window.INITIAL_STATE = ${JSON.stringify(state)}`)
     ]),
     body([
-      div('#app', [appView(parseInitialState(state))]),
+      div('#app', [appView(deserialize(state))]),
       script({ props: { src: '/index.js' } }, [])
     ])
   ]);
