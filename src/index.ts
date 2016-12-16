@@ -4,7 +4,7 @@ import { DOMSource, makeDOMDriver } from '@cycle/dom';
 import { HTTPSource, makeHTTPDriver } from '@cycle/http';
 import { HistorySource, makeHistoryDriver } from 'cyclejs-history-driver';
 import { makeTitleDriver } from './title-driver';
-import { intent } from './intent';
+import { intent } from './client/intent';
 import { model } from './model';
 import { view } from './view';
 import { StateData } from './type';

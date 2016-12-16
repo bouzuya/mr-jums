@@ -1,6 +1,6 @@
-import xs from 'xstream';
-import { Command } from '../command';
 import { DOMSource } from '@cycle/dom';
+import xs from 'xstream';
+import { Command } from '../../command';
 
 const intent = ({ DOM }: { DOM: DOMSource }): xs<Command> => {
   const click1$: xs<Event> = DOM.select('div.menu').events('click');
