@@ -37,6 +37,7 @@ export interface EntryDetail extends Entry {
 
 export interface EntryViewer {
   _pagedEntryList: PagedEntryList;
+  entries: Entry[];
   filteredEntries: Entry[];
   focusedEntryId: string | null;
   selectedEntry: Entry | null;
