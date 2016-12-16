@@ -52,7 +52,7 @@ const view = (state: State): VNode => {
           rel: 'apple-touch-icon', sizes: '192x192', href: '/images/favicon.png'
         }
       }),
-      script(`window.INITIAL_STATE = ${serialize(state)}`)
+      script(`window.INITIAL_STATE = ${JSON.stringify(serialize(state))}`)
     ]),
     body([
       div('#app', [appView(state)]),
