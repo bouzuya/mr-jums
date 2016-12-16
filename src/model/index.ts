@@ -1,7 +1,7 @@
 import xs from 'xstream';
 import { model as history$ } from './history';
 import { model as request$ } from './request';
-import { model as state$ } from './state';
+import { model as state$ } from './handler/state';
 import { Command, Event, Message } from './message';
 import { deserialize } from './state/deserialize';
 import { State, StateData } from '../type';

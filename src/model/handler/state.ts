@@ -7,16 +7,16 @@ import {
   NextCommand,
   PrevCommand,
   SelectCommand
-} from '../command';
-import { StateEvent } from '../event';
+} from '../../command';
+import { StateEvent } from '../../event';
 import {
   create,
   focusNext, focusPrev,
   select as entryViewerSelect, selectNext, selectPrev
-} from '../model/entry-viewer';
-import { State } from '../type';
-import { Command, Event, Message } from './message';
-import { select } from './select';
+} from '../../model/entry-viewer';
+import { State } from '../../type';
+import { Command, Event, Message } from '../message';
+import { select } from '../select';
 
 const doSelect = (state: State, command: SelectCommand): State => {
   const { entryViewer } = state;
