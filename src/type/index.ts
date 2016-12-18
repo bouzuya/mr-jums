@@ -1,5 +1,6 @@
 import { Entry } from './entry';
 import { EntryDetail } from './entry-detail';
+import { StateData } from './state-data';
 
 export interface EmptyEntryList {
   _type: 'empty-entry-list';
@@ -41,12 +42,8 @@ export interface State {
   entry: EntryDetail | null;
 }
 
-export interface StateData {
-  entry: EntryDetail | null;
-  entries: Entry[];
-}
-
 export {
   Entry,
-  EntryDetail
+  EntryDetail,
+  StateData
 };
