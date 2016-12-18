@@ -1,4 +1,5 @@
 import { Entry } from './entry';
+import { EntryDetail } from './entry-detail';
 
 export interface EmptyEntryList {
   _type: 'empty-entry-list';
@@ -25,13 +26,6 @@ export interface EmptyPagedEntryList {
 
 export type PagedEntryList = EmptyPagedEntryList | NonEmptyPagedEntryList;
 
-export interface EntryDetail extends Entry {
-  html: string;
-  minutes: number;
-  pubdate: string;
-  tags: string[];
-}
-
 export interface EntryViewer {
   _pagedEntryList: PagedEntryList;
   entries: Entry[];
@@ -52,4 +46,7 @@ export interface StateData {
   entries: Entry[];
 }
 
-export { Entry };
+export {
+  Entry,
+  EntryDetail
+};
