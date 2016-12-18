@@ -4,7 +4,7 @@ import { model as request$ } from './handler/request';
 import { model as state$ } from './handler/state';
 import { Command, Event, Message } from './message';
 import { deserialize } from './state/deserialize';
-import { State, StateData } from '../type';
+import { State, SerializedData } from '../type';
 
 const isEvent = (message: Message): message is Event => {
   return message.type === 'state' ||
@@ -14,7 +14,7 @@ const isEvent = (message: Message): message is Event => {
 
 const model = (
   command$: xs<Command>,
-  initialState: StateData | undefined
+  initialState: SerializedData | undefined
 ): xs<Event> => {
   const state: State = deserialize(initialState);
   const subject = xs.create<Message>();

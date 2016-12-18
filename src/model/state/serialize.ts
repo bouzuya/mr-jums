@@ -1,6 +1,6 @@
-import { State, StateData } from '../../type';
+import { State, SerializedData } from '../../type';
 
-const serialize = (state: State): StateData => {
+const serialize = (state: State): SerializedData => {
   return {
     entry: state.entry,
     entries: state.entryViewer.entries

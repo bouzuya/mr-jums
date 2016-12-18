@@ -1,4 +1,4 @@
-import { Entry, EntryDetail, State, StateData } from '../../type';
+import { Entry, EntryDetail, State, SerializedData } from '../../type';
 import { deserialize } from './deserialize';
 
 const create = (
@@ -7,7 +7,7 @@ const create = (
     entries: Entry[];
   }
 ): State => {
-  const data: StateData = Object.assign(
+  const data: SerializedData = Object.assign(
     { entries },
     typeof entry === 'undefined'
       ? { entry: null } : { entry }

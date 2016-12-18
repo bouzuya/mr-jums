@@ -1,6 +1,6 @@
 import { Entry } from './entry';
 import { EntryDetail } from './entry-detail';
-import { StateData } from './state-data';
+import { SerializedData } from './serialized-data';
 
 export interface EmptyEntryList {
   _type: 'empty-entry-list';
@@ -45,5 +45,5 @@ export interface State {
 export {
   Entry,
   EntryDetail,
-  StateData
+  SerializedData
 };

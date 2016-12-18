@@ -1,7 +1,7 @@
-import { State, StateData } from '../../type';
+import { State, SerializedData } from '../../type';
 import { create, select } from '../entry-viewer';
 
-const deserialize = (data: StateData | undefined): State => {
+const deserialize = (data: SerializedData | undefined): State => {
   if (typeof data === 'undefined') {
     return {
       entry: null,
