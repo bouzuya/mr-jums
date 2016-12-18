@@ -7,6 +7,7 @@ import { makeTitleDriver } from './client/driver/title-driver';
 import { intent } from './client/intent';
 import { model } from './model';
 import { view } from './view';
+import { deserialize } from './model/state';
 import { SerializedData } from './type';
 
 type MySources = {
@@ -20,8 +21,9 @@ type MySinks = {
 };
 
 const main = (): void => {
-  const initialState: SerializedData | undefined = typeof window === 'undefined'
+  const serialized: SerializedData | undefined = typeof window === 'undefined'
     ? undefined : (<any>window).INITIAL_STATE;
+  const initialState = deserialize(serialized);
   run(
     (sources: MySources): MySinks => view(model(intent(sources), initialState)),
     {

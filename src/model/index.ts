@@ -3,8 +3,7 @@ import { model as history$ } from './handler/history';
 import { model as request$ } from './handler/request';
 import { model as state$ } from './handler/state';
 import { Command, Event, Message } from './message';
-import { deserialize } from './state/deserialize';
-import { State, SerializedData } from '../type';
+import { State } from '../type';
 
 const isEvent = (message: Message): message is Event => {
   return message.type === 'state' ||
@@ -14,15 +13,14 @@ const isEvent = (message: Message): message is Event => {
 
 const model = (
   command$: xs<Command>,
-  initialState: SerializedData | undefined
+  initialState: State
 ): xs<Event> => {
-  const state: State = deserialize(initialState);
   const subject = xs.create<Message>();
   const message$ = xs.merge<Message>(
     command$,
     history$(subject),
     request$(subject),
-    state$(subject, state)
+    state$(subject, initialState)
   )
     .map((message) => {
       setTimeout(() => subject.shamefullySendNext(message));
