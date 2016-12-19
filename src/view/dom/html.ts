@@ -15,6 +15,9 @@ import { State } from '../../type';
 import { view as appView } from './app';
 
 const view = (state: State): VNode => {
+  // TODO: remove process.env.NODE_ENV
+  const src = (process.env.NODE_ENV === 'development'
+    ? 'http://localhost:3001' : '') + '/index.js';
   return html({ lang: 'ja' }, [
     head([
       meta({ props: { charset: 'UTF-8' } }),
@@ -56,7 +59,7 @@ const view = (state: State): VNode => {
     ]),
     body([
       div('#app', [appView(state)]),
-      script({ props: { src: '/index.js' } }, [])
+      script({ props: { src } }, [])
     ])
   ]);
 };

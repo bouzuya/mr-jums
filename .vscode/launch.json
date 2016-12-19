@@ -2,21 +2,53 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Launch Chrome against localhost, with sourcemaps",
+      "name": "client-launch",
       "type": "chrome",
       "request": "launch",
-      "url": "http://localhost:3001",
+      "url": "http://localhost:4000",
       "sourceMaps": true,
       "webRoot": "${workspaceRoot}"
     },
     {
-      "name": "Attach to Chrome, with sourcemaps",
+      "name": "client-attach",
       "type": "chrome",
       "request": "attach",
       "port": 9222,
       "sourceMaps": true,
       "webRoot": "${workspaceRoot}/public/"
+    },
+    {
+      "name": "server-launch",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceRoot}/src/server/index.ts",
+      "cwd": "${workspaceRoot}",
+      "outFiles": [
+        "${workspaceRoot}/.tmp/es2015/src/server/index.js"
+      ],
+      "skipFiles": [
+        "node_modules/**/*.js"
+      ],
+      "sourceMaps": true,
+      "env": {
+        "NODE_ENV": "development"
+      }
+    },
+    {
+      "name": "server-attach",
+      "type": "node",
+      "request": "attach",
+      "port": 5858,
+      "sourceMaps": true
+    }
+  ],
+  "compounds": [
+    {
+      "name": "server/client",
+      "configurations": [
+        "server-launch",
+        "client-launch"
+      ]
     }
   ]
 }
-
