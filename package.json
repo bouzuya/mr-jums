@@ -68,7 +68,7 @@
   "homepage": "https://github.com/bouzuya/mr-jums",
   "keywords": [],
   "license": "MIT",
-  "main": "lib/index.js",
+  "main": ".tmp/es2015/src/server/index.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/bouzuya/mr-jums.git"
@@ -79,12 +79,10 @@
     "build:es2015": "babel .tmp/es2015/ -d .tmp/es5/",
     "build:less": "lessc --no-js --strict-imports --strict-math=on --strict-units=on src/view/dom/index.less ./public/index.css",
     "build:ts": "tsc",
-    "clean": "rimraf .tmp lib public/index.css",
-    "copy:dts": "cpx '.tmp/es2015/src/**/*.d.ts' 'lib/'",
+    "clean": "rimraf .tmp public/index.css",
     "copy:images": "cpx 'src/images/**/*' 'public/images/'",
-    "copy:js": "cpx '.tmp/es5/src/**/*.js' 'lib/'",
     "prepublish": "npm-run-all -s 'clean' 'build'",
-    "server": "node lib/server/index.js",
+    "server": "node .tmp/es2015/src/server/index.js",
     "start": "npm-run-all -s 'clean' 'build' 'build:bundle' 'server'",
     "test": "beater",
     "watch": "npm-run-all -p 'watch:*'",

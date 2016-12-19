@@ -8,8 +8,9 @@ const main = () => {
   const server = express();
   server.use(morgan('combined'));
   server.use(compression());
-  // __dirname === '/lib/server/'
-  server.use(express.static(join(__dirname, '..', '..', 'public')));
+  // __dirname === '/.tmp/es2015/src/server/'
+  const publicDir = join(__dirname, '..', '..', '..', '..', 'public');
+  server.use(express.static(publicDir));
   server.use((req, res) => {
     return void Promise.resolve(req.originalUrl)
       .then((path) => requestHtml(path))
@@ -19,7 +20,10 @@ const main = () => {
       )
       .then(({ status, body }) => void res.status(status).send(body));
   });
-  server.listen(parseInt((process.env.PORT || '4000'), 10));
+  const port = parseInt((process.env.PORT || '4000'), 10);
+  console.log(`public dir: ${publicDir}`);
+  console.log(`port      : ${port}`);
+  server.listen(port);
 };
 
 main();
