@@ -87,7 +87,7 @@
     "test": "beater",
     "watch": "npm-run-all -p 'watch:*'",
     "watch:es2015": "npm run 'build:es2015' -- --watch",
-    "watch:less": "watch --wait 2 'npm run build:less' 'src/view/dom/'",
+    "watch:less": "watch --wait 2 'npm run build:less' 'src/client/view/dom/'",
     "watch:server": "webpack-dev-server --config webpack.watch.config.js",
     "watch:test": "watch --wait 2 'npm test' '.tmp/es5/'",
     "watch:ts": "npm run 'build:ts' -- --watch"

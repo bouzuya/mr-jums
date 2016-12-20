@@ -6,7 +6,7 @@ import { HistorySource, makeHistoryDriver } from 'cyclejs-history-driver';
 import { makeTitleDriver } from './driver/title-driver';
 import { intent } from './intent';
 import { model } from '../model';
-import { view } from '../view';
+import { view } from './view';
 import { deserialize } from '../model/state';
 
 type MySources = {

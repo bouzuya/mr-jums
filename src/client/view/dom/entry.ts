@@ -1,5 +1,5 @@
 import { VNode, div, span } from '@cycle/dom';
-import { Entry, EntryDetail } from '../../type';
+import { Entry, EntryDetail } from '../../../type';
 
 const isDetail = (entry: Entry | EntryDetail): entry is EntryDetail => {
   return typeof (<EntryDetail>entry).html !== 'undefined';

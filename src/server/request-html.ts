@@ -2,7 +2,7 @@ import { requestJson } from './request-json';
 import { VNode } from '@cycle/dom';
 import { State } from '../type';
 import { create } from '../model/state/index';
-import { view as htmlView } from '../view/dom/html';
+import { view as htmlView } from '../client/view/dom/html'; // FIXME
 
 type Params = { year: string, month: string; date: string; };
 
