@@ -29,7 +29,7 @@ module.exports = {
     app: [
       'webpack-dev-server/client?http://localhost:' + port,
       'webpack/hot/dev-server',
-      path.join(__dirname, '.tmp/es2015/src/index.js')
+      path.join(__dirname, '.tmp/es2015/src/client/index.js')
     ]
   },
   output: {

@@ -20,7 +20,7 @@ module.exports = [
     },
     entry: {
       app: [
-        path.join(__dirname, '.tmp/es2015/src/index.js')
+        path.join(__dirname, '.tmp/es2015/src/client/index.js')
       ]
     },
     output: {
