@@ -6,5 +6,6 @@ export type CommandType =
   'fetch-posts-success' |
   'menu' |
   'next' |
+  'noop' |
   'prev' |
   'select';
