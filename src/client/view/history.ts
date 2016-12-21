@@ -1,5 +1,5 @@
 import xs from 'xstream';
-import { HistoryEvent } from '../../event';
+import { HistoryEvent } from '../../common/event';
 import {
   HistoryCommand,
   HistoryBackCommand,

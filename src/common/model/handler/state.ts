@@ -8,7 +8,7 @@ import {
   PrevCommand,
   SelectCommand
 } from '../../command';
-import { StateEvent } from '../../../event';
+import { StateEvent } from '../../event';
 import {
   create,
   focusNext, focusPrev,

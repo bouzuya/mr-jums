@@ -9,7 +9,7 @@ import {
   HistoryEvent,
   RequestEvent,
   StateEvent
-} from '../../event';
+} from '../../common/event';
 
 const select = <T extends Event>(
   event$: xs<Event>, type: EventType
