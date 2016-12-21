@@ -10,7 +10,7 @@ import {
   title
 } from '@cycle/dom';
 
-import { serialize } from '../../model/state/serialize';
+import { serialize } from '../model/state/serialize';
 import { State } from '../type/state';
 import { view as appView } from './app';
 

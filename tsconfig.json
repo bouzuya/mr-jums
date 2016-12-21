@@ -21,16 +21,16 @@
     "./src/client/index.ts",
     "./src/server/index.ts",
     "./test/index.ts",
-    "./test/model/entry-list/index.ts",
-    "./test/model/entry-list/get-page-entries.ts",
-    "./test/model/entry-viewer/empty.ts",
-    "./test/model/entry-viewer/focus.ts",
-    "./test/model/entry-viewer/focus-next.ts",
-    "./test/model/entry-viewer/focus-prev.ts",
-    "./test/model/entry-viewer/helpers-new-entry-viewer.ts",
-    "./test/model/entry-viewer/select.ts",
-    "./test/model/entry-viewer/select-next.ts",
-    "./test/model/entry-viewer/select-prev.ts",
-    "./test/model/paged-entry-list/index.ts"
+    "./test/common/model/entry-list/index.ts",
+    "./test/common/model/entry-list/get-page-entries.ts",
+    "./test/common/model/entry-viewer/empty.ts",
+    "./test/common/model/entry-viewer/focus.ts",
+    "./test/common/model/entry-viewer/focus-next.ts",
+    "./test/common/model/entry-viewer/focus-prev.ts",
+    "./test/common/model/entry-viewer/helpers-new-entry-viewer.ts",
+    "./test/common/model/entry-viewer/select.ts",
+    "./test/common/model/entry-viewer/select-next.ts",
+    "./test/common/model/entry-viewer/select-prev.ts",
+    "./test/common/model/paged-entry-list/index.ts"
   ]
 }

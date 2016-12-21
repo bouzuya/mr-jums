@@ -1,7 +1,7 @@
 import { requestJson } from './request-json';
 import { VNode } from '@cycle/dom';
 import { State } from '../common/type/state';
-import { create } from '../model/state/index';
+import { create } from '../common/model/state/index';
 import { view as htmlView } from '../common/view/html';
 
 type Params = { year: string, month: string; date: string; };

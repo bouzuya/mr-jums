@@ -5,9 +5,9 @@ import { HTTPSource, makeHTTPDriver } from '@cycle/http';
 import { HistorySource, makeHistoryDriver } from 'cyclejs-history-driver';
 import { makeTitleDriver } from './driver/title-driver';
 import { intent } from './intent';
-import { model } from '../model';
+import { model } from '../common/model';
 import { view } from './view';
-import { deserialize } from '../model/state';
+import { deserialize } from '../common/model/state';
 
 type MySources = {
   DOM: DOMSource;
