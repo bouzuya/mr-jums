@@ -6,6 +6,9 @@ import { HistorySource, makeHistoryDriver } from 'cyclejs-history-driver';
 import { makeTitleDriver } from './driver/title-driver';
 import { intent } from './intent';
 import { model } from '../common/model';
+import { model as history$ } from '../common/handler/history';
+import { model as request$ } from '../common/handler/request';
+import { model as state$ } from '../common/handler/state';
 import { view } from './view';
 import { deserialize } from '../common/model/state';
 
@@ -24,7 +27,12 @@ const main = (): void => {
     ? undefined : (<any>window).INITIAL_STATE;
   const initialState = deserialize(serialized);
   run(
-    (sources: MySources): MySinks => view(model(intent(sources), initialState)),
+    (sources: MySources): MySinks => view(model([
+      (_) => intent(sources),
+      history$,
+      request$,
+      (subject$) => state$(subject$, initialState)
+    ])),
     {
       DOM: makeDOMDriver('#app'),
       HISTORY: makeHistoryDriver(),
