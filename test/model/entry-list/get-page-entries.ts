@@ -1,7 +1,7 @@
 import * as assert from 'power-assert';
 import beater from 'beater';
 
-import { Entry } from '../../../src/type';
+import { Entry } from '../../../src/common/type';
 import {
   createEntryList,
   getPageEntries

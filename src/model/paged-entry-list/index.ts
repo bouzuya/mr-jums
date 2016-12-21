@@ -3,7 +3,7 @@ import {
   Entry,
   NonEmptyPagedEntryList,
   PagedEntryList
-} from '../../type';
+} from '../../common/type';
 import {
   EmptyEntryList, EntryList, NonEmptyEntryList,
   createEntryList,

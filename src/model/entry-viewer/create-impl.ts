@@ -3,7 +3,7 @@ import {
   NonEmptyPagedEntryList,
   PagedEntryList,
   EntryViewer
-} from '../../type';
+} from '../../common/type';
 import {
   getAllEntries,
   getCurrentPageEntries,

@@ -1,5 +1,5 @@
 import { Event } from './event';
-import { State } from '../type';
+import { State } from '../common/type';
 
 export interface StateEvent extends Event {
   type: 'state';

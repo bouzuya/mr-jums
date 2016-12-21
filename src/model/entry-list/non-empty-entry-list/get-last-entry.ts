@@ -1,4 +1,4 @@
-import { Entry } from '../../../type';
+import { Entry } from '../../../common/type';
 import { NonEmptyEntryList } from './non-empty-entry-list';
 
 const getLastEntry = (nonEmptyEntryList: NonEmptyEntryList): Entry => {

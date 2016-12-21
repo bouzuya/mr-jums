@@ -1,5 +1,5 @@
 import { createImpl } from './create-impl';
-import { EntryViewer } from '../../type';
+import { EntryViewer } from '../../common/type';
 import {
   createEntryList,
   getLastEntry,

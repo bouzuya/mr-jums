@@ -1,6 +1,6 @@
 import { requestJson } from './request-json';
 import { VNode } from '@cycle/dom';
-import { State } from '../type';
+import { State } from '../common/type';
 import { create } from '../model/state/index';
 import { view as htmlView } from '../common/view/html';
 

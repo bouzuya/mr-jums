@@ -1,3 +1,3 @@
-import { NonEmptyEntryList } from '../../../type';
+import { NonEmptyEntryList } from '../../../common/type';
 
 export { NonEmptyEntryList };

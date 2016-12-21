@@ -1,4 +1,4 @@
-import { EntryViewer } from '../../../src/type';
+import { EntryViewer } from '../../../src/common/type';
 import { create } from '../../../src/model/entry-viewer';
 
 const newEntryViewer = (): EntryViewer => {

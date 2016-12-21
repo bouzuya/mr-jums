@@ -14,7 +14,7 @@ import {
   focusNext, focusPrev,
   select as entryViewerSelect, selectNext, selectPrev
 } from '../../model/entry-viewer';
-import { State } from '../../type';
+import { State } from '../../common/type';
 import { Command, Event, Message } from '../message';
 import { select } from '../select';
 

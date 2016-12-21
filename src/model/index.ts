@@ -3,7 +3,7 @@ import { model as history$ } from './handler/history';
 import { model as request$ } from './handler/request';
 import { model as state$ } from './handler/state';
 import { Command, Event, Message } from './message';
-import { State } from '../type';
+import { State } from '../common/type';
 
 const isEvent = (message: Message): message is Event => {
   return message.type === 'state' ||

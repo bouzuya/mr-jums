@@ -1,6 +1,6 @@
 import { getEntries } from './get-entries';
 import { EmptyEntryList, isEmptyEntryList } from './empty-entry-list';
-import { Entry } from '../../type';
+import { Entry } from '../../common/type';
 import { EntryList } from './entry-list';
 import { NonEmptyEntryList, isNonEmptyEntryList } from './non-empty-entry-list';
 
