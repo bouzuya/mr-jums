@@ -1,6 +1,6 @@
 import xs from 'xstream';
-import { CommandType } from '../command';
-import { Command, Event, Message } from './message';
+import { CommandType } from '../../command';
+import { Command, Event, Message } from '../../model/message';
 
 const select = <T extends Command>(
   message$: xs<Message>, type: CommandType

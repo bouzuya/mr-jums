@@ -1,7 +1,6 @@
 import xs from 'xstream';
-import { StateEvent } from '../../event';
-import { Command, Event, Message } from '../message';
-import { HistoryEvent } from '../../event';
+import { HistoryEvent, StateEvent } from '../event';
+import { Command, Event, Message } from '../model/message';
 
 const path$ = (
   message$: xs<Message>

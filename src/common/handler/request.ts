@@ -1,9 +1,9 @@
 import xs from 'xstream';
-import { FetchPostsRequestCommand } from '../../command';
-import { select } from '../select';
-import { Command, Event, Message } from '../message';
-import { RequestEvent, StateEvent } from '../../event';
-import { State } from '../../type/state';
+import { FetchPostsRequestCommand } from '../command';
+import { select } from './util/select';
+import { Command, Event, Message } from '../model/message';
+import { RequestEvent, StateEvent } from '../event';
+import { State } from '../type/state';
 
 const fetchPostsRequest$ = (message$: xs<Message>): xs<any> => {
   return select<FetchPostsRequestCommand>(
