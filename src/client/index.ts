@@ -3,12 +3,12 @@ import { run } from '@cycle/xstream-run';
 import { DOMSource, makeDOMDriver } from '@cycle/dom';
 import { HTTPSource, makeHTTPDriver } from '@cycle/http';
 import { HistorySource, makeHistoryDriver } from 'cyclejs-history-driver';
-import { makeTitleDriver } from './driver/title-driver';
 import { intent } from './intent';
 import { model } from '../common/model';
 import { model as history$ } from '../common/handler/history';
 import { model as request$ } from '../common/handler/request';
 import { model as state$ } from '../common/handler/state';
+import { model as title$ } from '../common/handler/title';
 import { view } from './view';
 import { deserialize } from '../common/model/state';
 
@@ -31,13 +31,13 @@ const main = (): void => {
       (_) => intent(sources),
       history$,
       request$,
-      (subject$) => state$(subject$, initialState)
+      (subject$) => state$(subject$, initialState),
+      title$
     ])),
     {
       DOM: makeDOMDriver('#app'),
       HISTORY: makeHistoryDriver(),
-      HTTP: makeHTTPDriver(),
-      TITLE: makeTitleDriver()
+      HTTP: makeHTTPDriver()
     }
   );
 };
