@@ -6,10 +6,11 @@ const intent = ({ DOM }: { DOM: DOMSource }): xs<Command> => {
   const clickList$: xs<Event> = DOM.select('li').events('click');
   const select$: xs<Command> = clickList$
     .map((event) => {
-      let target = event.target as Element;
+      let target: HTMLElement | null = event.target as HTMLElement;
       while (target && target.tagName !== 'LI') {
         target = target.parentElement;
       }
+      if (target === null) return; // undefined
       const classList: string[] = Array.from(target.classList);
       const entryId: string | undefined = classList
         .map((c) => {
