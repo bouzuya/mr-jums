@@ -1,5 +1,5 @@
 import { VNode, div, ul, li } from '@cycle/dom';
-import { EntryViewer } from '../type';
+import { EntryViewer } from '../type/entry-viewer';
 import { view as entryView } from './entry';
 
 const view = (

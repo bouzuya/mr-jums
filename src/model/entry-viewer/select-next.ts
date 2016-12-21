@@ -1,4 +1,4 @@
-import { EntryViewer } from '../../common/type';
+import { EntryViewer } from '../../common/type/entry-viewer';
 import { createImpl } from './create-impl';
 import {
   createEntryList,

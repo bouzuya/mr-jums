@@ -1,4 +1,4 @@
-import { State } from '../../common/type';
+import { State } from '../../common/type/state';
 
 const serialize = (state: State): string => {
   const data = {

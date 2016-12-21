@@ -1,4 +1,4 @@
-import { State } from '../../common/type';
+import { State } from '../../common/type/state';
 import { create, select } from '../entry-viewer';
 
 const deserialize = (serialized: string | undefined): State => {

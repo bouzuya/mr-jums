@@ -1,4 +1,6 @@
-import { Entry, EntryDetail, State } from '../../common/type';
+import { Entry } from '../../common/type/entry';
+import { EntryDetail } from '../../common/type/entry-detail';
+import { State } from '../../common/type/state';
 import { deserialize } from './deserialize';
 
 const create = (

@@ -1,3 +1,3 @@
-import { EntryList } from '../../common/type';
+import { EntryList } from '../../common/type/entry-list';
 
 export { EntryList };

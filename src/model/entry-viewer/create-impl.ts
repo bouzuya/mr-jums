@@ -1,9 +1,9 @@
+import { EmptyPagedEntryList } from '../../common/type/empty-paged-entry-list';
 import {
-  EmptyPagedEntryList,
-  NonEmptyPagedEntryList,
-  PagedEntryList,
-  EntryViewer
-} from '../../common/type';
+  NonEmptyPagedEntryList
+} from '../../common/type/non-empty-paged-entry-list';
+import { PagedEntryList } from '../../common/type/paged-entry-list';
+import { EntryViewer } from '../../common/type/entry-viewer';
 import {
   getAllEntries,
   getCurrentPageEntries,

@@ -1,9 +1,9 @@
+import { EmptyPagedEntryList } from '../../common/type/empty-paged-entry-list';
+import { Entry } from '../../common/type/entry';
 import {
-  EmptyPagedEntryList,
-  Entry,
-  NonEmptyPagedEntryList,
-  PagedEntryList
-} from '../../common/type';
+  NonEmptyPagedEntryList
+} from '../../common/type/non-empty-paged-entry-list';
+import { PagedEntryList } from '../../common/type/paged-entry-list';
 import {
   EmptyEntryList, EntryList, NonEmptyEntryList,
   createEntryList,

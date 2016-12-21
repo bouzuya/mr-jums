@@ -3,7 +3,7 @@ import { FetchPostsRequestCommand } from '../../command';
 import { select } from '../select';
 import { Command, Event, Message } from '../message';
 import { RequestEvent, StateEvent } from '../../event';
-import { State } from '../../common/type';
+import { State } from '../../common/type/state';
 
 const fetchPostsRequest$ = (message$: xs<Message>): xs<any> => {
   return select<FetchPostsRequestCommand>(

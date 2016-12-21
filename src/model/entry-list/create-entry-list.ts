@@ -1,5 +1,5 @@
 import { EmptyEntryList, createEmptyEntryList } from './empty-entry-list';
-import { Entry } from '../../common/type';
+import { Entry } from '../../common/type/entry';
 import { EntryList } from './entry-list';
 import { NonEmptyEntryList, createNonEmptyEntryList } from './non-empty-entry-list';
 
