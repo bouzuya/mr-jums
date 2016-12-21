@@ -1,7 +1,7 @@
 import xs from 'xstream';
 import { DOMSource } from '@cycle/dom';
 import { HTTPSource } from '@cycle/http';
-import { Command } from '../../command';
+import { Command } from '../../common/command';
 
 import { intent as enter$ } from './enter';
 import { intent as fetchPostSuccess$ } from './fetch-post-success';

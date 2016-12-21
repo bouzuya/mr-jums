@@ -1,6 +1,6 @@
 import { DOMSource } from '@cycle/dom';
 import xs from 'xstream';
-import { Command } from '../../command';
+import { Command } from '../../common/command';
 
 const intent = ({ DOM }: { DOM: DOMSource }): xs<Command> => {
   const click$: xs<Event> = DOM.select('div.reload').events('click');

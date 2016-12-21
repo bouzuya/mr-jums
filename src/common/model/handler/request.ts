@@ -1,5 +1,5 @@
 import xs from 'xstream';
-import { FetchPostsRequestCommand } from '../../../command';
+import { FetchPostsRequestCommand } from '../../command';
 import { select } from '../select';
 import { Command, Event, Message } from '../message';
 import { RequestEvent, StateEvent } from '../../../event';

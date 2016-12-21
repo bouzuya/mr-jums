@@ -7,7 +7,7 @@ import {
   NextCommand,
   PrevCommand,
   SelectCommand
-} from '../../../command';
+} from '../../command';
 import { StateEvent } from '../../../event';
 import {
   create,
