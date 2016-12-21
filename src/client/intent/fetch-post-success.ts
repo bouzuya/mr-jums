@@ -1,6 +1,6 @@
 import { HTTPSource, Response as HTTPResponse } from '@cycle/http';
 import xs from 'xstream';
-import { Command, FetchPostSuccessCommand } from '../../common/command';
+import { Command, FetchPostSuccessCommand } from './util/command';
 
 const intent = ({ HTTP }: { HTTP: HTTPSource; }): xs<Command> => {
   const response$: xs<HTTPResponse> = HTTP.select('post').flatten();

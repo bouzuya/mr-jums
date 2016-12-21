@@ -1,6 +1,6 @@
 import { DOMSource } from '@cycle/dom';
 import xs from 'xstream';
-import { Command } from '../../common/command';
+import { Command } from './util/command';
 
 const intent = ({ DOM }: { DOM: DOMSource }): xs<Command> => {
   const clickList$: xs<Event> = DOM.select('li').events('click');
