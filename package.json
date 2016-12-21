@@ -22,15 +22,15 @@
     "url": "https://github.com/bouzuya/mr-jums/issues"
   },
   "dependencies": {
-    "@cycle/dom": "12.1.0",
-    "@cycle/http": "10.1.0",
-    "@cycle/xstream-run": "3.0.4",
+    "@cycle/dom": "14.2.0",
+    "@cycle/http": "11.2.0",
+    "@cycle/xstream-run": "4.1.0",
     "cyclejs-history-driver": "github:bouzuya/cyclejs-history-driver#0.1.2",
     "express": "4.14.0",
     "isomorphic-fetch": "2.2.1",
     "morgan": "1.7.0",
-    "snabbdom-to-html": "3.0.0",
-    "xstream": "5.3.4"
+    "snabbdom-to-html": "3.0.1",
+    "xstream": "9.2.0"
   },
   "devDependencies": {
     "@types/compression": "0.0.33",
