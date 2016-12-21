@@ -1,47 +1,23 @@
+import { EmptyEntryList } from './empty-entry-list';
+import { EmptyPagedEntryList } from './empty-paged-entry-list';
 import { Entry } from './entry';
 import { EntryDetail } from './entry-detail';
-
-export interface EmptyEntryList {
-  _type: 'empty-entry-list';
-}
-
-export interface NonEmptyEntryList {
-  _type: 'non-empty-entry-list';
-  // assert(_entries.length > 0) && assert(_entries are ordered by desc)
-  _entries: Entry[];
-}
-
-export type EntryList = EmptyEntryList | NonEmptyEntryList;
-
-export interface NonEmptyPagedEntryList {
-  _type: 'non-empty-paged-entry-list';
-  _entryList: EntryList;
-  _offset: string;
-  _count: number;
-}
-
-export interface EmptyPagedEntryList {
-  _type: 'empty-paged-entry-list';
-}
-
-export type PagedEntryList = EmptyPagedEntryList | NonEmptyPagedEntryList;
-
-export interface EntryViewer {
-  _pagedEntryList: PagedEntryList;
-  entries: Entry[];
-  filteredEntries: Entry[];
-  focusedEntryId: string | null;
-  selectedEntry: Entry | null;
-  selectedEntryId: string | null;
-}
-
-export interface State {
-  entryViewer: EntryViewer;
-  menu: boolean;
-  entry: EntryDetail | null;
-}
+import { EntryList } from './entry-list';
+import { EntryViewer } from './entry-viewer';
+import { NonEmptyEntryList } from './non-empty-entry-list';
+import { NonEmptyPagedEntryList } from './non-empty-paged-entry-list';
+import { PagedEntryList } from './paged-entry-list';
+import { State } from './state';
 
 export {
+  EmptyEntryList,
+  EmptyPagedEntryList,
   Entry,
-  EntryDetail
+  EntryDetail,
+  EntryList,
+  EntryViewer,
+  NonEmptyEntryList,
+  NonEmptyPagedEntryList,
+  PagedEntryList,
+  State
 };
