@@ -1,5 +1,5 @@
 import { VNode, div } from '@cycle/dom';
-import { State } from '../../../type';
+import { State } from '../../type';
 
 const view = ({ menu }: State): VNode => {
   const up = '\u25b2'; // U+25B2 BLACK UP-POINTING TRIANGLE

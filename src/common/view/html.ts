@@ -10,8 +10,8 @@ import {
   title
 } from '@cycle/dom';
 
-import { serialize } from '../../../model/state/serialize';
-import { State } from '../../../type';
+import { serialize } from '../../model/state/serialize';
+import { State } from '../../type';
 import { view as appView } from './app';
 
 const view = (state: State): VNode => {

@@ -1,5 +1,5 @@
 import { VNode, div } from '@cycle/dom';
-import { EntryDetail } from '../../../type';
+import { EntryDetail } from '../../type';
 import { view as entryView } from './entry';
 
 const view = (
