@@ -14,7 +14,7 @@ const create = (entries: Entry[]): EntryViewer => {
   return createImpl(
     createPagedEntryList(
       createEntryList(entries),
-      10,
+      9,
       (entries.length > 0 ? entries[0].id : null)
     ),
     (entries.length > 0 ? entries[0].id : null),
