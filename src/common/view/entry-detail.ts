@@ -13,9 +13,7 @@ const view = (
         (<any>elm).scrollTop = 0;
       }
     }
-  }, [
-      entry === null ? null : entryView(entry)
-    ]);
+  }, entry === null ? [] : [entryView(entry)]);
 };
 
 export { view };
