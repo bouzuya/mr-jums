@@ -1,5 +1,6 @@
 export { Command } from './command';
 export { CommandType } from './command-type';
+export { BackCommand } from './back-command';
 export { EnterCommand } from './enter-command';
 export { FetchPostSuccessCommand } from './fetch-post-success-command';
 export { FetchPostsFailureCommand } from './fetch-posts-failure-command';

@@ -1,4 +1,5 @@
 export type CommandType =
+  'back' |
   'enter' |
   'fetch-post-success' |
   'fetch-posts-failure' |
