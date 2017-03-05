@@ -8,8 +8,8 @@ module.exports = {
   name: 'client',
   target: 'web',
   module: {
-    preLoaders: [
-      { loader: 'source-map-loader', test: /\.js$/ }
+    rules: [
+      { use: ['source-map-loader'], test: /\.js$/, enforce: 'pre' }
     ],
     loaders: [
       {
@@ -22,15 +22,9 @@ module.exports = {
       }
     ]
   },
-  devtool: [
-    'source-map'
-  ],
+  devtool: 'source-map',
   entry: {
-    app: [
-      'webpack-dev-server/client?http://localhost:' + port,
-      'webpack/hot/dev-server',
-      path.join(__dirname, '.tmp/es2015/src/client/index.js')
-    ]
+    app: path.join(__dirname, '.tmp/es2015/src/client/index.js')
   },
   output: {
     filename: 'index.js'
@@ -41,6 +35,6 @@ module.exports = {
     contentBase: './public/'
   },
   plugins: [
-      new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin()
   ]
 };
