@@ -7,7 +7,7 @@ import {
   HistoryGoCommand,
   HistoryPushStateCommand,
   HistoryReplaceStateCommand
-} from 'cyclejs-history-driver';
+} from '@bouzuya/cyclejs-history-driver';
 
 const view = (history$: xs<HistoryEvent>): xs<HistoryCommand> => {
   return history$

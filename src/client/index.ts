@@ -1,8 +1,10 @@
 import xs from 'xstream';
-import { run } from '@cycle/xstream-run';
+import { run } from '@cycle/run';
 import { DOMSource, makeDOMDriver } from '@cycle/dom';
 import { HTTPSource, makeHTTPDriver } from '@cycle/http';
-import { HistorySource, makeHistoryDriver } from 'cyclejs-history-driver';
+import {
+  HistorySource, makeHistoryDriver
+} from '@bouzuya/cyclejs-history-driver';
 import { intent } from './intent';
 import { model } from '../common/model';
 import { model as history$ } from '../common/handler/history';
