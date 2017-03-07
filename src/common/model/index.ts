@@ -4,7 +4,7 @@ import { Event, Message } from './message';
 const isEvent = (message: Message): message is Event => {
   return message.type === 'state' ||
     message.type === 'request' ||
-    message.type == 'history';
+    message.type == 'history-pushed';
 };
 
 const model = (

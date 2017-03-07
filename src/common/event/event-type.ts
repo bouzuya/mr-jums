@@ -1,4 +1,4 @@
 export type EventType =
-  'history' |
+  'history-pushed' |
   'request' |
   'state';

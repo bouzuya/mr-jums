@@ -1,5 +1,5 @@
 import xs from 'xstream';
-import { HistoryEvent, StateEvent } from '../event';
+import { HistoryPushedEvent, StateEvent } from '../event';
 import { Command, Event, Message } from '../model/message';
 
 type P = {
@@ -9,7 +9,7 @@ type P = {
 
 type T = {
   stack: P[];
-  event: HistoryEvent | null;
+  event: HistoryPushedEvent | null;
 };
 
 const p$ = (message$: xs<Message>): xs<P> => {
@@ -39,7 +39,7 @@ const pop = ({ stack }: T): T => {
 
 const push = ({ stack }: T, { path, title }: P): T => {
   stack.push({ path, title });
-  return { stack, event: { type: 'history', path, title } }; // TODO: go
+  return { stack, event: { type: 'history-pushed', path, title } };
 };
 
 const handleP = (t: T, p: P): T => {
@@ -66,11 +66,11 @@ const handleP = (t: T, p: P): T => {
   }
 };
 
-const model = (message$: xs<Message>): xs<HistoryEvent> => {
+const model = (message$: xs<Message>): xs<HistoryPushedEvent> => {
   return p$(message$)
     .fold<T>((a, x) => handleP(a, x), { stack: [], event: null })
-    .map<HistoryEvent | null>(({ event }) => event)
-    .filter((event): event is HistoryEvent => event !== null);
+    .map<HistoryPushedEvent | null>(({ event }) => event)
+    .filter((event): event is HistoryPushedEvent => event !== null);
 };
 
 export { model, Command, Event };

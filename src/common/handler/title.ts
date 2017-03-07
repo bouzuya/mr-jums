@@ -4,7 +4,7 @@ import { NoopCommand } from '../../common/command';
 import {
   Event,
   EventType,
-  HistoryEvent
+  HistoryPushedEvent
 } from '../../common/event';
 
 const select = <T extends Event>(
@@ -15,7 +15,7 @@ const select = <T extends Event>(
 
 const model = (message$: xs<Message>): xs<Message> => {
   const noop: NoopCommand = { type: 'noop' };
-  return select<HistoryEvent>(message$, 'history')
+  return select<HistoryPushedEvent>(message$, 'history-pushed')
     .map(({ title }) => {
       if (typeof window === 'undefined') return noop;
       if (typeof window.document === 'undefined') return noop;

@@ -1,5 +1,5 @@
 import xs from 'xstream';
-import { HistoryEvent } from '../../common/event';
+import { HistoryPushedEvent } from '../../common/event';
 import {
   HistoryCommand,
   HistoryBackCommand,
@@ -9,7 +9,7 @@ import {
   HistoryReplaceStateCommand
 } from '@bouzuya/cyclejs-history-driver';
 
-const view = (history$: xs<HistoryEvent>): xs<HistoryCommand> => {
+const view = (history$: xs<HistoryPushedEvent>): xs<HistoryCommand> => {
   return history$
     .map<HistoryPushStateCommand>((event) => {
       return {
