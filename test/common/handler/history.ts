@@ -39,10 +39,15 @@ test(category + 'menu: true, entry: null', () => {
   });
   return toPromise(model(message$)).then((values) => {
     assert(values.length === 1);
-    const { type, path, title } = values[0];
-    assert(type === 'history-pushed');
-    assert(path === '/');
-    assert(title === 'blog.bouzuya.net');
+    const value = values[0];
+    if (value.type === 'history-pushed') {
+      const { type, path, title } = value;
+      assert(type === 'history-pushed');
+      assert(path === '/');
+      assert(title === 'blog.bouzuya.net');
+    } else {
+      assert.fail();
+    }
   });
 });
 
@@ -56,10 +61,15 @@ test(category + 'menu: true, entry: { id, title }', () => {
   });
   return toPromise(model(message$)).then((values) => {
     assert(values.length === 1);
-    const { type, path, title } = values[0];
-    assert(type === 'history-pushed');
-    assert(path === '/');
-    assert(title === 'blog.bouzuya.net');
+    const value = values[0]
+    if (value.type === 'history-pushed') {
+      const { type, path, title } = value;
+      assert(type === 'history-pushed');
+      assert(path === '/');
+      assert(title === 'blog.bouzuya.net');
+    } else {
+      assert.fail();
+    }
   });
 });
 
@@ -73,10 +83,15 @@ test(category + 'menu: false, entry: null', () => {
   });
   return toPromise(model(message$)).then((values) => {
     assert(values.length === 1);
-    const { type, path, title } = values[0];
-    assert(type === 'history-pushed');
-    assert(path === '/');
-    assert(title === 'blog.bouzuya.net');
+    const value = values[0];
+    if (value.type === 'history-pushed') {
+      const { type, path, title } = value;
+      assert(type === 'history-pushed');
+      assert(path === '/');
+      assert(title === 'blog.bouzuya.net');
+    } else {
+      assert.fail();
+    }
   });
 });
 
@@ -90,10 +105,15 @@ test(category + 'menu: false, entry: { id, title }', () => {
   });
   return toPromise(model(message$)).then((values) => {
     assert(values.length === 1);
-    const { type, path, title } = values[0];
-    assert(type === 'history-pushed');
-    assert(path === '/2006/01/02/');
-    assert(title === '2006-01-02 title1 - blog.bouzuya.net');
+    const value = values[0];
+    if (value.type === 'history-pushed') {
+      const { type, path, title } = value;
+      assert(type === 'history-pushed');
+      assert(path === '/2006/01/02/');
+      assert(title === '2006-01-02 title1 - blog.bouzuya.net');
+    } else {
+      assert.fail();
+    }
   });
 });
 
@@ -108,9 +128,14 @@ test(category + 'same path', () => {
   const message$ = xs.from([stateEvent, stateEvent]);
   return toPromise(model(message$)).then((values) => {
     assert(values.length === 1); // !== 2
-    assert(values[0].type === 'history-pushed');
-    assert(values[0].path === '/2006/01/02/');
-    assert(values[0].title === '2006-01-02 title1 - blog.bouzuya.net');
+    const value = values[0];
+    if (value.type === 'history-pushed') {
+      assert(value.type === 'history-pushed');
+      assert(value.path === '/2006/01/02/');
+      assert(value.title === '2006-01-02 title1 - blog.bouzuya.net');
+    } else {
+      assert.fail();
+    }
   });
 });
 
@@ -132,11 +157,21 @@ test(category + 'different path', () => {
   const message$ = xs.from([stateEvent1, stateEvent2]);
   return toPromise(model(message$)).then((values) => {
     assert(values.length === 2);
-    assert(values[0].type === 'history-pushed');
-    assert(values[0].path === '/2006/01/02/');
-    assert(values[0].title === '2006-01-02 title1 - blog.bouzuya.net');
-    assert(values[1].type === 'history-pushed');
-    assert(values[1].path === '/2006/01/03/');
-    assert(values[1].title === '2006-01-03 title2 - blog.bouzuya.net');
+    const value0 = values[0];
+    if (value0.type === 'history-pushed') {
+      assert(value0.type === 'history-pushed');
+      assert(value0.path === '/2006/01/02/');
+      assert(value0.title === '2006-01-02 title1 - blog.bouzuya.net');
+    } else {
+      assert.fail();
+    }
+    const value1 = values[1];
+    if (value1.type === 'history-pushed') {
+      assert(value1.type === 'history-pushed');
+      assert(value1.path === '/2006/01/03/');
+      assert(value1.title === '2006-01-03 title2 - blog.bouzuya.net');
+    } else {
+      assert.fail();
+    }
   });
 });
