@@ -37,7 +37,7 @@ test(category + 'menu: true, entry: null', () => {
       menu: true
     }
   });
-  return toPromise(model(message$).take(1)).then((values) => {
+  return toPromise(model(message$)).then((values) => {
     assert(values.length === 1);
     const { type, path, title } = values[0];
     assert(type === 'history');
@@ -54,7 +54,7 @@ test(category + 'menu: true, entry: { id, title }', () => {
       menu: true
     }
   });
-  return toPromise(model(message$).take(1)).then((values) => {
+  return toPromise(model(message$)).then((values) => {
     assert(values.length === 1);
     const { type, path, title } = values[0];
     assert(type === 'history');
@@ -71,7 +71,7 @@ test(category + 'menu: false, entry: null', () => {
       menu: false
     }
   });
-  return toPromise(model(message$).take(1)).then((values) => {
+  return toPromise(model(message$)).then((values) => {
     assert(values.length === 1);
     const { type, path, title } = values[0];
     assert(type === 'history');
@@ -88,11 +88,55 @@ test(category + 'menu: false, entry: { id, title }', () => {
       menu: false
     }
   });
-  return toPromise(model(message$).take(1)).then((values) => {
+  return toPromise(model(message$)).then((values) => {
     assert(values.length === 1);
     const { type, path, title } = values[0];
     assert(type === 'history');
     assert(path === '/2006/01/02/');
     assert(title === '2006-01-02 title1 - blog.bouzuya.net');
+  });
+});
+
+test(category + 'same path', () => {
+  const stateEvent = <StateEvent>{
+    type: 'state',
+    state: {
+      entry: { id: '2006-01-02', title: 'title1' },
+      menu: false
+    }
+  };
+  const message$ = xs.from([stateEvent, stateEvent]);
+  return toPromise(model(message$)).then((values) => {
+    assert(values.length === 1); // !== 2
+    assert(values[0].type === 'history');
+    assert(values[0].path === '/2006/01/02/');
+    assert(values[0].title === '2006-01-02 title1 - blog.bouzuya.net');
+  });
+});
+
+test(category + 'different path', () => {
+  const stateEvent1 = <StateEvent>{
+    type: 'state',
+    state: {
+      entry: { id: '2006-01-02', title: 'title1' },
+      menu: false
+    }
+  };
+  const stateEvent2 = <StateEvent>{
+    type: 'state',
+    state: {
+      entry: { id: '2006-01-03', title: 'title2' },
+      menu: false
+    }
+  };
+  const message$ = xs.from([stateEvent1, stateEvent2]);
+  return toPromise(model(message$)).then((values) => {
+    assert(values.length === 2);
+    assert(values[0].type === 'history');
+    assert(values[0].path === '/2006/01/02/');
+    assert(values[0].title === '2006-01-02 title1 - blog.bouzuya.net');
+    assert(values[1].type === 'history');
+    assert(values[1].path === '/2006/01/03/');
+    assert(values[1].title === '2006-01-03 title2 - blog.bouzuya.net');
   });
 });
