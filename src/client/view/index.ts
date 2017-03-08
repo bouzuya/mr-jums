@@ -5,6 +5,7 @@ import { view as httpView } from './http';
 import {
   Event,
   EventType,
+  HistoryPoppedEvent,
   HistoryPushedEvent,
   RequestEvent,
   StateEvent
@@ -19,7 +20,12 @@ const select = <T extends Event>(
 const view = (event$: xs<Event>): { DOM: xs<any>; HTTP: xs<any>; } => {
   const sinks = {
     DOM: domView(select<StateEvent>(event$, 'state')),
-    HISTORY: historyView(select<HistoryPushedEvent>(event$, 'history-pushed')),
+    HISTORY: historyView(
+      xs.merge(
+        select<HistoryPoppedEvent>(event$, 'history-popped'),
+        select<HistoryPushedEvent>(event$, 'history-pushed')
+      )
+    ),
     HTTP: httpView(select<RequestEvent>(event$, 'request'))
   };
   return sinks;
