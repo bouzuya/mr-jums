@@ -113,7 +113,8 @@ const model = (command$: xs<Message>, initialState: State): xs<StateEvent> => {
         return state;
       }
     }, initialState)
-    .map<StateEvent>((state) => ({ type: 'state', state }));
+    .map<StateEvent>((state) => ({ type: 'state', state }))
+    .remember();
   return state$;
 };
 
