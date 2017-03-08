@@ -3,8 +3,8 @@ export { Command } from './command';
 export { CommandType } from './command-type';
 
 // user command
-export { BackCommand } from './back-command';
 export { EnterCommand } from './enter-command';
+export { HistoryCommand } from './history-command';
 export { MenuCommand } from './menu-command';
 export { NextCommand } from './next-command';
 export { PrevCommand } from './prev-command';
