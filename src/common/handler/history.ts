@@ -33,8 +33,10 @@ const ignore = ({ stack }: T): T => {
 };
 
 const pop = ({ stack }: T): T => {
+  // assert(stack.length >= 2);
   stack.splice(stack.length - 1, 1);
-  return { stack, event: { type: 'history-popped' } };
+  const { path, title } = stack[stack.length - 1];
+  return { stack, event: { type: 'history-popped', path, title } };
 };
 
 const push = ({ stack }: T, { path, title }: P): T => {
