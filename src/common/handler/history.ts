@@ -34,7 +34,7 @@ const ignore = ({ stack }: T): T => {
 
 const pop = ({ stack }: T): T => {
   stack.splice(stack.length - 1, 1);
-  return { stack, event: null }; // TODO: back
+  return { stack, event: { type: 'history-popped' } };
 };
 
 const push = ({ stack }: T, { path, title }: P): T => {
