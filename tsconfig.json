@@ -22,6 +22,7 @@
     "./src/server/index.ts",
     "./test/index.ts",
     "./test/common/handler/history.ts",
+    "./test/common/handler/title.ts",
     "./test/common/model/entry-list/index.ts",
     "./test/common/model/entry-list/get-page-entries.ts",
     "./test/common/model/entry-viewer/empty.ts",
