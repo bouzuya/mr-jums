@@ -11,7 +11,7 @@ import { model } from '../../../src/common/handler/title';
 
 const { test, fixture } = beater();
 
-const category = 'handler > title > ';
+const category = '/common/handler/title ';
 
 const toPromise = <T>(s: Stream<T>): Promise<T[]> => {
   return new Promise<T[]>((resolve, reject) => {

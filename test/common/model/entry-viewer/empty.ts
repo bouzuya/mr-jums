@@ -5,7 +5,7 @@ import { create } from '../../../../src/common/model/entry-viewer';
 
 const { test } = beater();
 
-test('model > entry-viewer > empty', () => {
+test('/common/model/entry-viewer/empty', () => {
   const empty = create([]);
   assert(empty.filteredEntries.length === 0);
   assert(empty.focusedEntryId === null);

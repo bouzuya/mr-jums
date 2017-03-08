@@ -6,7 +6,7 @@ import { focusNext } from '../../../../src/common/model/entry-viewer';
 
 const { test } = beater();
 
-test('model > entry-viewer > focusNext', () => {
+test('/common/model/entry-viewer/focus-next', () => {
   const data = newEntryViewer();
 
   const next1 = focusNext(data);

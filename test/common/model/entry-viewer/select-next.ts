@@ -9,7 +9,7 @@ import {
 
 const { test } = beater();
 
-test('model > entry-viewer > selectNext', () => {
+test('/common/model/entry-viewer/select-next', () => {
   const data = newEntryViewer();
 
   const next0 = select(data);

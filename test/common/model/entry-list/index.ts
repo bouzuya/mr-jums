@@ -15,7 +15,7 @@ import {
 
 const { test } = beater();
 
-const category = 'model > entry-list > ';
+const category = '/common/model/entry-list ';
 
 test(category + 'EmptyEntryList', () => {
   const empty = createEntryList([]);

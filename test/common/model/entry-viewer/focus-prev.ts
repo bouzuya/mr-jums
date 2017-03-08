@@ -8,7 +8,7 @@ import {
 
 const { test } = beater();
 
-test('model > entry-viewer > focusPrev', () => {
+test('/common/model/entry-viewer/focus-prev', () => {
   const data = newEntryViewer();
 
   const next30 = new Array(30).fill(0).reduce((e, _) => focusNext(e), data);

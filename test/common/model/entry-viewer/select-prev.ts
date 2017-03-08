@@ -8,7 +8,7 @@ import {
 
 const { test } = beater();
 
-test('model > entry-viewer > selectPrev', () => {
+test('/common/model/entry-viewer/select-prev', () => {
   const data = newEntryViewer();
 
   const next30 = new Array(30).fill(0).reduce((e, _) => focusNext(e), data);

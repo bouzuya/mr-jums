@@ -9,7 +9,7 @@ import {
 
 const { test } = beater();
 
-const category = 'model > entry-list > get-page-entries > ';
+const category = '/common/model/entry-list/get-page-entries ';
 
 test(category + '*', () => {
   const entriesData: Entry[] = [

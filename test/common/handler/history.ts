@@ -7,7 +7,7 @@ import { model } from '../../../src/common/handler/history';
 
 const { test } = beater();
 
-const category = 'handler > history > ';
+const category = '/common/handler/history ';
 
 const toPromise = <T>(s: Stream<T>): Promise<T[]> => {
   return new Promise<T[]>((resolve, reject) => {

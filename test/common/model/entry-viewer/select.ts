@@ -6,7 +6,7 @@ import { select } from '../../../../src/common/model/entry-viewer';
 
 const { test } = beater();
 
-test('model > entry-viewer > select', () => {
+test('/common/model/entry-viewer/select', () => {
   const data = newEntryViewer();
 
   const focus20160131 = select(data, '2016-01-31');

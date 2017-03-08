@@ -9,7 +9,7 @@ import {
 
 const { test } = beater();
 
-const category = 'model > paged-entry-list > ';
+const category = '/common/model/paged-entry-list ';
 
 test(category + 'TODO', () => {
   assert(createPagedEntryList);
