@@ -16,10 +16,9 @@ const view = (
   history$: xs<HistoryPoppedEvent | HistoryPushedEvent>
 ): xs<HistoryCommand> => {
   return history$
+    .filter(({ type }) => type === 'history-pushed') // TODO
     .map<HistoryBackCommand | HistoryPushStateCommand>((event) => {
-      if (event.type === 'history-popped') {
-        return { type: 'back' };
-      } else if (event.type === 'history-pushed') {
+      if (event.type === 'history-pushed') {
         return {
           type: 'push-state',
           data: null,
