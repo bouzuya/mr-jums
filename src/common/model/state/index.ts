@@ -3,8 +3,8 @@ import { deserialize } from './deserialize';
 import { serialize } from './serialize';
 
 // export interface SerializedData {
-//   entry: EntryDetail | null;
 //   entries: Entry[];
+//   selectedEntryDetail: EntryDetail | null;
 // }
 
 export { create, deserialize, serialize };

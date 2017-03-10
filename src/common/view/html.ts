@@ -18,7 +18,7 @@ const view = (state: State): VNode => {
   // TODO: remove process.env.NODE_ENV
   const src = (process.env.NODE_ENV === 'development'
     ? 'http://localhost:3001' : '') + '/index.js';
-  const entry = state.entry;
+  const entry = state.selectedEntryDetail;
   return html({ lang: 'ja' }, [
     head([
       meta({ props: { charset: 'UTF-8' } }),

@@ -17,7 +17,7 @@ const p$ = (message$: xs<Message>): xs<P> => {
   return message$
     .filter((m) => m.type === 'state')
     .map<StateEvent>((message) => <StateEvent>message)
-    .map(({ state: { entry, menu } }) => {
+    .map(({ state: { selectedEntryDetail: entry, menu } }) => {
       const path = menu === true
         ? '/' : entry === null
           ? '/' : `/${entry.id.replace(/-/g, '/')}/`;

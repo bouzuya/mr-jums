@@ -33,7 +33,7 @@ test(category + 'menu: true, entry: null', () => {
   const message$ = xs.of(<StateEvent>{
     type: 'state',
     state: {
-      entry: null,
+      selectedEntryDetail: null,
       menu: true
     }
   });
@@ -49,7 +49,7 @@ test(category + 'menu: true, entry: { id, title }', () => {
   const message$ = xs.of(<StateEvent>{
     type: 'state',
     state: {
-      entry: { id: '2006-01-02', title: 'title1' },
+      selectedEntryDetail: { id: '2006-01-02', title: 'title1' },
       menu: true
     }
   });
@@ -65,7 +65,7 @@ test(category + 'menu: false, entry: null', () => {
   const message$ = xs.of(<StateEvent>{
     type: 'state',
     state: {
-      entry: null,
+      selectedEntryDetail: null,
       menu: false
     }
   });
@@ -81,7 +81,7 @@ test(category + 'menu: false, entry: { id, title }', () => {
   const message$ = xs.of(<StateEvent>{
     type: 'state',
     state: {
-      entry: { id: '2006-01-02', title: 'title1' },
+      selectedEntryDetail: { id: '2006-01-02', title: 'title1' },
       menu: false
     }
   });
@@ -97,7 +97,7 @@ test(category + 'same path', () => {
   const stateEvent = <StateEvent>{
     type: 'state',
     state: {
-      entry: { id: '2006-01-02', title: 'title1' },
+      selectedEntryDetail: { id: '2006-01-02', title: 'title1' },
       menu: false
     }
   };
@@ -114,14 +114,14 @@ test(category + 'different path', () => {
   const stateEvent1 = <StateEvent>{
     type: 'state',
     state: {
-      entry: { id: '2006-01-02', title: 'title1' },
+      selectedEntryDetail: { id: '2006-01-02', title: 'title1' },
       menu: false
     }
   };
   const stateEvent2 = <StateEvent>{
     type: 'state',
     state: {
-      entry: { id: '2006-01-03', title: 'title2' },
+      selectedEntryDetail: { id: '2006-01-03', title: 'title2' },
       menu: false
     }
   };
@@ -141,14 +141,14 @@ test(category + 'HistoryPoppedEvent', () => {
   const stateEvent1 = <StateEvent>{
     type: 'state',
     state: {
-      entry: { id: '2006-01-02', title: 'title1' },
+      selectedEntryDetail: { id: '2006-01-02', title: 'title1' },
       menu: false
     }
   };
   const stateEvent2 = <StateEvent>{
     type: 'state',
     state: {
-      entry: { id: '2006-01-03', title: 'title2' },
+      selectedEntryDetail: { id: '2006-01-03', title: 'title2' },
       menu: false
     }
   };
