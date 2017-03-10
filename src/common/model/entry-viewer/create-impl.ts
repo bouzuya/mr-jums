@@ -4,10 +4,7 @@ import {
 } from '../../type/non-empty-paged-entry-list';
 import { PagedEntryList } from '../../type/paged-entry-list';
 import { EntryViewer } from '../../type/entry-viewer';
-import {
-  getAllEntries,
-  getCurrentPageEntries,
-} from '../paged-entry-list';
+import { getAllEntries } from '../paged-entry-list';
 
 const createImpl = (
   pagedEntryList: PagedEntryList,
@@ -15,11 +12,9 @@ const createImpl = (
   selectedEntryId: string | null
 ): EntryViewer => {
   const entries = getAllEntries(pagedEntryList);
-  const filteredEntries = getCurrentPageEntries(pagedEntryList);
   return {
     _pagedEntryList: pagedEntryList,
     entries,
-    filteredEntries,
     focusedEntryId,
     selectedEntryId
   }

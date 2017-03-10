@@ -6,6 +6,7 @@ import { createImpl } from './create-impl';
 import { focus } from './focus';
 import { focusNext } from './focus-next';
 import { focusPrev } from './focus-prev';
+import { getCurrentPageEntries } from './get-current-page-entries';
 import { select } from './select';
 import { selectNext } from './select-next';
 import { selectPrev } from './select-prev';
@@ -22,4 +23,13 @@ const create = (entries: Entry[]): EntryViewer => {
   );
 };
 
-export { create, focus, focusNext, focusPrev, select, selectNext, selectPrev };
+export {
+  create,
+  focus,
+  focusNext,
+  focusPrev,
+  getCurrentPageEntries,
+  select,
+  selectNext,
+  selectPrev
+};

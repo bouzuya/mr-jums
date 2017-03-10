@@ -1,12 +1,14 @@
 import { VNode, div, ul, li } from '@cycle/dom';
 import { EntryViewer } from '../type/entry-viewer';
 import { view as entryView } from './entry';
+import { getCurrentPageEntries } from '../model/entry-viewer';
 
 const view = (
   entryViewer: EntryViewer
 ): VNode => {
-  const { filteredEntries, focusedEntryId, selectedEntryId } = entryViewer;
-  const entryListItems = filteredEntries.map((entry) => {
+  const { focusedEntryId, selectedEntryId } = entryViewer;
+  const currentPageEntries = getCurrentPageEntries(entryViewer);
+  const entryListItems = currentPageEntries.map((entry) => {
     const isFocused = entry.id === focusedEntryId;
     const isSelected = entry.id === selectedEntryId;
     const className = [
