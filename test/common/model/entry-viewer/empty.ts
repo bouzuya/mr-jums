@@ -9,6 +9,5 @@ test('/common/model/entry-viewer/empty', () => {
   const empty = create([]);
   assert(empty.filteredEntries.length === 0);
   assert(empty.focusedEntryId === null);
-  assert(empty.selectedEntry === null);
   assert(empty.selectedEntryId === null);
 });

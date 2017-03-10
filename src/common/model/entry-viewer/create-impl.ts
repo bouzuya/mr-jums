@@ -16,14 +16,11 @@ const createImpl = (
 ): EntryViewer => {
   const entries = getAllEntries(pagedEntryList);
   const filteredEntries = getCurrentPageEntries(pagedEntryList);
-  const entry = filteredEntries.find((entry) => entry.id === selectedEntryId);
-  const selectedEntry = typeof entry === 'undefined' ? null : entry;
   return {
     _pagedEntryList: pagedEntryList,
     entries,
     filteredEntries,
     focusedEntryId,
-    selectedEntry,
     selectedEntryId
   }
 };

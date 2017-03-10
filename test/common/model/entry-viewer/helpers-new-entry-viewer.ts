@@ -10,6 +10,5 @@ test('/common/model/entry-viewer/helper-new-entry-viewer', () => {
   assert(data.filteredEntries.length === 9);
   assert(data.filteredEntries[0].id === '2016-01-31');
   assert(data.focusedEntryId === '2016-01-31');
-  assert(data.selectedEntry === null);
   assert(data.selectedEntryId === null);
 });

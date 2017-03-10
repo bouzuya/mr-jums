@@ -6,6 +6,5 @@ export interface EntryViewer {
   entries: Entry[];
   filteredEntries: Entry[];
   focusedEntryId: string | null;
-  selectedEntry: Entry | null;
   selectedEntryId: string | null;
 }
