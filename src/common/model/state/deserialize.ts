@@ -1,14 +1,7 @@
 import { State } from '../../type/state';
 import { create, select } from '../entry-viewer';
 
-const deserialize = (serialized: string | undefined): State => {
-  if (typeof serialized === 'undefined') {
-    return {
-      selectedEntryDetail: null,
-      entryViewer: create([]),
-      menu: true
-    };
-  }
+const deserialize = (serialized: string): State => {
   const data = JSON.parse(serialized);
   const entryViewer = create(data.entries);
   return {

@@ -25,8 +25,8 @@ type MySinks = {
 };
 
 const main = (): void => {
-  const serialized: string | undefined = typeof window === 'undefined'
-    ? undefined : (<any>window).INITIAL_STATE;
+  if (typeof window === 'undefined') throw new Error();
+  const serialized: string = (<any>window).INITIAL_STATE;
   const initialState = deserialize(serialized);
   run(
     (sources: MySources): MySinks => view(model([
