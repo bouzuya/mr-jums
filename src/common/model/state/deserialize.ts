@@ -5,10 +5,10 @@ const deserialize = (serialized: string): State => {
   const data = JSON.parse(serialized);
   const entryViewer = create(data.entries);
   return {
-    selectedEntryDetail: data.entry,
-    entryViewer: data.entry === null
-      ? entryViewer : select(entryViewer, data.entry.id),
-    menu: data.entry === null
+    selectedEntryDetail: data.selectedEntryDetail,
+    entryViewer: data.selectedEntryDetail === null
+      ? entryViewer : select(entryViewer, data.selectedEntryDetail.id),
+    menu: data.selectedEntryDetail === null
   };
 };
 

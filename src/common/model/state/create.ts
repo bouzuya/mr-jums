@@ -12,7 +12,7 @@ const create = (
   const data = Object.assign(
     { entries },
     typeof entry === 'undefined'
-      ? { entry: null } : { entry }
+      ? { selectedEntryDetail: null } : { selectedEntryDetail: entry }
   );
   const serialized = JSON.stringify(data);
   return deserialize(serialized);
