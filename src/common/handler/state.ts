@@ -30,8 +30,8 @@ const fetchPostSuccess = (
   state: State, command: FetchPostSuccessCommand
 ): State => {
   const { date, html, minutes, pubdate, tags, title } = command.post;
-  const entry = { id: date, html, minutes, pubdate, tags, title };
-  return Object.assign({}, state, { entry });
+  const selectedEntryDetail = { id: date, html, minutes, pubdate, tags, title };
+  return Object.assign({}, state, { selectedEntryDetail });
 };
 
 const fetchPostsSuccess = (
