@@ -1,17 +1,11 @@
-import { EmptyPagedEntryList } from '../../type/empty-paged-entry-list';
-import {
-  NonEmptyPagedEntryList
-} from '../../type/non-empty-paged-entry-list';
-import { PagedEntryList } from '../../type/paged-entry-list';
+import { Entry } from '../../type/entry';
 import { EntryViewer } from '../../type/entry-viewer';
-import { getAllEntries } from '../paged-entry-list';
 
 const createImpl = (
-  pagedEntryList: PagedEntryList,
+  entries: Entry[],
   focusedEntryId: string | null,
   selectedEntryId: string | null
 ): EntryViewer => {
-  const entries = getAllEntries(pagedEntryList);
   return {
     entries,
     focusedEntryId,
@@ -20,8 +14,5 @@ const createImpl = (
 };
 
 export {
-  EmptyPagedEntryList,
-  NonEmptyPagedEntryList,
-  PagedEntryList,
   createImpl
 };

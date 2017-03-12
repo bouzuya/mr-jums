@@ -23,8 +23,6 @@
     "./test/index.ts",
     "./test/common/handler/history.ts",
     "./test/common/handler/title.ts",
-    "./test/common/model/entry-list/index.ts",
-    "./test/common/model/entry-list/get-page-entries.ts",
     "./test/common/model/entry-viewer/empty.ts",
     "./test/common/model/entry-viewer/focus.ts",
     "./test/common/model/entry-viewer/focus-next.ts",
@@ -32,7 +30,6 @@
     "./test/common/model/entry-viewer/helpers-new-entry-viewer.ts",
     "./test/common/model/entry-viewer/select.ts",
     "./test/common/model/entry-viewer/select-next.ts",
-    "./test/common/model/entry-viewer/select-prev.ts",
-    "./test/common/model/paged-entry-list/index.ts"
+    "./test/common/model/entry-viewer/select-prev.ts"
   ]
 }
