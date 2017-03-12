@@ -3,7 +3,6 @@ import { EntryViewer } from '../../type/entry-viewer';
 import { createEntryList } from '../entry-list';
 import { createPagedEntryList } from '../paged-entry-list';
 import { createImpl } from './create-impl';
-import { focus } from './focus';
 import { focusNext } from './focus-next';
 import { focusPrev } from './focus-prev';
 import { getCurrentPageEntries } from './get-current-page-entries';
@@ -25,7 +24,6 @@ const create = (entries: Entry[]): EntryViewer => {
 
 export {
   create,
-  focus,
   focusNext,
   focusPrev,
   getCurrentPageEntries,

@@ -1,53 +1,28 @@
-import { createImpl } from './create-impl';
+import { Entry } from '../../type/entry';
 import { EntryViewer } from '../../type/entry-viewer';
-import {
-  createEntryList,
-  getFirstEntry,
-  isEmptyEntryList
-} from '../entry-list';
-import {
-  findPrevEntry,
-  getAllEntries,
-  getCurrentPageEntries,
-  getOffsetEntryId,
-  isEmptyPagedEntryList,
-  isFirstEntryId,
-  isFirstEntryIdInCurrentPage,
-  offset
-} from '../paged-entry-list';
+
+const getPrevFocusedEntry = (
+  entries: Entry[], focusedEntryId: string | null
+): Entry | null => {
+  if (entries.length === 0) return null;
+  // assert(focusedEntryId === null);
+  const index = entries.findIndex(({ id }) => id === focusedEntryId);
+  // assert(index >= 0) && assert(index < entries.length);
+  if (index === 0) return null; // first entry
+  return entries[index - 1];
+};
 
 const focusPrev = (
   entryViewer: EntryViewer
 ): EntryViewer => {
-  const { _pagedEntryList: pagedEntryList } = entryViewer;
-  if (isEmptyPagedEntryList(pagedEntryList)) return entryViewer;
-  const entries = getAllEntries(pagedEntryList);
-  const entryList = createEntryList(entries);
-  const offsetEntryId = getOffsetEntryId(pagedEntryList);
-  if (isEmptyEntryList(entryList)) return entryViewer;
-  const pageEntries = getCurrentPageEntries(pagedEntryList);
-  const pageEntryList = createEntryList(pageEntries);
-  if (isEmptyEntryList(pageEntryList)) return entryViewer;
-  if (entryViewer.focusedEntryId === null) return entryViewer;
-  const currentPageFirstEntryIndex = entries
-    .findIndex(({ id }) => id === offsetEntryId);
-  if (currentPageFirstEntryIndex < 0) throw new Error();
-  const prevOffsetEntryId =
-    getFirstEntry(pageEntryList).id !== getFirstEntry(entryList).id &&
-      isFirstEntryIdInCurrentPage(pagedEntryList, entryViewer.focusedEntryId)
-      ? entries[currentPageFirstEntryIndex - 1].id : offsetEntryId;
-  const prevFocusedEntry =
-    isFirstEntryId(pagedEntryList, entryViewer.focusedEntryId)
-      ? getFirstEntry(entryList)
-      : findPrevEntry(
-        pagedEntryList, entryViewer.focusedEntryId
-      ); // TODO: getPrevEntry
+  const { entries, focusedEntryId, selectedEntryId } = entryViewer;
+  const prevFocusedEntry = getPrevFocusedEntry(entries, focusedEntryId);
   if (prevFocusedEntry === null) return entryViewer;
-  return createImpl(
-    offset(pagedEntryList, prevOffsetEntryId),
-    prevFocusedEntry.id,
-    entryViewer.selectedEntryId
-  );
+  return {
+    entries,
+    focusedEntryId: prevFocusedEntry.id,
+    selectedEntryId
+  };
 };
 
 export { focusPrev };

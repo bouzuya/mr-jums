@@ -1,54 +1,30 @@
+import { Entry } from '../../type/entry';
 import { EntryViewer } from '../../type/entry-viewer';
-import { createImpl } from './create-impl';
-import {
-  createEntryList,
-  getLastEntry,
-  isEmptyEntryList
-} from '../entry-list';
-import {
-  findNextEntry,
-  getAllEntries,
-  getCurrentPageEntries,
-  getOffsetEntryId,
-  isEmptyPagedEntryList,
-  isLastEntryId,
-  isLastEntryIdInCurrentPage,
-  offset
-} from '../paged-entry-list';
+
+const getNextFocusedEntry = (
+  entries: Entry[], focusedEntryId: string | null
+): Entry | null => {
+  if (entries.length === 0) return null;
+  // assert(focusedEntryId === null);
+  const index = entries.findIndex(({ id }) => id === focusedEntryId);
+  // assert(index >= 0) && assert(index < entries.length);
+  if (index === entries.length - 1) return null; // last entry
+  return entries[index + 1];
+};
 
 const selectAndFocusNext = (
   entryViewer: EntryViewer
 ): EntryViewer => {
-  const { _pagedEntryList: pagedEntryList } = entryViewer;
-  if (isEmptyPagedEntryList(pagedEntryList)) return entryViewer;
-  const entries = getAllEntries(pagedEntryList);
-  const entryList = createEntryList(entries);
-  const offsetEntryId = getOffsetEntryId(pagedEntryList);
-  if (isEmptyEntryList(entryList)) return entryViewer;
-  const pageEntries = getCurrentPageEntries(pagedEntryList);
-  const pageEntryList = createEntryList(pageEntries);
-  if (isEmptyEntryList(pageEntryList)) return entryViewer;
-  if (entryViewer.selectedEntryId === null) return entryViewer;
-  const currentPageFirstEntryIndex = entries
-    .findIndex(({ id }) => id === offsetEntryId);
-  if (currentPageFirstEntryIndex < 0) throw new Error();
-  const nextOffsetEntryId =
-    getLastEntry(pageEntryList).id !== getLastEntry(entryList).id &&
-      isLastEntryIdInCurrentPage(pagedEntryList, entryViewer.selectedEntryId)
-      ? entries[currentPageFirstEntryIndex + 1].id : offsetEntryId;
-  const nextSelectedEntry = isLastEntryId(
-    pagedEntryList, entryViewer.selectedEntryId
-  )
-    ? getLastEntry(entryList)
-    : findNextEntry(
-      pagedEntryList, entryViewer.selectedEntryId
-    ); // TODO: getNextEntry
+  const { entries, selectedEntryId } = entryViewer;
+  if (entries.length === 0) return entryViewer;
+  if (selectedEntryId === null) return entryViewer;
+  const nextSelectedEntry = getNextFocusedEntry(entries, selectedEntryId);
   if (nextSelectedEntry === null) return entryViewer;
-  return createImpl(
-    offset(pagedEntryList, nextOffsetEntryId),
-    nextSelectedEntry.id,
-    nextSelectedEntry.id
-  );
+  return {
+    entries,
+    focusedEntryId: nextSelectedEntry.id,
+    selectedEntryId: nextSelectedEntry.id
+  };
 };
 
 export { selectAndFocusNext as selectNext };

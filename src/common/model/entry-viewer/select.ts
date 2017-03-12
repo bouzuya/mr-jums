@@ -1,26 +1,28 @@
-import { createImpl } from './create-impl';
 import { EntryViewer } from '../../type/entry-viewer';
-import {
-  hasEntryId,
-  isEmptyPagedEntryList,
-} from '../paged-entry-list';
-import { focus } from './focus';
 
 const selectAndFocus = (
   entryViewer: EntryViewer,
   entryId?: string
 ): EntryViewer => {
-  const { _pagedEntryList: pagedEntryList } = entryViewer;
-  if (isEmptyPagedEntryList(pagedEntryList)) return entryViewer;
-  const id = typeof entryId === 'undefined'
-    ? entryViewer.focusedEntryId : entryId;
-  if (id === null) return entryViewer;
-  if (hasEntryId(pagedEntryList, id) === false) return entryViewer;
-  return focus(createImpl(
-    pagedEntryList,
-    entryViewer.focusedEntryId,
-    id
-  ), id);
+  if (typeof entryId === 'undefined') {
+    const { entries, focusedEntryId } = entryViewer;
+    if (entries.length === 0) return entryViewer;
+    return {
+      entries,
+      focusedEntryId,
+      selectedEntryId: focusedEntryId
+    };
+  } else {
+    const { entries } = entryViewer;
+    if (entries.length === 0) return entryViewer;
+    const selectedEntry = entries.find(({ id }) => id === entryId);
+    if (typeof selectedEntry === 'undefined') return entryViewer;
+    return {
+      entries,
+      focusedEntryId: selectedEntry.id,
+      selectedEntryId: selectedEntry.id
+    };
+  }
 };
 
 export { selectAndFocus as select };

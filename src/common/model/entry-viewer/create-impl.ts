@@ -13,7 +13,6 @@ const createImpl = (
 ): EntryViewer => {
   const entries = getAllEntries(pagedEntryList);
   return {
-    _pagedEntryList: pagedEntryList,
     entries,
     focusedEntryId,
     selectedEntryId

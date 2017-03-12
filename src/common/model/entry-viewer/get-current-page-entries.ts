@@ -1,13 +1,17 @@
 import { EntryViewer } from '../../type/entry-viewer';
-import {
-  getCurrentPageEntries as getCurrentPageEntries_,
-} from '../paged-entry-list';
 import { Entry } from '../../type/entry';
 
 const getCurrentPageEntries = ({
-  _pagedEntryList: pagedEntryList
+  entries,
+  focusedEntryId
 }: EntryViewer): Entry[] => {
-  return getCurrentPageEntries_(pagedEntryList);
+  if (entries.length === 0) return [];
+  // assert(focusedEntryId !== null);
+  const index = entries.findIndex(({ id }) => id === focusedEntryId);
+  // assert(index >= 0) && assert(index < entries.length);
+  const s = Math.max(0, index - 4);
+  const e = Math.max(0, index + 4 + 1);
+  return entries.slice(s, e);
 };
 
 export {
