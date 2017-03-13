@@ -8,114 +8,70 @@ import {
   PrevCommand,
   SelectCommand
 } from '../../command';
+// StateCommand
 import { StateEvent } from '../../event';
-import {
-  create,
-  focusNext, focusPrev,
-  select as entryViewerSelect, selectNext, selectPrev
-} from '../../model/entry-viewer';
 import { State } from '../../type/state';
-import { Command, Event, Message } from '../../model/message';
+import { Message } from '../../model/message';
 import { select } from '../util/select';
 
-const doSelect = (state: State, command: SelectCommand): State => {
-  const { entryViewer } = state;
-  return Object.assign({}, state, {
-    entryViewer: entryViewerSelect(entryViewer, command.entryId),
-    menu: false
-  });
-};
+import { enter } from './enter';
+import { fetchPostSuccess } from './fetch-post-success';
+import { fetchPostsSuccess } from './fetch-posts-success';
+import { menu } from './menu';
+import { next } from './next';
+import { prev } from './prev';
+import { select as doSelect } from './select';
 
-const fetchPostSuccess = (
-  state: State, command: FetchPostSuccessCommand
-): State => {
-  const { date, html, minutes, pubdate, tags, title } = command.post;
-  const selectedEntryDetail = { id: date, html, minutes, pubdate, tags, title };
-  return Object.assign({}, state, { selectedEntryDetail });
-};
-
-const fetchPostsSuccess = (
-  state: State, command: FetchPostsSuccessCommand
-): State => {
-  const posts = command.posts
-    .map(({ date, title }) => ({ id: date, title }))
-    .sort(({ id: a }, { id: b }) => a > b ? -1 : (a === b ? 0 : 1));
-  return Object.assign({}, state, {
-    entryViewer: create(posts)
-  });
-};
-
-const menu = (state: State, _: MenuCommand): State => {
-  return Object.assign({}, state, { menu: true });
-};
-
-const enter = (state: State, _: EnterCommand): State => {
-  const { entryViewer } = state;
-  return Object.assign({}, state, {
-    entryViewer: entryViewerSelect(entryViewer),
-    menu: false
-  });
-};
-
-const next = (state: State, _: NextCommand): State => {
-  const { menu, entryViewer } = state;
-  return Object.assign({}, state, {
-    entryViewer: menu === true
-      ? focusNext(entryViewer) : selectNext(entryViewer)
-  });
-};
-
-const prev = (state: State, _: PrevCommand): State => {
-  const { menu, entryViewer } = state;
-  return Object.assign({}, state, {
-    entryViewer: menu === true
-      ? focusPrev(entryViewer) : selectPrev(entryViewer)
-  });
-};
-
-type MyCommand =
+type StateCommand =
   EnterCommand |
   FetchPostSuccessCommand |
   FetchPostsSuccessCommand |
   MenuCommand |
-  SelectCommand |
   NextCommand |
-  PrevCommand;
+  PrevCommand |
+  SelectCommand;
 
-const model = (command$: xs<Message>, initialState: State): xs<StateEvent> => {
-  const state$: xs<StateEvent> = xs
-    .merge<MyCommand>(
-    select<EnterCommand>(command$, 'enter'),
-    select<FetchPostSuccessCommand>(command$, 'fetch-post-success'),
-    select<FetchPostsSuccessCommand>(command$, 'fetch-posts-success'),
-    select<MenuCommand>(command$, 'menu'),
-    select<SelectCommand>(command$, 'select'),
-    select<NextCommand>(command$, 'next'),
-    select<PrevCommand>(command$, 'prev')
-    )
-    .fold((state: State, command: MyCommand) => {
-      if (command.type === 'select') {
-        return doSelect(state, command);
-      } else if (command.type === 'fetch-post-success') {
-        return fetchPostSuccess(state, command);
-      } else if (command.type === 'fetch-posts-success') {
-        return fetchPostsSuccess(state, command);
-      } else if (command.type === 'menu') {
-        return menu(state, command);
-      } else if (command.type === 'enter') {
-        return enter(state, command);
-      } else if (command.type === 'next') {
-        return next(state, command);
-      } else if (command.type === 'prev') {
-        return prev(state, command);
-      } else {
-        // unknown command: do nothing
-        return state;
-      }
-    }, initialState)
-    .map<StateEvent>((state) => ({ type: 'state', state }))
-    .remember();
-  return state$;
+const intent = (message$: xs<Message>): xs<StateCommand> => {
+  return xs.merge<StateCommand>(
+    select<EnterCommand>(message$, 'enter'),
+    select<FetchPostSuccessCommand>(message$, 'fetch-post-success'),
+    select<FetchPostsSuccessCommand>(message$, 'fetch-posts-success'),
+    select<MenuCommand>(message$, 'menu'),
+    select<NextCommand>(message$, 'next'),
+    select<PrevCommand>(message$, 'prev'),
+    select<SelectCommand>(message$, 'select')
+  );
 };
 
-export { model, Command, Event };
+const model = (command$: xs<StateCommand>, initialState: State): xs<State> => {
+  return command$.fold((state: State, command: StateCommand) => {
+    if (command.type === 'enter') {
+      return enter(state, command);
+    } else if (command.type === 'fetch-post-success') {
+      return fetchPostSuccess(state, command);
+    } else if (command.type === 'fetch-posts-success') {
+      return fetchPostsSuccess(state, command);
+    } else if (command.type === 'menu') {
+      return menu(state, command);
+    } else if (command.type === 'next') {
+      return next(state, command);
+    } else if (command.type === 'prev') {
+      return prev(state, command);
+    } else if (command.type === 'select') {
+      return doSelect(state, command);
+    } else {
+      // unknown command: do nothing
+      return state;
+    }
+  }, initialState);
+};
+
+const view = (state$: xs<State>): xs<StateEvent> => {
+  return state$.map<StateEvent>((state) => ({ type: 'state', state }));
+};
+
+const handler = (message$: xs<Message>, init: State): xs<Message> => {
+  return view(model(intent(message$), init)).remember();
+};
+
+export { handler as model };
