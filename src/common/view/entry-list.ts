@@ -17,7 +17,7 @@ const view = (
       isFocused ? '.is-focused' : '',
       isSelected ? '.is-selected' : ''
     ].join('');
-    return li(className, [entryView(entry)]);
+    return li(className, { key: entry.id }, [entryView(entry)]);
   });
   return div('.entry-list', [
     ul('.entry-list', entryListItems)
