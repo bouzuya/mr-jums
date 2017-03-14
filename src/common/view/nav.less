@@ -44,11 +44,17 @@
     .nav-button(@size);
     .position(absolute, auto, auto, 0, 50%);
     margin-left: (@size / -2);
+    &.is-disabled {
+      display: none;
+    }
   }
   > .prev {
     .nav-button(@size);
     .position(absolute, 0, auto, auto, 50%);
     margin-left: (@size / -2);
+    &.is-disabled {
+      display: none;
+    }
   }
   > .enter {
     .nav-button(@size);
