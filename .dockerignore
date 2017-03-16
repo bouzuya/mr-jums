@@ -1,0 +1,13 @@
+*.d.ts
+.travis.yml
+.vscode
+Dockerfile
+LICENSE
+README.md
+logo
+scripts
+src
+test
+tsconfig.json
+webpack.*.js
+yarn.lock
