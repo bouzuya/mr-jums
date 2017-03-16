@@ -9,7 +9,7 @@ services:
 after_success:
   - yarn install --production
   - if [ "$TRAVIS_BRANCH" == "master" ]; then
-    docker login --email="${DOCKER_EMAIL}" --username="${DOCKER_EMAIL}" --password="${DOCKER_PASSWORD}" registry.heroku.com;
+    docker login --email="${DOCKER_EMAIL}" --username="${DOCKER_USERNAME}" --password="${DOCKER_PASSWORD}" registry.heroku.com;
     docker build -t registry.heroku.com/mr-jums/web .;
     docker push registry.heroku.com/mr-jums/web;
     fi
