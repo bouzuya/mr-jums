@@ -8,9 +8,11 @@ services:
 - docker
 after_success:
 - yarn install --production
-- if [ "$TRAVIS_BRANCH" == "master" ]; then docker login --username="${DOCKER_USERNAME}"
-  --password="${DOCKER_PASSWORD}" registry.heroku.com; docker build -t registry.heroku.com/mr-jums/web
-  .; docker push registry.heroku.com/mr-jums/web; fi
+- if [ "$TRAVIS_BRANCH" == "master" ]; then
+  docker login --username="${DOCKER_USERNAME}" --password="${DOCKER_PASSWORD}" registry.heroku.com;
+  docker build -t registry.heroku.com/mr-jums/web .;
+  docker push registry.heroku.com/mr-jums/web;
+  fi
 deploy:
   provider: s3
   access_key_id: AKIAJFY6JWIO3IB4QN2Q
