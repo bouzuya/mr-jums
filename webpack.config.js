@@ -24,8 +24,8 @@ module.exports = [
       ]
     },
     output: {
-      path: path.join(__dirname, 'public/'),
-      filename: 'index.js'
+      path: path.join(__dirname, 'public'),
+      filename: '/scripts/index.js'
     },
     plugins: [
       new webpack.optimize.UglifyJsPlugin()

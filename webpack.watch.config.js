@@ -27,6 +27,8 @@ module.exports = {
     app: path.join(__dirname, '.tmp/es2015/src/client/index.js')
   },
   output: {
+    path: path.join(__dirname, 'public'),
+    publicDir: '/scripts/',
     filename: 'index.js'
   },
   devServer: {
