@@ -1,9 +1,10 @@
 *.log
+.env
 .envrc
 .tmp/
-lib/
-node_modules/
-public/index.css
-public/images/
 /public/scripts/
 /rev.json
+lib/
+node_modules/
+public/images/
+public/index.css
