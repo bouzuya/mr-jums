@@ -14,7 +14,10 @@ import { serialize } from '../model/state/serialize';
 import { State } from '../type/state';
 import { view as appView } from './app';
 
-const view = (state: State, scriptUrl: string, styleUrl: string): VNode => {
+const view = (
+  state: State, scriptUrl: string, styleUrl: string, imageBaseUrl: string
+): VNode => {
+  const faviconUrl = `${imageBaseUrl}/images/favicon.png`;
   const entry = state.selectedEntryDetail;
   return html({ lang: 'ja' }, [
     head([
@@ -47,15 +50,9 @@ const view = (state: State, scriptUrl: string, styleUrl: string): VNode => {
           rel: 'stylesheet', type: 'text/css', href: styleUrl
         }
       }),
+      link({ props: { rel: 'icon', sizes: '192x192', href: faviconUrl } }),
       link({
-        props: {
-          rel: 'icon', sizes: '192x192', href: '/images/favicon.png'
-        }
-      }),
-      link({
-        props: {
-          rel: 'apple-touch-icon', sizes: '192x192', href: '/images/favicon.png'
-        }
+        props: { rel: 'apple-touch-icon', sizes: '192x192', href: faviconUrl }
       }),
       script(`window.INITIAL_STATE = ${JSON.stringify(serialize(state))}`)
     ]),

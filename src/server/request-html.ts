@@ -17,7 +17,9 @@ type Route = {
 const vnodeToString: (vnode: VNode) => string = require('snabbdom-to-html');
 
 const render = (state: State, config: ServerConfig): string => {
-  const vnode = htmlView(state, config.scriptUrl, config.styleUrl);
+  const vnode = htmlView(
+    state, config.scriptUrl, config.styleUrl, config.imageBaseUrl
+  );
   return '<!DOCTYPE html>' + vnodeToString(vnode);
 };
 
