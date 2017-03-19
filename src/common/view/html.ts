@@ -14,10 +14,7 @@ import { serialize } from '../model/state/serialize';
 import { State } from '../type/state';
 import { view as appView } from './app';
 
-const view = (state: State): VNode => {
-  // TODO: remove process.env.NODE_ENV
-  const src = (process.env.NODE_ENV === 'development'
-    ? 'http://localhost:3001' : '') + '/scripts/index.js';
+const view = (state: State, scriptUrl: string, styleUrl: string): VNode => {
   const entry = state.selectedEntryDetail;
   return html({ lang: 'ja' }, [
     head([
@@ -47,7 +44,7 @@ const view = (state: State): VNode => {
       }),
       link({
         props: {
-          rel: 'stylesheet', type: 'text/css', href: '/index.css'
+          rel: 'stylesheet', type: 'text/css', href: styleUrl
         }
       }),
       link({
@@ -64,7 +61,7 @@ const view = (state: State): VNode => {
     ]),
     body([
       div('#app', [appView(state)]),
-      script({ props: { src } }, [])
+      script({ props: { src: scriptUrl } }, [])
     ])
   ]);
 };

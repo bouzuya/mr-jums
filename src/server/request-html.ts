@@ -4,6 +4,8 @@ import { State } from '../common/type/state';
 import { create } from '../common/model/state/index';
 import { view as htmlView } from '../common/view/html';
 
+import { ServerConfig } from '../common/type/server-config';
+
 type Params = { year: string, month: string; date: string; };
 
 type Route = {
@@ -14,8 +16,9 @@ type Route = {
 // FIXME
 const vnodeToString: (vnode: VNode) => string = require('snabbdom-to-html');
 
-const render = (state: State): string => {
-  return '<!DOCTYPE html>' + vnodeToString(htmlView(state));
+const render = (state: State, config: ServerConfig): string => {
+  const vnode = htmlView(state, config.scriptUrl, config.styleUrl);
+  return '<!DOCTYPE html>' + vnodeToString(vnode);
 };
 
 // TODO: 404
@@ -98,11 +101,11 @@ const init = ({ name, params }: Route): Promise<State> => {
   return inits[name](params);
 };
 
-const requestHtml = (path: string): Promise<string> => {
+const requestHtml = (path: string, config: ServerConfig): Promise<string> => {
   return Promise.resolve(path)
     .then((path) => route(path))
     .then((matchedRoute) => init(matchedRoute))
-    .then((state) => render(state));
+    .then((state) => render(state, config));
 };
 
 export { requestHtml };

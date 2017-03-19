@@ -12,7 +12,7 @@ const main = () => {
   server.use(express.static(config.publicDir));
   server.use((req, res) => {
     return void Promise.resolve(req.originalUrl)
-      .then((path) => requestHtml(path))
+      .then((path) => requestHtml(path, config))
       .then(
       (html) => ({ status: 200, body: html }),
       () => ({ status: 500, body: JSON.stringify({ message: 'ERROR' }) })
