@@ -2,6 +2,24 @@
 
 mr-jums is a html generator for bbn: blog.bouzuya.net using Cycle.js
 
+## Development
+
+### Run debugger & watcher
+
+```
+$ yarn
+$ npm run watch
+$ # VS Code "Debug: Start Debugging" (F5)
+```
+
+### Run docker image in local
+
+```
+$ # or docker pull registry.heroku.com/mr-jums/web
+$ docker build -t registry.heroku.com/mr-jums/web .
+$ docker push registry.heroku.com/mr-jums/web
+```
+
 ## Badges
 
 [![Travis CI][travisci-badge-url]][travisci-url]
