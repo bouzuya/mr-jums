@@ -7,7 +7,6 @@ node_js:
 services:
 - docker
 after_success:
-- yarn install --production
 - if [ "$TRAVIS_BRANCH" == "master" ]; then
   docker login --username="${DOCKER_USERNAME}" --password="${DOCKER_PASSWORD}" registry.heroku.com;
   docker build -t registry.heroku.com/mr-jums/web .;

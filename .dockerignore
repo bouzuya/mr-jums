@@ -5,6 +5,7 @@ Dockerfile
 LICENSE
 README.md
 logo
+node_modules
 scripts
 src
 test
