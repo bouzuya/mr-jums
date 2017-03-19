@@ -4,5 +4,6 @@
 lib/
 node_modules/
 public/index.css
-public/index.js
 public/images/
+/public/scripts/
+/rev.json
