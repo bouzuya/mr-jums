@@ -19,6 +19,7 @@ deploy:
   bucket: mr-jums.bouzuya.net
   local-dir: public/scripts
   upload-dir: scripts
+  region: ap-northeast-1
   skip_cleanup: true
   on:
     branch: master
