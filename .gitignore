@@ -3,7 +3,7 @@
 .envrc
 .tmp/
 /public/scripts/
+/public/styles/
 /rev.json
 lib/
 node_modules/
-public/index.css
