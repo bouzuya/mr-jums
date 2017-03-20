@@ -28,7 +28,7 @@ module.exports = {
   },
   output: {
     path: path.join(__dirname, 'public'),
-    publicDir: '/scripts/',
+    publicPath: '/scripts/',
     filename: 'index.js'
   },
   devServer: {
