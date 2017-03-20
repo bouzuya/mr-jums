@@ -2,6 +2,7 @@
 @import "./entry-list";
 @import "./entry-detail";
 @import "./nav";
+@import "./mixins/position";
 .app() {
   @media (max-width: 767px) {
     width: 100vw;
@@ -29,7 +30,29 @@
     > .entry-detail {
       .entry-detail();
     }
-    > .nav {
+    > .nav:first-child {
+      .position(absolute, 40%, auto, auto, 0);
+      width: 100%;
+      height: 20%;
+      > .enter, > .menu {
+        display: none;
+      }
+      > .next, .prev {
+        width: 100%;
+        height: 25%;
+        background-color: @white2;
+        color: @green;
+        text-align: center;
+        z-index: 8;
+      }
+      > .next {
+        .position(absolute, auto, auto, 0, auto);
+      }
+      > .prev {
+        .position(absolute, 0, auto, auto, auto);
+      }
+    }
+    > .nav:last-child {
       .nav();
     }
   }

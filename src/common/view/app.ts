@@ -15,6 +15,7 @@ const view = (state: State): VNode => {
       className: ['app', (menu ? 'is-menu' : '')].join(' ').trim()
     }
   }, [
+      navView(state),
       entryListView(entryViewer),
       entryDetailView(selectedEntryDetail),
       navView(state)
