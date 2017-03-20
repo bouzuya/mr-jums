@@ -9,10 +9,6 @@ const view = (
   const { focusedEntryId, selectedEntryId } = entryViewer;
   const currentPageEntries = getCurrentPageEntries(entryViewer);
   const index = currentPageEntries.findIndex(({ id }) => id === focusedEntryId);
-  const top = currentPageEntries.length === 0
-    ? '40%'
-    : (40 - (index - Math.min(0, currentPageEntries.length - 5)) * 10) + '%';
-  const style = { position: 'absolute', top };
   const entryListItems = currentPageEntries.map((entry) => {
     const isFocused = entry.id === focusedEntryId;
     const isSelected = entry.id === selectedEntryId;
@@ -24,8 +20,12 @@ const view = (
     ].join('');
     return li(className, { key: entry.id }, [entryView(entry)]);
   });
+  const classNames = {
+    [`index-${index}`]: true,
+    [`count-${currentPageEntries.length}`]: true
+  };
   return div('.entry-list', [
-    ul('.entry-list', { style }, entryListItems)
+    ul('.entry-list', { class: classNames }, entryListItems)
   ]);
 };
 

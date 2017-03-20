@@ -6,6 +6,29 @@
     color: @white2;
     > .entry-list {
       height: 100%;
+      position: absolute;
+      top: 0;
+      &.count-1,
+      &.count-2,
+      &.count-3,
+      &.count-4,
+      &.count-5,
+      &.count-6,
+      &.count-7,
+      &.count-8 {
+        &.index-0 {
+          top: 40%;
+        }
+        &.index-1 {
+          top: 30%;
+        }
+        &.index-2 {
+          top: 20%;
+        }
+        &.index-3 {
+          top: 10%;
+        }
+      }
       > .entry-list-item {
         display: flex;
         align-items: center;
