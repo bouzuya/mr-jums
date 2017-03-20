@@ -2,66 +2,107 @@
 @import "./mixins/position";
 @import "./mixins/user-select";
 .nav() {
-  @size: 44px;
-  @width: (@size * 2);
-  .user-select(none);
-  .position(absolute, auto, auto, 4px, 4px);
-  width: @width;
-  height: 128px;
-  .nav-button(@size: 44px) {
-    text-align: center;
-    line-height: @size;
-    font-size: (@size / 4);
-    width: @size;
-    height: @size;
-    cursor: pointer;
-    color: @green;
-    background-color: @white;
-    border-radius: 50%;
-    opacity: 0.75;
-  }
-  &.is-menu {
-    > .enter {
-      z-index: 1;
+  @media (max-width: 767px) {
+    @size: 44px;
+    @width: (@size * 2);
+    .user-select(none);
+    .nav-button(@size: 44px) {
+      text-align: center;
+      line-height: @size;
+      font-size: (@size / 4);
+      width: @size;
+      height: @size;
+      cursor: pointer;
+      color: @green;
+      background-color: @white;
+      border-radius: 50%;
       opacity: 0.75;
-      left: (@width - @size);
+    }
+    > .enter {
+      display: none;
     }
     > .menu {
+      display: none;
+    }
+    > .next {
+      .nav-button(@size);
+      .position(absolute, auto, 0, 0, auto);
+      margin-left: (@size / -2);
+      &.is-disabled {
+        display: none;
+      }
+    }
+    > .prev {
+      .nav-button(@size);
+      .position(absolute, 0, 0, auto, auto);
+      margin-left: (@size / -2);
+      &.is-disabled {
+        display: none;
+      }
+    }
+  }
+  @media (min-width: 768px) {
+    @size: 44px;
+    @width: (@size * 2);
+    .user-select(none);
+    .position(absolute, auto, auto, 4px, 4px);
+    width: @width;
+    height: 128px;
+    .nav-button(@size: 44px) {
+      text-align: center;
+      line-height: @size;
+      font-size: (@size / 4);
+      width: @size;
+      height: @size;
+      cursor: pointer;
+      color: @green;
+      background-color: @white;
+      border-radius: 50%;
+      opacity: 0.75;
+    }
+    &.is-menu {
+      > .enter {
+        z-index: 1;
+        opacity: 0.75;
+        left: (@width - @size);
+      }
+      > .menu {
+        z-index: 0;
+        opacity: 0;
+        left: (@width - @size);
+      }
+    }
+    > .menu {
+      .nav-button(@size);
+      .position(absolute, 50%, auto, auto, 0);
+      margin-top: (@size / -2);
+      z-index: 1;
+      opacity: 0.75;
+      transition: 0.5s;
+    }
+    > .next {
+      .nav-button(@size);
+      .position(absolute, auto, auto, 0, 50%);
+      margin-left: (@size / -2);
+      &.is-disabled {
+        display: none;
+      }
+    }
+    > .prev {
+      .nav-button(@size);
+      .position(absolute, 0, auto, auto, 50%);
+      margin-left: (@size / -2);
+      &.is-disabled {
+        display: none;
+      }
+    }
+    > .enter {
+      .nav-button(@size);
+      .position(absolute, 50%, auto, auto, 0);
+      margin-top: (@size / -2);
       z-index: 0;
       opacity: 0;
-      left: (@width - @size);
+      transition: 0.5s;
     }
-  }
-  > .menu {
-    .nav-button(@size);
-    .position(absolute, 50%, auto, auto, 0);
-    margin-top: (@size / -2);
-    z-index: 1;
-    opacity: 0.75;
-    transition: 0.5s;
-  }
-  > .next {
-    .nav-button(@size);
-    .position(absolute, auto, auto, 0, 50%);
-    margin-left: (@size / -2);
-    &.is-disabled {
-      display: none;
-    }
-  }
-  > .prev {
-    .nav-button(@size);
-    .position(absolute, 0, auto, auto, 50%);
-    margin-left: (@size / -2);
-    &.is-disabled {
-      display: none;
-    }
-  }
-  > .enter {
-    .nav-button(@size);
-    .position(absolute, 50%, auto, auto, 0);
-    margin-top: (@size / -2);
-    z-index: 0;
-    opacity: 0;
-    transition: 0.5s;
   }
 }
