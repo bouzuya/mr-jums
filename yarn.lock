@@ -52,6 +52,10 @@
     "@types/express-serve-static-core" "*"
     "@types/serve-static" "*"
 
+"@types/htmlescape@1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@types/htmlescape/-/htmlescape-1.1.0.tgz#f0717132897f4d143635caeb1aa5b699380e9460"
+
 "@types/isomorphic-fetch@0.0.33":
   version "0.0.33"
   resolved "https://registry.yarnpkg.com/@types/isomorphic-fetch/-/isomorphic-fetch-0.0.33.tgz#3ea1b86f8b73e6a7430d01d4dbd5b1f63fd72718"
@@ -1899,6 +1903,10 @@ hpack.js@^2.1.6:
 html-entities@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/html-entities/-/html-entities-1.2.0.tgz#41948caf85ce82fed36e4e6a0ed371a6664379e2"
+
+htmlescape@1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/htmlescape/-/htmlescape-1.1.1.tgz#3a03edc2214bca3b66424a3e7959349509cb0351"
 
 http-deceiver@^1.2.4:
   version "1.2.7"
