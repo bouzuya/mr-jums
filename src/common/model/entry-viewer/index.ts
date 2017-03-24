@@ -2,6 +2,7 @@ import { Entry } from '../../type/entry';
 import { EntryViewer } from '../../type/entry-viewer';
 import { focusNext } from './focus-next';
 import { focusPrev } from './focus-prev';
+import { getCurrentEntry as getCurrentEntryImpl } from './get-current-entry';
 import { getCurrentPageEntries } from './get-current-page-entries';
 import { select } from './select';
 import { selectNext } from './select-next';
@@ -16,6 +17,16 @@ const create = (entries: Entry[]): EntryViewer => {
     focusedEntryId: (entries.length > 0 ? entries[0].id : null),
     selectedEntryId: null
   };
+};
+
+const getCurrentFocusedEntry = (entryViewer: EntryViewer): Entry | null => {
+  const { entries, focusedEntryId } = entryViewer;
+  return getCurrentEntryImpl(entries, focusedEntryId);
+};
+
+const getCurrentSelectedEntry = (entryViewer: EntryViewer): Entry | null => {
+  const { entries, selectedEntryId } = entryViewer;
+  return getCurrentEntryImpl(entries, selectedEntryId);
 };
 
 const getNextFocusedEntry = (entryViewer: EntryViewer): Entry | null => {
@@ -42,6 +53,8 @@ export {
   create,
   focusNext,
   focusPrev,
+  getCurrentFocusedEntry,
+  getCurrentSelectedEntry,
   getCurrentPageEntries,
   getNextFocusedEntry,
   getNextSelectedEntry,
