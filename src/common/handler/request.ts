@@ -29,7 +29,7 @@ const fetchPostRequest$ = (message$: xs<Message>): xs<any> => {
     })
     .map(({ id }) => {
       return {
-        url: `http://blog.bouzuya.net/${id!.replace(/-/g, '/')}.json`,
+        url: `https://blog.bouzuya.net/${id!.replace(/-/g, '/')}.json`,
         category: 'post'
       };
     });

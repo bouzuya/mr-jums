@@ -8,7 +8,7 @@ const intent = ({ DOM }: { DOM: DOMSource }): xs<Command> => {
     .map<Command>(() => ({
       type: 'fetch-posts-request',
       request: {
-        url: 'http://blog.bouzuya.net/posts.json',
+        url: 'https://blog.bouzuya.net/posts.json',
         category: 'posts'
       }
     }));
