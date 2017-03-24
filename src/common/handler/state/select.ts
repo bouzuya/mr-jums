@@ -6,7 +6,8 @@ const select = (state: State, command: SelectCommand): State => {
   const { entryViewer } = state;
   return Object.assign({}, state, {
     entryViewer: entryViewerSelect(entryViewer, command.entryId),
-    menu: false
+    menu: false,
+    selectedEntryDetail: null
   });
 };
 

@@ -6,7 +6,8 @@ const prev = (state: State, _: PrevCommand): State => {
   const { menu, entryViewer } = state;
   return Object.assign({}, state, {
     entryViewer: menu === true
-      ? focusPrev(entryViewer) : selectPrev(entryViewer)
+      ? focusPrev(entryViewer) : selectPrev(entryViewer),
+    selectedEntryDetail: null
   });
 };
 
