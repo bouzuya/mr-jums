@@ -4,6 +4,9 @@ node_js:
 - node
 - '6'
 - '4'
+before_install:
+- npm i -g yarn
+- yarn -V
 services:
 - docker
 after_success:
