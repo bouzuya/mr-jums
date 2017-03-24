@@ -1,5 +1,6 @@
 import { div, VNode } from '@cycle/dom';
 import { State } from '../type/state';
+import { getCurrentSelectedEntry } from '../model/entry-viewer';
 import { view as entryListView } from './entry-list';
 import { view as entryDetailView } from './entry-detail';
 import { view as navView } from './nav';
@@ -10,6 +11,7 @@ const view = (state: State): VNode => {
     entryViewer,
     menu
   } = state;
+  const selectedEntry = getCurrentSelectedEntry(entryViewer);
   return div({
     props: {
       className: ['app', (menu ? 'is-menu' : '')].join(' ').trim()
@@ -17,7 +19,7 @@ const view = (state: State): VNode => {
   }, [
       navView(state),
       entryListView(entryViewer),
-      entryDetailView(selectedEntryDetail),
+      entryDetailView(selectedEntry, selectedEntryDetail),
       navView(state)
     ]);
 };
