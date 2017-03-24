@@ -1,8 +1,8 @@
 import { fetch } from './globals';
+import { url } from '../common/util/url';
 
 const requestJson = (path: string): Promise<string> => {
-  const url = `https://blog.bouzuya.net${path}`;
-  return fetch(url).then((response) => response.text());
+  return fetch(url(path)).then((response) => response.text());
 };
 
 export { requestJson };

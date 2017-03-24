@@ -4,6 +4,7 @@ import { select } from './util/select';
 import { Command, Event, Message } from '../model/message';
 import { RequestEvent, StateEvent } from '../event';
 import { State } from '../type/state';
+import { url } from '../util/url';
 
 const fetchPostsRequest$ = (message$: xs<Message>): xs<any> => {
   return select<FetchPostsRequestCommand>(
@@ -29,7 +30,7 @@ const fetchPostRequest$ = (message$: xs<Message>): xs<any> => {
     })
     .map(({ id }) => {
       return {
-        url: `https://blog.bouzuya.net/${id!.replace(/-/g, '/')}.json`,
+        url: url(`/${id!.replace(/-/g, '/')}.json`),
         category: 'post'
       };
     });

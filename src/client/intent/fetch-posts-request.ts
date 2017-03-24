@@ -1,6 +1,7 @@
 import { DOMSource } from '@cycle/dom';
 import xs from 'xstream';
 import { Command } from './util/command';
+import { url } from '../../common/util/url';
 
 const intent = ({ DOM }: { DOM: DOMSource }): xs<Command> => {
   const click$: xs<Event> = DOM.select('div.reload').events('click');
@@ -8,7 +9,7 @@ const intent = ({ DOM }: { DOM: DOMSource }): xs<Command> => {
     .map<Command>(() => ({
       type: 'fetch-posts-request',
       request: {
-        url: 'https://blog.bouzuya.net/posts.json',
+        url: url('/posts.json'),
         category: 'posts'
       }
     }));
