@@ -1,0 +1,13 @@
+# Environtment Variables
+
+## How to use
+# ```
+# $ cp _envrc .env
+# $ vi .env
+# $ echo 'dotenv' > .envrc
+# ```
+
+## Examples
+# IMAGE_BASE_URL='https://mr-jums.bouzuya.net'
+# NODE_ENV='development'
+# PORT='4000'
