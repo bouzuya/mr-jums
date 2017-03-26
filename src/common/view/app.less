@@ -67,6 +67,9 @@
           top: 4px;
           left: 16px;
         }
+        &.is-disabled {
+          display: none;
+        }
       }
       > .prev {
         .position(absolute, -8px, auto, auto, auto);
@@ -89,6 +92,11 @@
           position: absolute;
           bottom: 4px;
           left: 16px;
+        }
+        &.is-disabled {
+          &:after {
+            display: none;
+          }
         }
       }
     }
