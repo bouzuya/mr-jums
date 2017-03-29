@@ -732,6 +732,10 @@ batch@0.5.3:
   version "0.5.3"
   resolved "https://registry.yarnpkg.com/batch/-/batch-0.5.3.tgz#3f3414f380321743bfc1042f9a83ff1d5824d464"
 
+bath@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/bath/-/bath-2.0.1.tgz#4be25894a566df885d96ce66c729f33e8cdabb39"
+
 bcrypt-pbkdf@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/bcrypt-pbkdf/-/bcrypt-pbkdf-1.0.1.tgz#63bc5dcb61331b92bc05fd528953c33462a06f8d"
@@ -3370,6 +3374,12 @@ source-map@~0.2.0:
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.2.0.tgz#dab73fbcfc2ba819b4de03bd6f6eaa48164b3f9d"
   dependencies:
     amdefine ">=0.0.4"
+
+spa-town@0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/spa-town/-/spa-town-0.1.2.tgz#fb3099f833ce8a67d67e659e85903d12c52a8cca"
+  dependencies:
+    bath "^2.0.1"
 
 spdx-correct@~1.0.0:
   version "1.0.2"
