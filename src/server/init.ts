@@ -3,22 +3,58 @@ import { State } from '../common/type/state';
 import { requestJson } from './request-json';
 import { Params, Route } from './type';
 
-const fetchDetail = ({ year, month, date }: Params): Promise<any> => {
+interface ApiEntryDetail {
+  date: string;
+  html: string;
+  minutes: number;
+  pubdate: string;
+  tags: string[];
+  title: string;
+}
+
+interface ApiEntrySummary {
+  date: string;
+  title: string;
+}
+
+const fetchDetail = (
+  { year, month, date }: Params
+): Promise<ApiEntryDetail> => {
   const path = `/${year}/${month}/${date}.json`;
   return requestJson(path).then((jsonString) => JSON.parse(jsonString));
 };
 
-const fetchList = (): Promise<any> => {
+const fetchList = (): Promise<ApiEntrySummary[]> => {
   const path = '/posts.json';
   return requestJson(path).then((jsonString) => JSON.parse(jsonString));
 };
 
-const parseEntryList = (entries: any): Promise<State> => {
+const parseEntryList = (entries: ApiEntrySummary[]): Promise<State> => {
   const state = create({
-    entries: entries.map(({
-      date: id, title
-    }: { date: string; title: string; }) => ({ id, title }))
-      .sort((a: any, b: any) => {
+    entries: entries
+      .map(({ date: id, title }) => ({ id, title }))
+      .sort((a: { id: string; }, b: { id: string; }) => {
+        return a.id > b.id ? -1 : a.id === b.id ? 0 : 1;
+      })
+  });
+  return Promise.resolve(state);
+};
+
+const parseEntryDetail = (
+  [entry, entries]: [ApiEntryDetail, ApiEntrySummary[]]
+): Promise<State> => {
+  const state = create({
+    entry: {
+      id: entry.date,
+      title: entry.title,
+      html: entry.html,
+      minutes: entry.minutes,
+      pubdate: entry.pubdate,
+      tags: entry.tags
+    },
+    entries: entries
+      .map(({ date: id, title }) => ({ id, title }))
+      .sort((a: { id: string; }, b: { id: string; }) => {
         return a.id > b.id ? -1 : a.id === b.id ? 0 : 1;
       })
   });
@@ -26,28 +62,7 @@ const parseEntryList = (entries: any): Promise<State> => {
 };
 
 const initEntryDetail = (params: Params): Promise<State> => {
-  return Promise.all([
-    fetchDetail(params),
-    fetchList()
-  ]).then(([entry, entries]) => {
-    const state = create({
-      entry: {
-        id: <string>entry.date,
-        title: <string>entry.title,
-        html: <string>entry.html,
-        minutes: <number>entry.minutes,
-        pubdate: <string>entry.pubdate,
-        tags: <string[]>entry.tags
-      },
-      entries: entries.map(({
-        date: id, title
-      }: { date: string; title: string; }) => ({ id, title }))
-        .sort((a: any, b: any) => {
-          return a.id > b.id ? -1 : a.id === b.id ? 0 : 1;
-        })
-    });
-    return Promise.resolve(state);
-  });
+  return Promise.all([fetchDetail(params), fetchList()]).then(parseEntryDetail);
 };
 
 const initEntryList = (_: Params): Promise<State> => {
