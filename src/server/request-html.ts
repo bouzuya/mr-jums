@@ -3,15 +3,9 @@ import { VNode } from '@cycle/dom';
 import { State } from '../common/type/state';
 import { create } from '../common/model/state/index';
 import { view as htmlView } from '../common/view/html';
-
 import { ServerConfig } from '../common/type/server-config';
-
-type Params = { year: string, month: string; date: string; };
-
-type Route = {
-  name: string;
-  params: Params | null;
-};
+import { route } from './route';
+import { Params, Route } from './type';
 
 // FIXME
 const vnodeToString: (vnode: VNode) => string = require('snabbdom-to-html');
@@ -21,23 +15,6 @@ const render = (state: State, config: ServerConfig): string => {
     state, config.scriptUrl, config.styleUrl, config.imageBaseUrl
   );
   return '<!DOCTYPE html>' + vnodeToString(vnode);
-};
-
-// TODO: 404
-const route = (path: string): Route => {
-  const match = path.match(/^\/(\d{4})\/(\d{2})\/(\d{2})\/$/);
-  if (match === null) {
-    return { name: 'entry-list', params: null };
-  } else {
-    return {
-      name: 'entry-detail',
-      params: {
-        year: match[1],
-        month: match[2],
-        date: match[3]
-      }
-    };
-  }
 };
 
 const fetchDetail = ({ year, month, date }: Params): Promise<any> => {
@@ -87,13 +64,13 @@ const initEntryDetail = (params: Params): Promise<State> => {
   });
 };
 
-const initEntryList = (_: null): Promise<State> => {
+const initEntryList = (_: Params): Promise<State> => {
   return fetchList().then(parseEntryList);
 };
 
 // TODO: 404
 const inits: {
-  [name: string]: (params: Params | null) => Promise<State>;
+  [name: string]: (params: Params) => Promise<State>;
 } = {
     'entry-detail': initEntryDetail,
     'entry-list': initEntryList
