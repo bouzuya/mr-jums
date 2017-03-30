@@ -12,10 +12,11 @@ const model = (
   handlers: ((subject$: xs<Message>) => xs<Message>)[]
 ): xs<Event> => {
   const subject = xs.create<Message>();
-  const message$: xs<Message> = xs.merge.apply(
+  const merged$: xs<Message> = xs.merge.apply(
     xs,
     handlers.map((handler) => handler(subject))
-  );
+  )
+  const message$ = merged$.filter((message) => message.type !== 'noop');
   const event$ = message$
     .map((message) => {
       setTimeout(() => subject.shamefullySendNext(message));
