@@ -8,6 +8,7 @@ import {
 import { intent } from './intent';
 import { model } from '../common/model';
 import { model as history$ } from '../common/handler/history';
+import { model as log$ } from '../common/handler/log'; // for DEBUG
 import { model as request$ } from '../common/handler/request';
 import { model as state$ } from '../common/handler/state';
 import { model as title$ } from '../common/handler/title';
@@ -34,6 +35,7 @@ const main = (): void => {
       history$,
       request$,
       (subject$) => state$(subject$, initialState),
+      log$, // for DEBUG
       title$
     ])),
     {
