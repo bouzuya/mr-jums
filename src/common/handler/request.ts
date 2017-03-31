@@ -1,6 +1,7 @@
 import xs from 'xstream';
 import { FetchPostsRequestCommand } from '../command';
 import { select } from './util/select';
+import { getCurrentSelectedEntry } from '../model/entry-viewer';
 import { Command, Event, Message } from '../model/message';
 import { RequestEvent, StateEvent } from '../event';
 import { State } from '../type/state';
@@ -13,21 +14,29 @@ const fetchPostsRequest$ = (message$: xs<Message>): xs<any> => {
 };
 
 const fetchPostRequest$ = (message$: xs<Message>): xs<any> => {
+  interface S {
+    b: boolean;
+    id: string | null;
+  }
+  const initial: S = { b: false, id: null };
   return message$
     .filter((message) => message.type === 'state')
     .map<StateEvent>((message) => message as StateEvent)
     .map<State>(({ state }) => state)
-    .fold(({ id: prev }, { entryViewer: { selectedEntryId: id } }) => {
-      if (typeof prev === 'undefined') return { id, req: false };
-      if (prev === id) return { id, req: false };
-      return { id, req: true };
-    }, { id: undefined, req: false } as {
-      id: string | null | undefined;
-      req: boolean;
+    .map<{ l: string | null; d: string | null; }>((state) => {
+      const d = state.selectedEntryDetail;
+      const l = getCurrentSelectedEntry(state.entryViewer);
+      return {
+        d: d === null ? null : d.id,
+        l: l === null ? null : l.id
+      };
     })
-    .filter(({ id, req }) => {
-      return req && (typeof id !== 'undefined' && id !== null);
-    })
+    .fold(({ id }, { l, d }) => {
+      return l === null || l === d
+        ? initial
+        : { b: l !== id, id: l };
+    }, initial)
+    .filter(({ b, id }) => b && id !== null)
     .map(({ id }) => {
       return {
         url: url(`/${id!.replace(/-/g, '/')}.json`),
@@ -35,6 +44,7 @@ const fetchPostRequest$ = (message$: xs<Message>): xs<any> => {
       };
     });
 };
+
 const model = (message$: xs<Message>): xs<RequestEvent> => {
   const request$ = xs.merge(
     fetchPostsRequest$(message$),
