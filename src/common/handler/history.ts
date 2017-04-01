@@ -1,3 +1,7 @@
+import {
+  History as FakeHistory,
+  back, create, current, currentState, previous, pushState
+} from 'fake-history-fns';
 import xs from 'xstream';
 import { HistoryPoppedEvent, HistoryPushedEvent, StateEvent } from '../event';
 import { Command, Event, Message } from '../model/message';
@@ -9,15 +13,14 @@ type P = {
 };
 
 type T = {
-  stack: P[];
   event: HistoryPoppedEvent | HistoryPushedEvent | null;
+  history: FakeHistory;
 };
 
 const p$ = (message$: xs<Message>): xs<P> => {
   const bbn = 'blog.bouzuya.net';
   return message$
-    .filter((m) => m.type === 'state')
-    .map<StateEvent>((message) => <StateEvent>message)
+    .filter((m): m is StateEvent => m.type === 'state')
     .map(({ state: { entryViewer, menu } }) => {
       const entry = getCurrentSelectedEntry(entryViewer);
       const path = menu === true
@@ -30,43 +33,27 @@ const p$ = (message$: xs<Message>): xs<P> => {
     });
 };
 
-const ignore = ({ stack }: T): T => {
-  return { stack, event: null };
-};
-
-const pop = ({ stack }: T): T => {
-  // assert(stack.length >= 2);
-  stack.splice(stack.length - 1, 1);
-  const { path, title } = stack[stack.length - 1];
-  return { stack, event: { type: 'history-popped', path, title } };
-};
-
-const push = ({ stack }: T, { path, title }: P): T => {
-  stack.push({ path, title });
-  return { stack, event: { type: 'history-pushed', path, title } };
-};
-
 const handleP = (t: T, p: P): T => {
-  const { path } = p;
-  if (t.stack.length === 0) {
-    return push(t, p);
-  } else if (t.stack.length === 1) {
-    const last1 = t.stack[t.stack.length - 1];
-    if (last1.path === path) {
-      return ignore(t);
-    } else {
-      return push(t, p);
-    }
+  const { path: eventPath } = p;
+  const { history } = t;
+  if (previous(history) === eventPath) {
+    const newHistory = back(history);
+    const pathOrNull = current(newHistory);
+    const { title }: { title: string; } = currentState(newHistory);
+    const path = pathOrNull === null ? '/' : pathOrNull;
+    return {
+      event: { type: 'history-popped', path, title },
+      history: newHistory
+    };
+  } else if (current(history) === eventPath) {
+    return { event: null, history };
   } else {
-    const last2 = t.stack[t.stack.length - 2];
-    const last1 = t.stack[t.stack.length - 1];
-    if (last2.path === path) {
-      return pop(t);
-    } else if (last1.path === path) {
-      return ignore(t);
-    } else {
-      return push(t, p);
-    }
+    const { path, title } = p;
+    const newHistory = pushState(history, { title }, title, path);
+    return {
+      event: { type: 'history-pushed', path, title },
+      history: newHistory
+    };
   }
 };
 
@@ -74,7 +61,7 @@ const model = (
   message$: xs<Message>
 ): xs<HistoryPoppedEvent | HistoryPushedEvent> => {
   return p$(message$)
-    .fold<T>((a, x) => handleP(a, x), { stack: [], event: null })
+    .fold<T>((a, x) => handleP(a, x), { history: create(), event: null })
     .map<HistoryPoppedEvent | HistoryPushedEvent | null>(({ event }) => event)
     .filter((event): event is (HistoryPoppedEvent | HistoryPushedEvent) => {
       return event !== null;
