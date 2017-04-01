@@ -1,6 +1,7 @@
 import xs from 'xstream';
 import { HistoryPoppedEvent, HistoryPushedEvent, StateEvent } from '../event';
 import { Command, Event, Message } from '../model/message';
+import { getCurrentSelectedEntry } from '../model/entry-viewer';
 
 type P = {
   path: string;
@@ -17,7 +18,8 @@ const p$ = (message$: xs<Message>): xs<P> => {
   return message$
     .filter((m) => m.type === 'state')
     .map<StateEvent>((message) => <StateEvent>message)
-    .map(({ state: { selectedEntryDetail: entry, menu } }) => {
+    .map(({ state: { entryViewer, menu } }) => {
+      const entry = getCurrentSelectedEntry(entryViewer);
       const path = menu === true
         ? '/' : entry === null
           ? '/' : `/${entry.id.replace(/-/g, '/')}/`;
