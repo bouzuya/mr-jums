@@ -1,10 +1,8 @@
 import xs from 'xstream';
 import { run } from '@cycle/run';
-import { DOMSource, makeDOMDriver } from '@cycle/dom';
-import { HTTPSource, makeHTTPDriver } from '@cycle/http';
-import {
-  HistorySource, makeHistoryDriver
-} from '@bouzuya/cyclejs-history-driver';
+import { makeDOMDriver } from '@cycle/dom';
+import { makeHTTPDriver } from '@cycle/http';
+import { makeHistoryDriver } from '@bouzuya/cyclejs-history-driver';
 import { intent } from './intent';
 import { model } from '../common/model';
 import { model as history$ } from '../common/handler/history';
@@ -14,12 +12,7 @@ import { model as state$ } from '../common/handler/state';
 import { model as title$ } from '../common/handler/title';
 import { view } from './view';
 import { deserialize } from '../common/model/state';
-
-type MySources = {
-  DOM: DOMSource;
-  HISTORY: HistorySource;
-  HTTP: HTTPSource;
-};
+import { Sources } from './type/sources';
 
 type MySinks = {
   DOM: xs<any>;
@@ -30,7 +23,7 @@ const main = (): void => {
   const serialized: string = (<any>window).INITIAL_STATE;
   const initialState = deserialize(serialized);
   run(
-    (sources: MySources): MySinks => view(model([
+    (sources: Sources): MySinks => view(model([
       (_) => intent(sources),
       history$,
       request$,
