@@ -1,4 +1,3 @@
-import xs from 'xstream';
 import { run } from '@cycle/run';
 import { makeDOMDriver } from '@cycle/dom';
 import { makeHTTPDriver } from '@cycle/http';
@@ -12,18 +11,15 @@ import { model as state$ } from '../common/handler/state';
 import { model as title$ } from '../common/handler/title';
 import { view } from './view';
 import { deserialize } from '../common/model/state';
+import { Sinks } from './type/sinks';
 import { Sources } from './type/sources';
-
-type MySinks = {
-  DOM: xs<any>;
-};
 
 const main = (): void => {
   if (typeof window === 'undefined') throw new Error();
   const serialized: string = (<any>window).INITIAL_STATE;
   const initialState = deserialize(serialized);
   run(
-    (sources: Sources): MySinks => view(model([
+    (sources: Sources): Sinks => view(model([
       (_) => intent(sources),
       history$,
       request$,
