@@ -1,7 +1,10 @@
+import { HistoryCommand } from '@bouzuya/cyclejs-history-driver'
+import { VNode } from '@cycle/dom';
+import { RequestOptions } from '@cycle/http';
 import xs from 'xstream';
 
 export interface Sinks {
-  DOM: xs<any>;
-  HISTORY: xs<any>;
-  HTTP: xs<any>;
+  DOM: xs<VNode>;
+  HISTORY: xs<HistoryCommand>;
+  HTTP: xs<RequestOptions>;
 }
