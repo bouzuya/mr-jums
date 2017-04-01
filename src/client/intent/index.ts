@@ -1,6 +1,4 @@
 import xs from 'xstream';
-import { DOMSource } from '@cycle/dom';
-import { HTTPSource } from '@cycle/http';
 import { Command } from './util/command';
 
 import { Sources } from '../type/sources';
