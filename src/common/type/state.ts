@@ -3,6 +3,6 @@ import { EntryViewer } from './entry-viewer';
 
 export interface State {
   entryViewer: EntryViewer;
-  menu: boolean;
+  focus: 'entry-list' | 'entry-detail';
   selectedEntryDetail: EntryDetail | null;
 }

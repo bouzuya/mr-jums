@@ -8,7 +8,9 @@ const deserialize = (serialized: string): State => {
     selectedEntryDetail: data.selectedEntryDetail,
     entryViewer: data.selectedEntryDetail === null
       ? entryViewer : select(entryViewer, data.selectedEntryDetail.id),
-    menu: data.selectedEntryDetail === null
+    focus: data.selectedEntryDetail === null
+      ? 'entry-list'
+      : 'entry-detail'
   };
 };
 

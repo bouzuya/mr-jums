@@ -21,12 +21,12 @@ const p$ = (message$: xs<Message>): xs<P> => {
   const bbn = 'blog.bouzuya.net';
   return message$
     .filter((m): m is StateEvent => m.type === 'state')
-    .map(({ state: { entryViewer, menu } }) => {
+    .map(({ state: { entryViewer, focus } }) => {
       const entry = getCurrentSelectedEntry(entryViewer);
-      const path = menu === true
+      const path = focus === 'entry-list'
         ? '/' : entry === null
           ? '/' : `/${entry.id.replace(/-/g, '/')}/`;
-      const title = menu === true
+      const title = focus === 'entry-list'
         ? bbn : entry === null
           ? bbn : `${entry.id} ${entry.title} - ${bbn}`;
       return { path, title };

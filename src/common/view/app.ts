@@ -9,12 +9,15 @@ const view = (state: State): VNode => {
   const {
     selectedEntryDetail,
     entryViewer,
-    menu
+    focus
   } = state;
   const selectedEntry = getCurrentSelectedEntry(entryViewer);
   return div({
     props: {
-      className: ['app', (menu ? 'is-menu' : '')].join(' ').trim()
+      className: [
+        'app',
+        (focus === 'entry-list' ? 'is-menu' : '')
+      ].join(' ').trim()
     }
   }, [
       navView(state),

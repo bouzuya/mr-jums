@@ -29,14 +29,14 @@ const toPromise = <T>(s: Stream<T>): Promise<T[]> => {
   });
 };
 
-test(category + 'menu: true, entry: null', () => {
+test(category + 'entry: null, focus: "entry-list"', () => {
   const message$ = xs.of(<StateEvent>{
     type: 'state',
     state: {
       entryViewer: {
         selectedEntryId: null,
       },
-      menu: true
+      focus: 'entry-list'
     }
   });
   return toPromise(model(message$)).then((values) => {
@@ -47,7 +47,7 @@ test(category + 'menu: true, entry: null', () => {
   });
 });
 
-test(category + 'menu: true, entry: { id, title }', () => {
+test(category + 'entry: { id, title }, focus: "entry-list"', () => {
   const message$ = xs.of(<StateEvent>{
     type: 'state',
     state: {
@@ -55,7 +55,7 @@ test(category + 'menu: true, entry: { id, title }', () => {
         entries: [{ id: '2006-01-02', title: 'title1' }],
         selectedEntryId: '2006-01-02'
       },
-      menu: true
+      focus: 'entry-list'
     }
   });
   return toPromise(model(message$)).then((values) => {
@@ -66,12 +66,12 @@ test(category + 'menu: true, entry: { id, title }', () => {
   });
 });
 
-test(category + 'menu: false, entry: null', () => {
+test(category + 'entry: null, focus: "entry-detail"', () => {
   const message$ = xs.of(<StateEvent>{
     type: 'state',
     state: {
       entryViewer: { selectedEntryId: null },
-      menu: false
+      focus: 'entry-detail'
     }
   });
   return toPromise(model(message$)).then((values) => {
@@ -82,7 +82,7 @@ test(category + 'menu: false, entry: null', () => {
   });
 });
 
-test(category + 'menu: false, entry: { id, title }', () => {
+test(category + 'entry: { id, title }, focus: "entry-detail"', () => {
   const message$ = xs.of(<StateEvent>{
     type: 'state',
     state: {
@@ -90,7 +90,7 @@ test(category + 'menu: false, entry: { id, title }', () => {
         entries: [{ id: '2006-01-02', title: 'title1' }],
         selectedEntryId: '2006-01-02'
       },
-      menu: false
+      focus: 'entry-detail'
     }
   });
   return toPromise(model(message$)).then((values) => {
@@ -109,7 +109,7 @@ test(category + 'same path', () => {
         entries: [{ id: '2006-01-02', title: 'title1' }],
         selectedEntryId: '2006-01-02'
       },
-      menu: false
+      focus: 'entry-detail'
     }
   };
   const message$ = xs.from([stateEvent, stateEvent]);
@@ -129,7 +129,7 @@ test(category + 'different path', () => {
         entries: [{ id: '2006-01-02', title: 'title1' }],
         selectedEntryId: '2006-01-02'
       },
-      menu: false
+      focus: 'entry-detail'
     }
   };
   const stateEvent2 = <StateEvent>{
@@ -139,7 +139,7 @@ test(category + 'different path', () => {
         entries: [{ id: '2006-01-03', title: 'title2' }],
         selectedEntryId: '2006-01-03'
       },
-      menu: false
+      focus: 'entry-detail'
     }
   };
   const message$ = xs.from([stateEvent1, stateEvent2]);
@@ -162,7 +162,7 @@ test(category + 'HistoryPoppedEvent', () => {
         entries: [{ id: '2006-01-02', title: 'title1' }],
         selectedEntryId: '2006-01-02'
       },
-      menu: false
+      focus: 'entry-detail'
     }
   };
   const stateEvent2 = <StateEvent>{
@@ -172,7 +172,7 @@ test(category + 'HistoryPoppedEvent', () => {
         entries: [{ id: '2006-01-03', title: 'title2' }],
         selectedEntryId: '2006-01-03'
       },
-      menu: false
+      focus: 'entry-detail'
     }
   };
   const message$ = xs.from([stateEvent1, stateEvent2, stateEvent1]);
