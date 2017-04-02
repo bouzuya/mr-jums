@@ -1,11 +1,10 @@
-import { Response as HTTPResponse } from '@cycle/http';
 import xs from 'xstream';
 
 import { Sources } from '../type/sources';
 import { Command, FetchPostsSuccessCommand } from './util/command';
 
 const intent = ({ HTTP }: Sources): xs<Command> => {
-  const response$: xs<HTTPResponse> = HTTP.select('posts').flatten();
+  const response$ = HTTP.select('posts').flatten();
   const command$: xs<Command> = response$
     .map<FetchPostsSuccessCommand>((response) => ({
       type: 'fetch-posts-success',
