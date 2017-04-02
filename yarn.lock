@@ -1615,9 +1615,9 @@ extsprintf@1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/extsprintf/-/extsprintf-1.0.2.tgz#e1080e0658e300b06294990cc70e1502235fd550"
 
-fake-history-fns@0.1.2:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/fake-history-fns/-/fake-history-fns-0.1.2.tgz#3972e07c587fc87ef6f571b861f1fac1655134bb"
+fake-history-fns@0.1.3:
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/fake-history-fns/-/fake-history-fns-0.1.3.tgz#49cb28ef483584b0daa89626b018e7a093e8c2c3"
 
 fast-levenshtein@~2.0.4:
   version "2.0.6"
