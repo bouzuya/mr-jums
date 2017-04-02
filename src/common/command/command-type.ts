@@ -4,6 +4,7 @@ export type CommandType =
   'fetch-posts-failure' |
   'fetch-posts-request' |
   'fetch-posts-success' |
+  'go-to' |
   'history' |
   'menu' |
   'next' |

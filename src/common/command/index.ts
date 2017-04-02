@@ -4,6 +4,7 @@ export { CommandType } from './command-type';
 
 // user command
 export { EnterCommand } from './enter-command';
+export { GoToCommand } from './go-to-command';
 export { HistoryCommand } from './history-command';
 export { MenuCommand } from './menu-command';
 export { NextCommand } from './next-command';
