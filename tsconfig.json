@@ -30,6 +30,7 @@
     "./test/common/model/entry-viewer/helpers-new-entry-viewer.ts",
     "./test/common/model/entry-viewer/select.ts",
     "./test/common/model/entry-viewer/select-next.ts",
-    "./test/common/model/entry-viewer/select-prev.ts"
+    "./test/common/model/entry-viewer/select-prev.ts",
+    "./test/server/route.ts"
   ]
 }
