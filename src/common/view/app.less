@@ -47,14 +47,6 @@
       }
       > .next {
         .position(absolute, auto, auto, -8px, auto);
-        &:before {
-          .position(absolute, -8px, auto, auto, auto);
-          content: "";
-          display: block;
-          width: 100%;
-          height: 8px;
-          background-color: @white;
-        }
         &:after {
           content: "";
           display: block;
@@ -65,7 +57,19 @@
           border-width: 8px 6px;
           position: absolute;
           top: 4px;
-          left: 16px;
+          left: 18px;
+        }
+        &:before {
+          content: "";
+          display: block;
+          width: 0;
+          height: 0;
+          border: 8px solid transparent;
+          border-color: rgba(255, 255, 255, 0.3) transparent transparent transparent;
+          border-width: 8px 6px;
+          position: absolute;
+          top: 6px;
+          left: 18px;
         }
         &.is-disabled {
           display: none;
@@ -73,14 +77,6 @@
       }
       > .prev {
         .position(absolute, -8px, auto, auto, auto);
-        &:before {
-          .position(absolute, auto, auto, -8px, auto);
-          content: "";
-          display: block;
-          width: 100%;
-          height: 8px;
-          background-color: @white;
-        }
         &:after {
           content: "";
           display: block;
@@ -91,12 +87,22 @@
           border-width: 8px 6px;
           position: absolute;
           bottom: 4px;
-          left: 16px;
+          left: 18px;
+        }
+        &:before {
+          content: "";
+          display: block;
+          width: 0;
+          height: 0;
+          border: 8px solid transparent;
+          border-color: transparent transparent rgba(255, 255, 255, 0.3) transparent;
+          border-width: 8px 6px;
+          position: absolute;
+          bottom: 2px;
+          left: 18px;
         }
         &.is-disabled {
-          &:after {
-            display: none;
-          }
+          display: none;
         }
       }
     }
