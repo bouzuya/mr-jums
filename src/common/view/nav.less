@@ -3,6 +3,7 @@
 @import "./mixins/user-select";
 .nav() {
   @media (max-width: 767px) {
+    .position(absolute, 40%, auto, auto, 0);
     @size: 44px;
     @width: (@size * 2);
     .user-select(none);
