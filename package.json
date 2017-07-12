@@ -67,8 +67,8 @@
     "webpack-dev-server": "2.4.1"
   },
   "engines": {
-    "node": "6.9.2",
-    "npm": "3.10.9"
+    "node": "6.11.1",
+    "npm": "3.10.10"
   },
   "homepage": "https://github.com/bouzuya/mr-jums",
   "keywords": [],
