@@ -1,4 +1,4 @@
-FROM node:6.10-alpine
+FROM node:6.11.1
 RUN adduser -D myuser
 WORKDIR /home/myuser/
 COPY . .
