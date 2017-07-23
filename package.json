@@ -9,13 +9,8 @@
   },
   "babel": {
     "presets": [
-      "es2015"
-    ]
-  },
-  "beater": {
-    "dir": "./.tmp/es5/test/",
-    "require": [
-      "./scripts/enable-power-assert.js"
+      "es2015",
+      "power-assert"
     ]
   },
   "bugs": {
@@ -50,8 +45,8 @@
     "babel-core": "6.23.1",
     "babel-loader": "6.3.2",
     "babel-preset-es2015": "6.22.0",
+    "babel-preset-power-assert": "^1.0.0",
     "beater": "^5.0.0",
-    "espower-loader": "1.2.0",
     "less": "2.7.2",
     "npm-run-all": "4.0.2",
     "power-assert": "1.4.2",
