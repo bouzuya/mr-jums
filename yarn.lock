@@ -742,32 +742,22 @@ bcrypt-pbkdf@^1.0.0:
   dependencies:
     tweetnacl "^0.14.3"
 
-beater-cli-reporter@0.4.2:
-  version "0.4.2"
-  resolved "https://registry.yarnpkg.com/beater-cli-reporter/-/beater-cli-reporter-0.4.2.tgz#d82a42dbd833a1ac613f269d232853203b82c63d"
-  dependencies:
-    beater-reporter "0.3.0"
-    colo "0.3.2"
-    set-blocking "2.0.0"
+beater-reporter@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/beater-reporter/-/beater-reporter-0.4.0.tgz#9042743ff52bdac246ff20afd1568152fa2996c0"
 
-beater-cli@0.2.4:
-  version "0.2.4"
-  resolved "https://registry.yarnpkg.com/beater-cli/-/beater-cli-0.2.4.tgz#bb9c31f1a093fca494ca96f50a17cf570353a116"
+beater-tap-reporter@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/beater-tap-reporter/-/beater-tap-reporter-1.0.1.tgz#8dd0d7ac58e8b503d4c4b7e244b3a51e833b403b"
   dependencies:
-    beater-cli-reporter "0.4.2"
-    beater-reporter "0.3.0"
-    exists-sync "0.0.3"
-    minimist "1.2.0"
+    beater-reporter "^0.4.0"
 
-beater-reporter@0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/beater-reporter/-/beater-reporter-0.3.0.tgz#13886338f4755c398ac6dac64f59413759fe710b"
-
-beater@0.4.1:
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/beater/-/beater-0.4.1.tgz#21e65fcc48fd4fb414880887c87ba9fc19f1f337"
+beater@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/beater/-/beater-5.0.0.tgz#f644d1b495a5409d32e77df5e34e02ad86b99d05"
   dependencies:
-    beater-reporter "0.3.0"
+    beater-reporter "^0.4.0"
+    beater-tap-reporter "^1.0.1"
 
 big.js@^3.1.3:
   version "3.1.3"
@@ -981,10 +971,6 @@ co@^4.6.0:
 code-point-at@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/code-point-at/-/code-point-at-1.1.0.tgz#0d070b4d043a5bea33a2f1a40e2edb3d9a4ccf77"
-
-colo@0.3.2:
-  version "0.3.2"
-  resolved "https://registry.yarnpkg.com/colo/-/colo-0.3.2.tgz#418c0c81b4577e5174aafa82cba5ea9f5e78c8c1"
 
 combined-stream@^1.0.5, combined-stream@~1.0.5:
   version "1.0.5"
@@ -1551,10 +1537,6 @@ exec-sh@^0.2.0:
   resolved "https://registry.yarnpkg.com/exec-sh/-/exec-sh-0.2.0.tgz#14f75de3f20d286ef933099b2ce50a90359cef10"
   dependencies:
     merge "^1.1.3"
-
-exists-sync@0.0.3:
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/exists-sync/-/exists-sync-0.0.3.tgz#b910000bedbb113b378b82f5f5a7638107622dcf"
 
 expand-brackets@^0.1.4:
   version "0.1.5"
@@ -2424,7 +2406,7 @@ minimist@0.0.8:
   version "0.0.8"
   resolved "https://registry.yarnpkg.com/minimist/-/minimist-0.0.8.tgz#857fcabfc3397d2625b8228262e86aa7a011b05d"
 
-minimist@1.2.0, minimist@^1.2.0:
+minimist@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.0.tgz#a35008b20f41383eec1fb914f4cd5df79a264284"
 
@@ -3213,7 +3195,7 @@ serve-static@1.12.0:
     parseurl "~1.3.1"
     send "0.15.0"
 
-set-blocking@2.0.0, set-blocking@^2.0.0, set-blocking@~2.0.0:
+set-blocking@^2.0.0, set-blocking@~2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/set-blocking/-/set-blocking-2.0.0.tgz#045f9782d011ae9a6803ddd382b24392b3d890f7"
 
