@@ -1,8 +1,10 @@
 import * as assert from 'power-assert';
-import beater from 'beater';
+import { Test, test } from 'beater';
 
-const { test } = beater();
-
-test('/common/model/entry-viewer/select TODO', () => {
+const tests1: Test[] = [
+  test('/common/model/entry-viewer/select TODO', () => {
   assert(true); // TODO
-});
+  })
+];
+
+export { tests1 as tests };

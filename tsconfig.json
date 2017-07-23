@@ -20,17 +20,6 @@
     "./snabbdom-to-html.d.ts",
     "./src/client/index.ts",
     "./src/server/index.ts",
-    "./test/index.ts",
-    "./test/common/handler/history.ts",
-    "./test/common/handler/title.ts",
-    "./test/common/model/entry-viewer/empty.ts",
-    "./test/common/model/entry-viewer/focus.ts",
-    "./test/common/model/entry-viewer/focus-next.ts",
-    "./test/common/model/entry-viewer/focus-prev.ts",
-    "./test/common/model/entry-viewer/helpers-new-entry-viewer.ts",
-    "./test/common/model/entry-viewer/select.ts",
-    "./test/common/model/entry-viewer/select-next.ts",
-    "./test/common/model/entry-viewer/select-prev.ts",
-    "./test/server/route.ts"
+    "./test/index.ts"
   ]
 }

@@ -1,14 +1,13 @@
-import * as assert from 'power-assert';
-import * as sinon from 'sinon';
-import * as proxyquire from 'proxyquire';
-import beater from 'beater';
+import { Test, run } from 'beater';
 
-// import { add } from '../src/';
+import { tests as commonHandlerHistoryTests } from './common/handler/history';
+import { tests as commonHandlerTitleTests } from './common/handler/title';
+import { tests as commonModelEntryViewerTests } from './common/model/entry-viewer';
+import { tests as serverRouteTests } from './server/route';
 
-const { test } = beater();
-
-test('add', () => {
-  // assert(add(1, 2) === 3);
-  assert(sinon);
-  assert(proxyquire);
-});
+const tests1: Test[] = ([] as Test[])
+  .concat(commonHandlerHistoryTests)
+  .concat(commonHandlerTitleTests)
+  .concat(commonModelEntryViewerTests)
+  .concat(serverRouteTests);
+run(tests1).catch(() => process.exit(1));
