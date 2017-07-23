@@ -1,5 +1,5 @@
 FROM node:6.11.1
-RUN adduser -D myuser
+RUN useradd -m myuser
 WORKDIR /home/myuser/
 COPY . .
 RUN npm install --production
