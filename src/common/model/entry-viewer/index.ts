@@ -1,5 +1,6 @@
 import { Entry } from '../../type/entry';
 import { EntryViewer } from '../../type/entry-viewer';
+import { focus } from './focus';
 import { focusNext } from './focus-next';
 import { focusPrev } from './focus-prev';
 import { getCurrentEntry as getCurrentEntryImpl } from './get-current-entry';
@@ -80,6 +81,7 @@ const getPrevSelectedEntry = (entryViewer: EntryViewer): Entry | null => {
 
 export {
   create,
+  focus,
   focusNext,
   focusPrev,
   getCurrentFocusedEntry,
