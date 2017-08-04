@@ -50,7 +50,7 @@ const tests1: Test[] = [
       type: 'state',
       state: {
         entryViewer: {
-          entries: [{ id: '2006-01-02', title: 'title1' }],
+          partialEntries: [{ id: '2006-01-02', title: 'title1' }],
           selectedEntryId: '2006-01-02'
         },
         focus: 'entry-list'
@@ -83,7 +83,7 @@ const tests1: Test[] = [
       type: 'state',
       state: {
         entryViewer: {
-          entries: [{ id: '2006-01-02', title: 'title1' }],
+          partialEntries: [{ id: '2006-01-02', title: 'title1' }],
           selectedEntryId: '2006-01-02'
         },
         focus: 'entry-detail'
@@ -101,7 +101,7 @@ const tests1: Test[] = [
       type: 'state',
       state: {
         entryViewer: {
-          entries: [{ id: '2006-01-02', title: 'title1' }],
+          partialEntries: [{ id: '2006-01-02', title: 'title1' }],
           selectedEntryId: '2006-01-02'
         },
         focus: 'entry-detail'
@@ -120,7 +120,7 @@ const tests1: Test[] = [
       type: 'state',
       state: {
         entryViewer: {
-          entries: [{ id: '2006-01-02', title: 'title1' }],
+          partialEntries: [{ id: '2006-01-02', title: 'title1' }],
           selectedEntryId: '2006-01-02'
         },
         focus: 'entry-detail'
@@ -130,7 +130,7 @@ const tests1: Test[] = [
       type: 'state',
       state: {
         entryViewer: {
-          entries: [{ id: '2006-01-03', title: 'title2' }],
+          partialEntries: [{ id: '2006-01-03', title: 'title2' }],
           selectedEntryId: '2006-01-03'
         },
         focus: 'entry-detail'
@@ -152,7 +152,7 @@ const tests1: Test[] = [
       type: 'state',
       state: {
         entryViewer: {
-          entries: [{ id: '2006-01-02', title: 'title1' }],
+          partialEntries: [{ id: '2006-01-02', title: 'title1' }],
           selectedEntryId: '2006-01-02'
         },
         focus: 'entry-detail'
@@ -162,7 +162,7 @@ const tests1: Test[] = [
       type: 'state',
       state: {
         entryViewer: {
-          entries: [{ id: '2006-01-03', title: 'title2' }],
+          partialEntries: [{ id: '2006-01-03', title: 'title2' }],
           selectedEntryId: '2006-01-03'
         },
         focus: 'entry-detail'

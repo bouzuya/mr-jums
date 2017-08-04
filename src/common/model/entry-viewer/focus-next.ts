@@ -5,15 +5,15 @@ import { getNextEntry } from './get-next-entry';
 const focusNext = (
   entryViewer: EntryViewer
 ): EntryViewer => {
-  const { allEntries, entries, focusedEntryId, selectedEntryId } = entryViewer;
+  const { allEntries, partialEntries, focusedEntryId, selectedEntryId } = entryViewer;
   const nextFocusedEntry = getNextEntry(
-    allEntries === null ? entries : allEntries,
+    allEntries === null ? partialEntries : allEntries,
     focusedEntryId
   );
   if (nextFocusedEntry === null) return entryViewer;
   return {
     allEntries,
-    entries,
+    partialEntries,
     focusedEntryId: nextFocusedEntry.id,
     selectedEntryId
   };

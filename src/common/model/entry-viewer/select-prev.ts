@@ -5,15 +5,15 @@ import { getPrevEntry } from './get-prev-entry';
 const selectAndFocusPrev = (
   entryViewer: EntryViewer
 ): EntryViewer => {
-  const { allEntries, entries, selectedEntryId } = entryViewer;
+  const { allEntries, partialEntries, selectedEntryId } = entryViewer;
   const prevSelectedEntry = getPrevEntry(
-    allEntries === null ? entries : allEntries,
+    allEntries === null ? partialEntries : allEntries,
     selectedEntryId
   );
   if (prevSelectedEntry === null) return entryViewer;
   return {
     allEntries,
-    entries,
+    partialEntries,
     focusedEntryId: prevSelectedEntry.id,
     selectedEntryId: prevSelectedEntry.id
   };

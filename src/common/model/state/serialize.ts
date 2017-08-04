@@ -3,7 +3,7 @@ import { State } from '../../type/state';
 const serialize = (state: State): string => {
   const data = {
     selectedEntryDetail: state.selectedEntryDetail,
-    entries: state.entryViewer.entries
+    partialEntries: state.entryViewer.partialEntries
   };
   return JSON.stringify(data);
 };

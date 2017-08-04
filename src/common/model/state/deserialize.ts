@@ -3,7 +3,7 @@ import { create, select } from '../entry-viewer';
 
 const deserialize = (serialized: string): State => {
   const data = JSON.parse(serialized);
-  const entryViewer = create(data.entries);
+  const entryViewer = create(data.partialEntries);
   return {
     selectedEntryDetail: data.selectedEntryDetail,
     entryViewer: data.selectedEntryDetail === null

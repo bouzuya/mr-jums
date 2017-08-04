@@ -10,7 +10,7 @@ const create = (
   }
 ): State => {
   const data = Object.assign(
-    { entries },
+    { partialEntries: entries },
     typeof entry === 'undefined'
       ? { selectedEntryDetail: null } : { selectedEntryDetail: entry }
   );
