@@ -1,5 +1,5 @@
 import { State } from '../../type/state';
-import { create, select } from '../entry-viewer';
+import { create, focus, select } from '../entry-viewer';
 
 const deserialize = (serialized: string): State => {
   const data = JSON.parse(serialized);
@@ -7,7 +7,8 @@ const deserialize = (serialized: string): State => {
   return {
     selectedEntryDetail: data.selectedEntryDetail,
     entryViewer: data.selectedEntryDetail === null
-      ? entryViewer : select(entryViewer, data.selectedEntryDetail.id),
+      ? focus(entryViewer, data.focusedEntryId)
+      : select(entryViewer, data.selectedEntryDetail.id),
     focus: data.selectedEntryDetail === null
       ? 'entry-list'
       : 'entry-detail'

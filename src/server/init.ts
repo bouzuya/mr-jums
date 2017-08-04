@@ -46,10 +46,11 @@ const buildPartialEntries = (
   );
 };
 
-const makeParseEntryList = (focusedEntry: string | null) =>
+const makeParseEntryList = (focusedEntryId: string | null) =>
   (entries: ApiEntrySummary[]): Promise<State> => {
     const state = create({
-      entries: buildPartialEntries(entries, focusedEntry)
+      entries: buildPartialEntries(entries, focusedEntryId),
+      focus: focusedEntryId
     });
     return Promise.resolve(state);
   };
@@ -65,7 +66,8 @@ const makeParseEntryDetail = ({ year, month, date }: Params) => {
         pubdate: entry.pubdate,
         tags: entry.tags
       },
-      entries: buildPartialEntries(entries, `${year}-${month}-${date}`)
+      entries: buildPartialEntries(entries, `${year}-${month}-${date}`),
+      focus: `${year}-${month}-${date}`
     });
     return Promise.resolve(state);
   };
