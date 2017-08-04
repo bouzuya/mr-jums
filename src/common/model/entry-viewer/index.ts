@@ -13,40 +13,69 @@ import { getPrevEntry as getPrevEntryImpl } from './get-prev-entry';
 
 const create = (entries: Entry[]): EntryViewer => {
   return {
+    allEntries: null,
     entries,
     focusedEntryId: (entries.length > 0 ? entries[0].id : null),
     selectedEntryId: null
   };
 };
 
+const withAll = (entryViewer: EntryViewer, allEntries: Entry[]): EntryViewer => {
+  const { entries, focusedEntryId, selectedEntryId } = entryViewer;
+  return {
+    allEntries,
+    entries,
+    focusedEntryId,
+    selectedEntryId
+  };
+};
+
 const getCurrentFocusedEntry = (entryViewer: EntryViewer): Entry | null => {
-  const { entries, focusedEntryId } = entryViewer;
-  return getCurrentEntryImpl(entries, focusedEntryId);
+  const { allEntries, entries, focusedEntryId } = entryViewer;
+  return getCurrentEntryImpl(
+    allEntries === null ? entries : allEntries,
+    focusedEntryId
+  );
 };
 
 const getCurrentSelectedEntry = (entryViewer: EntryViewer): Entry | null => {
-  const { entries, selectedEntryId } = entryViewer;
-  return getCurrentEntryImpl(entries, selectedEntryId);
+  const { allEntries, entries, selectedEntryId } = entryViewer;
+  return getCurrentEntryImpl(
+    allEntries === null ? entries : allEntries,
+    selectedEntryId
+  );
 };
 
 const getNextFocusedEntry = (entryViewer: EntryViewer): Entry | null => {
-  const { entries, focusedEntryId } = entryViewer;
-  return getNextEntryImpl(entries, focusedEntryId);
+  const { allEntries, entries, focusedEntryId } = entryViewer;
+  return getNextEntryImpl(
+    allEntries === null ? entries : allEntries,
+    focusedEntryId
+  );
 };
 
 const getNextSelectedEntry = (entryViewer: EntryViewer): Entry | null => {
-  const { entries, selectedEntryId } = entryViewer;
-  return getNextEntryImpl(entries, selectedEntryId);
+  const { allEntries, entries, selectedEntryId } = entryViewer;
+  return getNextEntryImpl(
+    allEntries === null ? entries : allEntries,
+    selectedEntryId
+  );
 };
 
 const getPrevFocusedEntry = (entryViewer: EntryViewer): Entry | null => {
-  const { entries, focusedEntryId } = entryViewer;
-  return getPrevEntryImpl(entries, focusedEntryId);
+  const { allEntries, entries, focusedEntryId } = entryViewer;
+  return getPrevEntryImpl(
+    allEntries === null ? entries : allEntries,
+    focusedEntryId
+  );
 };
 
 const getPrevSelectedEntry = (entryViewer: EntryViewer): Entry | null => {
-  const { entries, selectedEntryId } = entryViewer;
-  return getPrevEntryImpl(entries, selectedEntryId);
+  const { allEntries, entries, selectedEntryId } = entryViewer;
+  return getPrevEntryImpl(
+    allEntries === null ? entries : allEntries,
+    selectedEntryId
+  );
 };
 
 export {
@@ -62,5 +91,6 @@ export {
   getPrevSelectedEntry,
   select,
   selectNext,
-  selectPrev
+  selectPrev,
+  withAll
 };
