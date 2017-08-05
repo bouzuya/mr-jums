@@ -16,7 +16,7 @@ import { State } from '../type/state';
 import { view as appView } from './app';
 
 const view = (
-  state: State, scriptUrl: string, styleUrl: string, imageBaseUrl: string
+  state: State, _scriptUrl: string, _styleUrl: string, imageBaseUrl: string
 ): VNode => {
   const faviconUrl = `${imageBaseUrl}/images/favicon.png`;
   const entry = state.selectedEntryDetail;
@@ -47,11 +47,11 @@ const view = (
           content: 'WIpgFHN5YFkpju_QBxqY2IoTI6QV2OP0Xhc5WGq9U0g'
         }
       }),
-      link({
-        props: {
-          rel: 'stylesheet', type: 'text/css', href: styleUrl
-        }
-      }),
+      // link({
+      //   props: {
+      //     rel: 'stylesheet', type: 'text/css', href: styleUrl
+      //   }
+      // }),
       link({ props: { rel: 'icon', sizes: '192x192', href: faviconUrl } }),
       link({
         props: { rel: 'apple-touch-icon', sizes: '192x192', href: faviconUrl }
@@ -60,7 +60,7 @@ const view = (
     ]),
     body([
       div('#app', [appView(state)]),
-      script({ props: { src: scriptUrl } }, [])
+      // script({ props: { src: scriptUrl } }, [])
     ])
   ]);
 };
