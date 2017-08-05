@@ -12,6 +12,16 @@ const tests1: Test[] = [
     assert.deepEqual(result.params, {});
   }),
 
+  test(category + 'entry-list (focused)', () => {
+    const result = route('/2006/01/02/related/');
+    assert(result.name === 'entry-list');
+    assert.deepEqual(result.params, {
+      year: '2006',
+      month: '01',
+      date: '02'
+    });
+  }),
+
   test(category + 'entry-detail', () => {
     const result = route('/2006/01/02/');
     assert(result.name === 'entry-detail');

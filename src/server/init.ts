@@ -79,8 +79,11 @@ const initEntryDetail = (params: Params): Promise<State> => {
     .then(makeParseEntryDetail(params));
 };
 
-const initEntryList = ({ focusedEntry }: Params): Promise<State> => {
-  return fetchList().then(makeParseEntryList(focusedEntry));
+const initEntryList = ({ year, month, date }: Params): Promise<State> => {
+  const focusedEntryId = typeof year === 'undefined'
+    ? null
+    : `${year}-${month}-${date}`;
+  return fetchList().then(makeParseEntryList(focusedEntryId));
 };
 
 // TODO: 404

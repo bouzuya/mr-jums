@@ -11,11 +11,12 @@ import {
 } from '../model/entry-viewer';
 
 const toPath = (entry: Entry | null, type: 'focus' | 'select'): string => {
+  const path = entry === null ? '/' : '/' + entry.id.split('-').join('/') + '/';
   switch (type) {
     case 'focus':
-      return entry === null ? '/' : '/?f=' + entry.id;
+      return path + 'related/';
     case 'select':
-      return entry === null ? '/' : '/' + entry.id.split('-').join('/') + '/';
+      return path;
     default:
       throw new Error();
   }
