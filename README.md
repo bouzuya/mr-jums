@@ -20,6 +20,12 @@ $ docker build -t registry.heroku.com/mr-jums/web .
 $ docker push registry.heroku.com/mr-jums/web
 ```
 
+### URLs
+
+- `/`                          ... entry list (latest)
+- `/{yyyy}/{mm}/{dd}/`         ... entry detail
+- `/{yyyy}/{mm}/{dd}/related/` ... entry list ()
+
 ## Badges
 
 [![Travis CI][travisci-badge-url]][travisci-url]
