@@ -67,7 +67,8 @@
     "npm": "3.10.10"
   },
   "files": [
-    ".tmp/es5/src/"
+    ".tmp/es5/src/",
+    "rev.json"
   ],
   "homepage": "https://github.com/bouzuya/mr-jums",
   "keywords": [],
