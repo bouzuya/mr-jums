@@ -10,6 +10,7 @@ const getUrls = (): { scriptUrl: string; styleUrl: string; } => {
 
 const create = (): ServerConfig => {
   const imageBaseUrl = process.env.IMAGE_BASE_URL;
+  const jsonBaseUrl = process.env.JSON_BASE_URL;
   const port = parseInt((process.env.PORT || '4000'), 10);
   const publicDir = join(process.cwd(), 'public');
   const urls = getUrls();
@@ -19,6 +20,7 @@ const create = (): ServerConfig => {
     ? 'http://localhost:4000/styles/index.css' : urls.styleUrl;
   return {
     imageBaseUrl,
+    jsonBaseUrl,
     port,
     publicDir,
     scriptUrl,

@@ -1,5 +1,6 @@
 import { create } from '../common/model/state/index';
 import { Entry } from '../common/type/entry';
+import { ServerConfig } from '../common/type/server-config';
 import { State } from '../common/type/state';
 import { requestJson } from './request-json';
 import { Params, Route } from './type';
@@ -19,15 +20,16 @@ interface ApiEntrySummary {
 }
 
 const fetchDetail = (
-  { year, month, date }: Params
+  { year, month, date }: Params,
+  config: ServerConfig
 ): Promise<ApiEntryDetail> => {
   const path = `/${year}/${month}/${date}.json`;
-  return requestJson(path).then((jsonString) => JSON.parse(jsonString));
+  return requestJson(path, config).then((jsonString) => JSON.parse(jsonString));
 };
 
-const fetchList = (): Promise<ApiEntrySummary[]> => {
+const fetchList = (config: ServerConfig): Promise<ApiEntrySummary[]> => {
   const path = '/posts.json';
-  return requestJson(path).then((jsonString) => JSON.parse(jsonString));
+  return requestJson(path, config).then((jsonString) => JSON.parse(jsonString));
 };
 
 const buildPartialEntries = (
@@ -73,29 +75,29 @@ const makeParseEntryDetail = ({ year, month, date }: Params) => {
   };
 };
 
-const initEntryDetail = (params: Params): Promise<State> => {
+const initEntryDetail = (params: Params, config: ServerConfig): Promise<State> => {
   return Promise
-    .all([fetchDetail(params), fetchList()])
+    .all([fetchDetail(params, config), fetchList(config)])
     .then(makeParseEntryDetail(params));
 };
 
-const initEntryList = ({ year, month, date }: Params): Promise<State> => {
+const initEntryList = ({ year, month, date }: Params, config: ServerConfig): Promise<State> => {
   const focusedEntryId = typeof year === 'undefined'
     ? null
     : `${year}-${month}-${date}`;
-  return fetchList().then(makeParseEntryList(focusedEntryId));
+  return fetchList(config).then(makeParseEntryList(focusedEntryId));
 };
 
 // TODO: 404
 const inits: {
-  [name: string]: (params: Params) => Promise<State>;
+  [name: string]: (params: Params, config: ServerConfig) => Promise<State>;
 } = {
     'entry-detail': initEntryDetail,
     'entry-list': initEntryList
   };
 
-const init = ({ name, params }: Route): Promise<State> => {
-  return inits[name](params);
+const init = ({ name, params }: Route, config: ServerConfig): Promise<State> => {
+  return inits[name](params, config);
 };
 
 export { init };

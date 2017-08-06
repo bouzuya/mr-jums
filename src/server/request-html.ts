@@ -18,7 +18,7 @@ const render = (state: State, config: ServerConfig): string => {
 const requestHtml = (path: string, config: ServerConfig): Promise<string> => {
   return Promise.resolve(path)
     .then((path) => route(path))
-    .then((route) => init(route))
+    .then((route) => init(route, config))
     .then((state) => render(state, config));
 };
 

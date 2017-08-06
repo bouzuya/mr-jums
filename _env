@@ -9,5 +9,6 @@
 
 ## Examples
 # IMAGE_BASE_URL='https://mr-jums.bouzuya.net'
+# JSON_BASE_URL='https://blog.bouzuya.net'
 # NODE_ENV='development'
 # PORT='4000'
