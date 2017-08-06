@@ -1,5 +1,5 @@
 {
-  "name": "mr-jums",
+  "name": "@bouzuya/mr-jums",
   "description": "A client for blog.bouzuya.net using Cycle.js",
   "version": "0.1.0",
   "author": {
