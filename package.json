@@ -66,6 +66,9 @@
     "node": "6.11.1",
     "npm": "3.10.10"
   },
+  "files": [
+    ".tmp/es5/src/"
+  ],
   "homepage": "https://github.com/bouzuya/mr-jums",
   "keywords": [],
   "license": "MIT",
