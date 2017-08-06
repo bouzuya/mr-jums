@@ -18,6 +18,7 @@
   },
   "files": [
     "./snabbdom-to-html.d.ts",
+    "./src/cli/index.ts",
     "./src/client/index.ts",
     "./src/server/index.ts",
     "./test/index.ts"

@@ -69,7 +69,7 @@
   "homepage": "https://github.com/bouzuya/mr-jums",
   "keywords": [],
   "license": "MIT",
-  "main": ".tmp/es2015/src/server/index.js",
+  "main": ".tmp/es5/src/cli/index.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/bouzuya/mr-jums.git"
