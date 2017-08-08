@@ -3,7 +3,10 @@ import { outputFileSync } from 'fs-extra';
 import { join } from 'path';
 import { parse } from 'url';
 import { create } from '../common/model/server-config/create';
-import { requestHtml } from '../server/request-html';
+import { State } from '../common/type/state';
+import { init } from '../server/init';
+import { render } from '../server/render';
+import { Route, route } from '../server/route';
 
 const build = (dstDir: string) => {
   const config = create();
@@ -19,7 +22,9 @@ const build = (dstDir: string) => {
     .reduce((promise, path) => {
       return promise
         .then(() => new Promise((resolve) => process.nextTick(resolve)))
-        .then(() => requestHtml(path, config))
+        .then(() => route(path))
+        .then((route: Route) => init(route, config))
+        .then((state: State) => render(state, config))
         .then((html) => {
           const filePaths = [
             join(dstDir, path, 'index.html')

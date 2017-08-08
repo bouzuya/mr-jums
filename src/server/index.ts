@@ -1,8 +1,10 @@
 import * as express from 'express';
 import * as compression from 'compression';
 import * as morgan from 'morgan';
-import { requestHtml } from './request-html';
 import { create } from '../common/model/server-config/create';
+import { init } from './init';
+import { render } from './render';
+import { route } from './route';
 
 const main = () => {
   const config = create();
@@ -12,7 +14,9 @@ const main = () => {
   server.use(express.static(config.publicDir));
   server.use((req, res) => {
     return void Promise.resolve(req.originalUrl)
-      .then((path) => requestHtml(path, config))
+      .then((path) => route(path))
+      .then((route) => init(route, config))
+      .then((state) => render(state, config))
       .then(
       (html) => ({ status: 200, body: html }),
       () => ({ status: 500, body: JSON.stringify({ message: 'ERROR' }) })

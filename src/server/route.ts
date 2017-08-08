@@ -14,4 +14,4 @@ const buildRouter = (): (path: string) => Route => {
 
 const route = buildRouter();
 
-export { route };
+export { Route, route };
