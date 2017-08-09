@@ -21,7 +21,7 @@ const p$ = (message$: xs<Message>): xs<P> => {
   const bbn = 'blog.bouzuya.net';
   return message$
     .filter((m): m is StateEvent => m.type === 'state')
-    .map(({ state: { entryViewer, focus } }) => {
+    .map(({ state: { entryViewer, focus } }: StateEvent) => {
       const entry = getCurrentSelectedEntry(entryViewer);
       const path = focus === 'entry-list'
         ? '/' : entry === null
