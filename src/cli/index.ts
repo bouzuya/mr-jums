@@ -16,14 +16,33 @@ const build = (dstDir: string) => {
   const entries = JSON.parse(entriesData) as { date: string; }[];
   // paths = ['/' + '/2006/01/02/', '/2006/01/02/related/', '/2006/01/03/', ...]
   const paths = entries
-    .map(({ date }) => '/' + date.split('-').join('/') + '/')
-    .reduce((a, i) => a.concat([i, i + 'related/']), ['/']);
+    .map(({ date }) => {
+      const entryData = readFileSync(join.apply(null, [jsonDir].concat(date.split('-'), 'index.json')), 'utf-8');
+      const { idTitle } = JSON.parse(entryData) as { idTitle?: string; };
+      return { date, idTitle };
+    })
+    .map(({ date, idTitle }) => {
+      const path = '/' + date.split('-').join('/') + '/';
+      return [
+        path,
+        path + 'related/',
+        path + (typeof idTitle === 'undefined' ? 'diary' : idTitle) + '/'
+      ];
+    })
+    .reduce((a, i) => a.concat(i), ['/']);
   paths
     .reduce((promise, path) => {
       return promise
         .then(() => new Promise((resolve) => process.nextTick(resolve)))
         .then(() => route(path))
-        .then((route: Route) => init(route, config))
+        .then((route1: Route) => {
+          if (route1.name === 'permanent-redirect') {
+            const url = path.replace(/\/[^\/]*\/$/, '/');
+            return init(route(url), config);
+          } else {
+            return init(route1, config);
+          }
+        })
         .then((state: State) => render(state, config))
         .then((html) => {
           const filePaths = [

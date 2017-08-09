@@ -8,7 +8,8 @@ const buildRouter = (): (path: string) => Route => {
   const date = /^\d{2}$/;
   return router([
     route1('entry-detail', '/{year}/{month}/{date}/', { year, month, date }),
-    route1('entry-list', '/{year}/{month}/{date}/related/', { year, month, date })
+    route1('entry-list', '/{year}/{month}/{date}/related/', { year, month, date }),
+    route1('permanent-redirect', '/{year}/{month}/{date}/{idTitle}/', { year, month, date })
   ], result('entry-list', {}));
 };
 
