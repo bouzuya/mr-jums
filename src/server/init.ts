@@ -6,6 +6,7 @@ import { requestJson } from './request-json';
 import { Params, Route } from './type';
 
 interface ApiEntryDetail {
+  data: string;
   date: string;
   html: string;
   minutes: number;
@@ -61,6 +62,7 @@ const makeParseEntryDetail = ({ year, month, date }: Params) => {
   return ([entry, entries]: [ApiEntryDetail, ApiEntrySummary[]]): Promise<State> => {
     const state = create({
       entry: {
+        description: entry.data.substring(0, 100),
         id: entry.date,
         title: entry.title,
         html: entry.html,
