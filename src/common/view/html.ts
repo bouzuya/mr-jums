@@ -67,9 +67,7 @@ const view = (
       //     rel: 'stylesheet', type: 'text/css', href: styleUrl
       //   }
       // }),
-      entry === null
-        ? link({ props: { rel: 'alternate', type: 'application/atom+xml', href: '/atom.xml' } })
-        : null,
+      link({ props: { rel: 'alternate', type: 'application/atom+xml', href: '/atom.xml' } }),
       link({ props: { rel: 'icon', sizes: '192x192', href: faviconUrl } }),
       link({
         props: { rel: 'apple-touch-icon', sizes: '192x192', href: faviconUrl }
