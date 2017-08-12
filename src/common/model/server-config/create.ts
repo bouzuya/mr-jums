@@ -20,9 +20,17 @@ const getUrls = (): { scriptUrl: string; styleUrl: string; } => {
   return revJson;
 };
 
-const create = (): ServerConfig => {
-  const imageBaseUrl = process.env.IMAGE_BASE_URL;
-  const jsonBaseUrl = process.env.JSON_BASE_URL;
+const create = (options?: Partial<{ imageBaseUrl: string; jsonBaseUrl: string; }>): ServerConfig => {
+  const imageBaseUrl = typeof options === 'undefined'
+    ? process.env.IMAGE_BASE_URL
+    : typeof options.imageBaseUrl === 'undefined'
+      ? process.env.IMAGE_BASE_URL
+      : options.imageBaseUrl;
+  const jsonBaseUrl = typeof options === 'undefined'
+    ? process.env.JSON_BASE_URL
+    : typeof options.jsonBaseUrl === 'undefined'
+      ? process.env.JSON_BASE_URL
+      : options.jsonBaseUrl;
   const port = parseInt((process.env.PORT || '4000'), 10);
   const publicDir = join(process.cwd(), 'public');
   const urls = getUrls();

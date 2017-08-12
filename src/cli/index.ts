@@ -8,8 +8,15 @@ import { init } from '../server/init';
 import { render } from '../server/render';
 import { Route, route } from '../server/route';
 
-const build = (dstDir: string) => {
-  const config = create();
+export interface Options {
+  dstDir: string;
+  imageBaseUrl?: string;
+  jsonBaseUrl?: string;
+}
+
+const build = (options: Options) => {
+  const dstDir = options.dstDir;
+  const config = create(options);
   const jsonDir = parse(config.jsonBaseUrl).path;
   if (typeof jsonDir === 'undefined') throw new Error();
   const entriesData = readFileSync(join(jsonDir, 'posts.json'), 'utf-8');
