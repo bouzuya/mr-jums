@@ -24,7 +24,9 @@ const build = (options: Options) => {
   // paths = ['/' + '/2006/01/02/', '/2006/01/02/related/', '/2006/01/03/', ...]
   const paths = entries
     .map(({ date }) => {
-      const entryData = readFileSync(join.apply(null, [jsonDir].concat(date.split('-'), 'index.json')), 'utf-8');
+      const [yyyy, mm, dd] = date.split('-');
+      const entryPath = join(jsonDir, yyyy, mm, dd, 'index.json');
+      const entryData = readFileSync(entryPath, 'utf-8');
       const { idTitle } = JSON.parse(entryData) as { idTitle?: string; };
       return { date, idTitle };
     })
