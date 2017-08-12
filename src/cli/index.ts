@@ -1,5 +1,6 @@
-import { readFileSync } from 'fs';
-import { outputFileSync } from 'fs-extra';
+import { createHash } from 'crypto';
+import { existsSync, readFileSync } from 'fs';
+import { outputFileSync, outputJsonSync } from 'fs-extra';
 import { join } from 'path';
 import { parse } from 'url';
 import { create } from '../common/model/server-config/create';
@@ -12,7 +13,12 @@ import { Route, route } from '../server/route';
 export interface Options {
   dstDir: string;
   imageBaseUrl?: string;
+  incremental?: boolean;
   jsonBaseUrl?: string;
+}
+
+interface Cache {
+  [path: string]: string;
 }
 
 interface EntryId {
@@ -21,6 +27,22 @@ interface EntryId {
   dd: string;
   idTitle?: string;
 }
+
+const loadCache = (dstDir: string): Cache => {
+  const path = join(dstDir, '.mr-jums', 'cache.json');
+  if (!existsSync(path)) return {};
+  const data = readFileSync(path, 'utf-8');
+  return JSON.parse(data);
+};
+
+const saveCache = (dstDir: string, cache: Cache): void => {
+  const path = join(dstDir, '.mr-jums', 'cache.json');
+  outputJsonSync(path, cache);
+};
+
+const calcHash = (html: string): string => {
+  return createHash('md5').update(html).digest('hex');
+};
 
 // ['2006-01-02', ...]
 const loadEntryDates = (jsonDir: string): string[] => {
@@ -55,7 +77,13 @@ const toPaths = (entryIds: EntryId[]): string[] => {
     .reduce((a, i) => a.concat(i), ['/']);
 };
 
-const processPath = (path: string, config: ServerConfig, dstDir: string): Promise<void> => {
+const processPath = (
+  path: string,
+  config: ServerConfig,
+  dstDir: string,
+  incremental: boolean,
+  cache: Cache // mutable
+): Promise<void> => {
   return Promise.resolve(route(path))
     .then((route1: Route) => {
       if (route1.name === 'permanent-redirect') {
@@ -67,6 +95,14 @@ const processPath = (path: string, config: ServerConfig, dstDir: string): Promis
     })
     .then((state: State) => render(state, config))
     .then((html) => {
+      const hash = calcHash(html);
+      if (incremental) {
+        if (cache[path] === hash) {
+          return;
+        } else {
+          cache[path] = hash;
+        }
+      }
       const filePaths = [
         join(dstDir, path, 'index.html')
       ].concat(path.length === 1 ? [] : [
@@ -79,21 +115,46 @@ const processPath = (path: string, config: ServerConfig, dstDir: string): Promis
     });
 };
 
+const promiseFinally = (promise: Promise<any>, f: Function): Promise<any> => {
+  return promise.then((r) => {
+    try {
+      f();
+    } catch (_) {
+      // do nothing
+    }
+    return r;
+  }, (error) => {
+    try {
+      f();
+    } catch (_) {
+      // do nothing
+    }
+    return Promise.reject(error);
+  });
+};
+
 const build = (options: Options) => {
   const dstDir = options.dstDir;
   const config = create(options);
   const jsonDir = parse(config.jsonBaseUrl).path;
   if (typeof jsonDir === 'undefined') throw new Error();
-  toPaths(loadEntryIds(jsonDir))
+  const incremental = typeof options.incremental === 'undefined'
+    ? false : options.incremental;
+  const cache = incremental ? loadCache(dstDir) : {};
+  return promiseFinally(toPaths(loadEntryIds(jsonDir))
     .reduce((promise, path) => {
       return promise
-        .then(() => new Promise((resolve) => process.nextTick(resolve)))
-        .then(() => processPath(path, config, dstDir));
+        .then(() => new Promise<void>((resolve) => process.nextTick(resolve)))
+        .then(() => processPath(path, config, dstDir, incremental, cache));
     }, Promise.resolve())
     .then(() => {
       console.log('completed');
     }, (error) => {
       console.error(error);
+    }),
+    () => {
+      if (!incremental) return;
+      saveCache(dstDir, cache);
     });
 };
 
