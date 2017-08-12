@@ -26,6 +26,7 @@ interface EntryId {
   mm: string;
   dd: string;
   idTitle?: string;
+  digest: string;
 }
 
 const loadCache = (dstDir: string): Cache => {
@@ -40,8 +41,8 @@ const saveCache = (dstDir: string, cache: Cache): void => {
   outputJsonSync(path, cache);
 };
 
-const calcHash = (html: string): string => {
-  return createHash('md5').update(html).digest('hex');
+const calcDigest = (json: string): string => {
+  return createHash('md5').update(json).digest('hex');
 };
 
 // ['2006-01-02', ...]
@@ -57,8 +58,9 @@ const loadEntryIds = (jsonDir: string): EntryId[] => {
       const [yyyy, mm, dd] = date.split('-');
       const path = join(jsonDir, yyyy, mm, dd, 'index.json');
       const data = readFileSync(path, 'utf-8');
+      const digest = calcDigest(data);
       const { idTitle } = JSON.parse(data) as { idTitle?: string; };
-      return { yyyy, mm, dd, idTitle };
+      return { yyyy, mm, dd, idTitle, digest };
     });
 };
 
@@ -80,9 +82,7 @@ const toPaths = (entryIds: EntryId[]): string[] => {
 const processPath = (
   path: string,
   config: ServerConfig,
-  dstDir: string,
-  incremental: boolean,
-  cache: Cache // mutable
+  dstDir: string
 ): Promise<void> => {
   return Promise.resolve(route(path))
     .then((route1: Route) => {
@@ -95,14 +95,6 @@ const processPath = (
     })
     .then((state: State) => render(state, config))
     .then((html) => {
-      const hash = calcHash(html);
-      if (incremental) {
-        if (cache[path] === hash) {
-          return;
-        } else {
-          cache[path] = hash;
-        }
-      }
       const filePaths = [
         join(dstDir, path, 'index.html')
       ].concat(path.length === 1 ? [] : [
@@ -141,20 +133,27 @@ const build = (options: Options) => {
   const incremental = typeof options.incremental === 'undefined'
     ? false : options.incremental;
   const cache = incremental ? loadCache(dstDir) : {};
-  return promiseFinally(toPaths(loadEntryIds(jsonDir))
+  const entryIds = loadEntryIds(jsonDir);
+  const toProcessIds = incremental
+    ? entryIds.filter(({ yyyy, mm, dd, digest }) => {
+      return cache[`${yyyy}-${mm}-${dd}`] !== digest;
+    })
+    : entryIds
+  return promiseFinally(toPaths(toProcessIds)
     .reduce((promise, path) => {
       return promise
         .then(() => new Promise<void>((resolve) => process.nextTick(resolve)))
-        .then(() => processPath(path, config, dstDir, incremental, cache));
+        .then(() => processPath(path, config, dstDir));
     }, Promise.resolve())
     .then(() => {
       console.log('completed');
     }, (error) => {
       console.error(error);
-    }),
-    () => {
+    }), () => {
       if (!incremental) return;
-      saveCache(dstDir, cache);
+      saveCache(dstDir, entryIds.reduce((a, { yyyy, mm, dd, digest }) => {
+        return Object.assign(a, { [`${yyyy}-${mm}-${dd}`]: digest });
+      }, {} as Cache));
     });
 };
 
