@@ -1,4 +1,4 @@
-import { VNode, div, footer, header, h1 } from '@cycle/dom';
+import { VNode, a, div, footer, header, h1 } from '@cycle/dom';
 import { State } from '../type/state';
 import { getCurrentSelectedEntry } from '../model/entry-viewer';
 import { view as entryListView } from './entry-list';
@@ -22,7 +22,7 @@ const view = (state: State): VNode => {
     }
   }, [
       header('.header', [
-        h1('.title', [siteTitle]),
+        h1('.title', [a({ props: { href: '/' } }, [siteTitle])]),
         navView(state)
       ]),
       div('.body', [
