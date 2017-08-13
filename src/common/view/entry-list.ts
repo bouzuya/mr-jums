@@ -1,4 +1,4 @@
-import { VNode, a, div, ul, li, span } from '@cycle/dom';
+import { VNode, a, div, footer, header, h1, ul, li, nav, span } from '@cycle/dom';
 import { Entry } from '../type/entry';
 import { EntryViewer } from '../type/entry-viewer';
 import { getCurrentPageEntries } from '../model/entry-viewer';
@@ -20,6 +20,11 @@ const view = (
   const { focusedEntryId, selectedEntryId } = entryViewer;
   const currentPageEntries = getCurrentPageEntries(entryViewer);
   const index = currentPageEntries.findIndex(({ id }) => id === focusedEntryId);
+  const entry: Entry | null = focusedEntryId === null || currentPageEntries.length === 0
+    ? null
+    : focusedEntryId === currentPageEntries[0].id
+      ? null
+      : currentPageEntries[index];
   const entryListItems = currentPageEntries.map((entry) => {
     const isFocused = entry.id === focusedEntryId;
     const isSelected = entry.id === selectedEntryId;
@@ -35,8 +40,22 @@ const view = (
     [`index-${index}`]: true,
     [`count-${currentPageEntries.length}`]: true
   };
+  const permalink = entry === null
+    ? '/'
+    : '/' + entry.id.split('-').join('/') + '/related/';
+  const title = entry === null
+    ? '最近の記事'
+    : '『' + entry.id + ' ' + entry.title + '』の関連記事';
   return div('.entry-list', [
-    ul('.entry-list', { class: classNames }, entryListItems)
+    nav([
+      header('.header', [
+        h1([a({ props: { href: permalink } }, [title])])
+      ]),
+      div('.body', [
+        ul('.entry-list', { class: classNames }, entryListItems)
+      ]),
+      footer('.footer', [])
+    ])
   ]);
 };
 
