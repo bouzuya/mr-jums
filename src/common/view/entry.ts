@@ -1,4 +1,6 @@
-import { VNode, div, span } from '@cycle/dom';
+import {
+  VNode, VNodeData, a, article, div, footer, header, h, h1, section, span
+} from '@cycle/dom';
 import { Entry } from '../type/entry';
 import { EntryDetail } from '../type/entry-detail';
 
@@ -16,16 +18,32 @@ const entryView = (entry: Entry): VNode => {
 };
 
 const entryDetailView = (entryDetail: EntryDetail): VNode => {
-  return div('.entry', [
-    div('.header', [
-      span('.id', [entryDetail.id]),
-      span('.title', [entryDetail.title]),
-      span('.miuntes', [entryDetail.minutes]),
-      span('.pubdate', [entryDetail.pubdate]),
-      span('.tags', entryDetail.tags.map((tag) => span([tag])))
+  const permalink = '/' + entryDetail.id.split('-').join('/') + '/';
+  return article('.entry', [
+    header('.header', [
+      h1('.id-title', [
+        a({ props: { href: permalink } }, [
+          span('.id', [entryDetail.id]),
+          span('.separator', [' ']),
+          span('.title', [entryDetail.title])
+        ])
+      ])
     ]),
-    div('.body', { props: { innerHTML: entryDetail.html } })
+    div('.body', [
+      section('.content', { props: { innerHTML: entryDetail.html } })
+    ]),
+    footer('.footer', [
+      a('.permalink', { props: { href: permalink } }, [
+        time('.pubdate', { props: { datetime: entryDetail.pubdate } }, [
+          entryDetail.pubdate
+        ])
+      ])
+    ])
   ]);
+};
+
+const time = (sel: string, data: VNodeData, children: string[]) => {
+  return h('time' + sel, data, children.join(''));
 };
 
 const view = (entry: Entry | EntryDetail): VNode => {
