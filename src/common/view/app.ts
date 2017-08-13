@@ -1,4 +1,4 @@
-import { VNode, div, footer, header } from '@cycle/dom';
+import { VNode, div, footer, header, h1 } from '@cycle/dom';
 import { State } from '../type/state';
 import { getCurrentSelectedEntry } from '../model/entry-viewer';
 import { view as entryListView } from './entry-list';
@@ -12,6 +12,7 @@ const view = (state: State): VNode => {
     focus
   } = state;
   const selectedEntry = getCurrentSelectedEntry(entryViewer);
+  const siteTitle = 'blog.bouzuya.net';
   return div({
     props: {
       className: [
@@ -21,6 +22,7 @@ const view = (state: State): VNode => {
     }
   }, [
       header('.header', [
+        h1('.title', [siteTitle]),
         navView(state)
       ]),
       div('.body', [
