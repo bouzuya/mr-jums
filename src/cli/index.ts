@@ -27,6 +27,7 @@ interface EntryId {
   dd: string;
   idTitle?: string;
   digest: string;
+  relatedDigest: string;
 }
 
 const loadCache = (dstDir: string): Cache => {
@@ -59,12 +60,14 @@ const loadEntryIds = (jsonDir: string): EntryId[] => {
       const path = join(jsonDir, yyyy, mm, dd, 'index.json');
       const data = readFileSync(path, 'utf-8');
       const digest = calcDigest(data);
+      const relatedPath = join(jsonDir, yyyy, mm, dd, 'related.json');
+      const relatedDigest = calcDigest(readFileSync(relatedPath, 'utf-8'));
       const { idTitle } = JSON.parse(data) as { idTitle?: string; };
-      return { yyyy, mm, dd, idTitle, digest };
+      return { yyyy, mm, dd, idTitle, digest, relatedDigest };
     });
 };
 
-// ['/' + '/2006/01/02/', '/2006/01/02/related/', '/2006/01/03/', ...]
+// ['/', '/2006/01/02/', '/2006/01/02/related/', '/2006/01/02/title/', ...]
 const toPaths = (entryIds: EntryId[]): string[] => {
   return entryIds
     .map(({ yyyy, mm, dd, idTitle }) => {
@@ -135,10 +138,11 @@ const build = (options: Options) => {
   const cache = incremental ? loadCache(dstDir) : {};
   const entryIds = loadEntryIds(jsonDir);
   const toProcessIds = incremental
-    ? entryIds.filter(({ yyyy, mm, dd, digest }) => {
-      return cache[`${yyyy}-${mm}-${dd}`] !== digest;
+    ? entryIds.filter(({ yyyy, mm, dd, digest, relatedDigest }) => {
+      return cache[`${yyyy}-${mm}-${dd}`] !== digest ||
+        cache[`${yyyy}-${mm}-${dd}-related`] !== relatedDigest;
     })
-    : entryIds
+    : entryIds;
   return promiseFinally(toPaths(toProcessIds)
     .reduce((promise, path) => {
       return promise
@@ -151,9 +155,13 @@ const build = (options: Options) => {
       console.error(error);
     }), () => {
       if (!incremental) return;
-      saveCache(dstDir, entryIds.reduce((a, { yyyy, mm, dd, digest }) => {
-        return Object.assign(a, { [`${yyyy}-${mm}-${dd}`]: digest });
-      }, {} as Cache));
+      saveCache(dstDir,
+        entryIds.reduce((a, { yyyy, mm, dd, digest, relatedDigest }) => {
+          return Object.assign(a, {
+            [`${yyyy}-${mm}-${dd}`]: digest,
+            [`${yyyy}-${mm}-${dd}-related`]: relatedDigest
+          });
+        }, {} as Cache));
     });
 };
 
