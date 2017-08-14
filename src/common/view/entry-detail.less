@@ -19,68 +19,80 @@
       max-width: 720px;
       min-height: 100%;
       > .header {
-        > .id {
-          font-size: 0.8rem;
-        }
-        > .title {
-          display: block;
-        }
-        > .miuntes {
-          display: none;
-        }
-        > .pubdate {
-          display: none;
-        }
-        > .tags {
-          display: none;
+        > .id-title {
+          // TODO: a
+          font-size: 1.5rem;
+          font-weight: normal;
+          > a {
+            text-decoration: none;
+            > .id {
+              font-size: 0.8rem;
+            }
+            > .separator {
+              display: none;
+            }
+            > .title {
+              display: block;
+            }
+          }
         }
       }
       > .body {
-        h1, h2, h3, h4, h5, h6 {
-          font-size: 1.2rem;
-          font-weight: bold;
-          margin: 1.5rem 0 0.5rem 0;
+        > .content {
+          h1, h2, h3, h4, h5, h6 {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin: 1.5rem 0 0.5rem 0;
+          }
+          p {
+            font-size: 1.2rem;
+          }
+          a {
+            background-color: @green;
+            color: @white;
+          }
+          blockquote {
+            margin: 0 0 0 3rem;
+          }
+          hr {
+            border: 1px solid @white;
+            margin: 1rem 0;
+          }
+          pre {
+            background-color: @black;
+            border: 1px solid @white;
+            color: @white;
+            font-size: 1.2rem;
+            padding: 1rem;
+            white-space: pre-wrap;
+          }
+          ul {
+            font-size: 1.2rem;
+            list-style-type: disc;
+            margin: 0 0 0 3rem;
+            padding: 0;
+          }
+          ol {
+            font-size: 1.2rem;
+            list-style-type: decimal;
+            margin: 0 0 0 3rem;
+            padding: 0;
+          }
+          img {
+            border: 1px solid @white;
+          }
         }
-        p {
-          font-size: 1.2rem;
-        }
-        a {
-          background-color: @green;
-          color: @white;
-        }
-        blockquote {
-          margin: 0 0 0 3rem;
-        }
-        hr {
-          border: 1px solid @white;
-          margin: 1rem 0;
-        }
-        pre {
-          background-color: @black;
-          border: 1px solid @white;
-          color: @white;
-          font-size: 1.2rem;
-          padding: 1rem;
-          white-space: pre-wrap;
-        }
-        ul {
-          font-size: 1.2rem;
-          list-style-type: disc;
-          margin: 0 0 0 3rem;
-          padding: 0;
-        }
-        ol {
-          font-size: 1.2rem;
-          list-style-type: decimal;
-          margin: 0 0 0 3rem;
-          padding: 0;
-        }
-        img {
-          border: 1px solid @white;
+      }
+      > .footer {
+        > .permalink {
+          > .pubdate {
+            font-size: 0.8rem;
+          }
         }
       }
     }
   }
+  /*
   @media (min-width: 768px) {
     width: 80%;
     height: 100%;
@@ -117,4 +129,5 @@
       }
     }
   }
+  */
 }

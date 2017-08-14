@@ -17,49 +17,62 @@
       z-index: 24;
       color: transparent;
     }
-    > .enter {
+    > .header {
       display: none;
     }
-    > .menu {
+    > .body {
+      > .link-list {
+        > .link {
+          > .enter {
+            display: none;
+          }
+          > .menu {
+            display: none;
+          }
+          > .next {
+            .nav-button(@size);
+            .position(absolute, auto, 0, @size, auto);
+            margin-left: (@size / -2);
+            &:after {
+              .position(absolute, auto, 8px, 10px, auto);
+              content: "";
+              display: block;
+              width: 0;
+              height: 0;
+              border: 8px solid transparent;
+              border-color: @white transparent transparent transparent;
+              border-width: 8px 6px;
+            }
+            &.is-disabled {
+              display: none;
+            }
+          }
+          > .prev {
+            .nav-button(@size);
+            .position(absolute, @size, 0, auto, auto);
+            margin-left: (@size / -2);
+            &:after {
+              .position(absolute, 10px, 8px, auto, auto);
+              content: "";
+              display: block;
+              width: 0;
+              height: 0;
+              border: 8px solid transparent;
+              border-color: transparent transparent @white transparent;
+              border-width: 8px 6px;
+            }
+            &.is-disabled {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+    > .footer {
       display: none;
-    }
-    > .next {
-      .nav-button(@size);
-      .position(absolute, auto, 0, @size, auto);
-      margin-left: (@size / -2);
-      &:after {
-        .position(absolute, auto, 8px, 10px, auto);
-        content: "";
-        display: block;
-        width: 0;
-        height: 0;
-        border: 8px solid transparent;
-        border-color: @white transparent transparent transparent;
-        border-width: 8px 6px;
-      }
-      &.is-disabled {
-        display: none;
-      }
-    }
-    > .prev {
-      .nav-button(@size);
-      .position(absolute, @size, 0, auto, auto);
-      margin-left: (@size / -2);
-      &:after {
-        .position(absolute, 10px, 8px, auto, auto);
-        content: "";
-        display: block;
-        width: 0;
-        height: 0;
-        border: 8px solid transparent;
-        border-color: transparent transparent @white transparent;
-        border-width: 8px 6px;
-      }
-      &.is-disabled {
-        display: none;
-      }
     }
   }
+  /*
   @media (min-width: 768px) {
     @size: 44px;
     @width: (@size * 2);
@@ -125,4 +138,5 @@
       transition: 0.5s;
     }
   }
+  */
 }
