@@ -109,7 +109,16 @@
     }
     > .header {
       > .title {
-        display: none;
+        .position(fixed, 0, 0, 0, 0);
+        box-sizing: border-box;
+        color: @white2;
+        display: block;
+        font-size: 2rem;
+        font-weight: bold;
+        height: 100%;
+        padding: 20vh 0;
+        text-align: center;
+        width: 100%;
       }
       > .nav {
         .link-list-nav();
