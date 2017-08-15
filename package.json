@@ -62,10 +62,6 @@
     "webpack": "2.2.1",
     "webpack-dev-server": "2.4.1"
   },
-  "engines": {
-    "node": "6.11.1",
-    "npm": "3.10.10"
-  },
   "files": [
     ".tmp/es5/src/",
     "public/styles/index-*.css",
