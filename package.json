@@ -68,6 +68,7 @@
   },
   "files": [
     ".tmp/es5/src/",
+    "public/styles/index-*.css",
     "rev.json"
   ],
   "homepage": "https://github.com/bouzuya/mr-jums",

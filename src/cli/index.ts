@@ -9,6 +9,7 @@ import { State } from '../common/type/state';
 import { init } from '../server/init';
 import { render } from '../server/render';
 import { Route, route } from '../server/route';
+import { buildCss } from './build-css';
 
 export interface Options {
   dstDir: string;
@@ -128,6 +129,19 @@ const promiseFinally = (promise: Promise<any>, f: Function): Promise<any> => {
   });
 };
 
+const buildHtml = (
+  config: ServerConfig,
+  dstDir: string,
+  toProcessIds: EntryId[]
+): Promise<void> => {
+  return toPaths(toProcessIds)
+    .reduce((promise, path) => {
+      return promise
+        .then(() => new Promise<void>((resolve) => process.nextTick(resolve)))
+        .then(() => processPath(path, config, dstDir));
+    }, Promise.resolve());
+};
+
 const build = (options: Options) => {
   const dstDir = options.dstDir;
   const config = create(options);
@@ -136,33 +150,31 @@ const build = (options: Options) => {
   const incremental = typeof options.incremental === 'undefined'
     ? false : options.incremental;
   const cache = incremental ? loadCache(dstDir) : {};
-  const entryIds = loadEntryIds(jsonDir);
-  const toProcessIds = incremental
-    ? entryIds.filter(({ yyyy, mm, dd, digest, relatedDigest }) => {
+  const allEntryIds = loadEntryIds(jsonDir);
+  const targetEntryIds = incremental
+    ? allEntryIds.filter(({ yyyy, mm, dd, digest, relatedDigest }) => {
       return cache[`${yyyy}-${mm}-${dd}`] !== digest ||
         cache[`${yyyy}-${mm}-${dd}-related`] !== relatedDigest;
     })
-    : entryIds;
-  return promiseFinally(toPaths(toProcessIds)
-    .reduce((promise, path) => {
-      return promise
-        .then(() => new Promise<void>((resolve) => process.nextTick(resolve)))
-        .then(() => processPath(path, config, dstDir));
-    }, Promise.resolve())
-    .then(() => {
-      console.log('completed');
-    }, (error) => {
-      console.error(error);
-    }), () => {
-      if (!incremental) return;
-      saveCache(dstDir,
-        entryIds.reduce((a, { yyyy, mm, dd, digest, relatedDigest }) => {
-          return Object.assign(a, {
-            [`${yyyy}-${mm}-${dd}`]: digest,
-            [`${yyyy}-${mm}-${dd}-related`]: relatedDigest
-          });
-        }, {} as Cache));
-    });
+    : allEntryIds;
+  return promiseFinally(
+    Promise.resolve()
+      .then(() => buildHtml(config, dstDir, targetEntryIds))
+      .then(() => buildCss(dstDir))
+      .then(() => {
+        console.log('completed');
+      }, (error) => {
+        console.error(error);
+      }), () => {
+        if (!incremental) return;
+        saveCache(dstDir,
+          allEntryIds.reduce((a, { yyyy, mm, dd, digest, relatedDigest }) => {
+            return Object.assign(a, {
+              [`${yyyy}-${mm}-${dd}`]: digest,
+              [`${yyyy}-${mm}-${dd}-related`]: relatedDigest
+            });
+          }, {} as Cache));
+      });
 };
 
 export { build };
