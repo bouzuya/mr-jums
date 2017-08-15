@@ -4,7 +4,10 @@ import { Sources } from '../type/sources';
 import { Command } from './util/command';
 
 const intent = ({ DOM }: Sources): xs<Command> => {
-  const click1$: xs<Event> = DOM.select('div.menu').events('click');
+  const click1$: xs<Event> = DOM.select('a.menu').events('click').map((e) => {
+    e.preventDefault();
+    return e;
+  });
   const click2$: xs<Event> = DOM.select('.entry-detail')
     .events('click')
     .filter((e: Event) => !(<any>e.target).matches('.entry, .entry *'));

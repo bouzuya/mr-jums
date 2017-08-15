@@ -4,7 +4,10 @@ import { Sources } from '../type/sources';
 import { Command } from './util/command';
 
 const intent = ({ DOM }: Sources): xs<Command> => {
-  const clickList$: xs<Event> = DOM.select('li').events('click');
+  const clickList$: xs<Event> = DOM.select('li').events('click').map((e) => {
+    e.preventDefault();
+    return e;
+  });
   const select$: xs<Command> = clickList$
     .map((event) => {
       let target: HTMLElement | null = event.target as HTMLElement;
