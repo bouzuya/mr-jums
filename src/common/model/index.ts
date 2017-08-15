@@ -15,7 +15,7 @@ const model = (
   const merged$: xs<Message> = xs.merge.apply(
     xs,
     handlers.map((handler) => handler(subject))
-  )
+  );
   const message$ = merged$.filter((message) => message.type !== 'noop');
   const event$ = message$
     .map((message) => {
