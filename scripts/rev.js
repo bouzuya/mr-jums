@@ -1,7 +1,7 @@
 var rev = require('rev-hash');
 var fs = require('fs');
 
-var baseUrl = 'https://mr-jums.bouzuya.net';
+var baseUrl = '';
 var revFile = 'rev.json';
 
 var jsFile = 'public/scripts/index.js';
