@@ -37,6 +37,7 @@ const buildPartialEntries = (
   allEntries: ApiEntrySummary[],
   entryId: string | null
 ): Entry[] => {
+  const n = 15;
   const es = allEntries
     .map(({ date: id, title }) => ({ id, title }))
     .sort((a: { id: string; }, b: { id: string; }) => {
@@ -44,8 +45,8 @@ const buildPartialEntries = (
     });
   const index = Math.max(0, es.findIndex(({ id }) => id === entryId));
   return es.slice(
-    Math.max(0, index - 4),
-    Math.min(es.length - 1, index + 4 + 1)
+    Math.max(0, index - n),
+    Math.min(es.length - 1, index + n + 1)
   );
 };
 
