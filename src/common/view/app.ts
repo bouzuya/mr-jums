@@ -26,8 +26,8 @@ const view = (state: State): VNode => {
         navView(state)
       ]),
       div('.body', [
-        entryListView(entryViewer),
-        entryDetailView(selectedEntry, selectedEntryDetail)
+        entryDetailView(selectedEntry, selectedEntryDetail),
+        entryListView(entryViewer)
       ]),
       footer('.footer', [
         navView(state)
