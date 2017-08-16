@@ -8,12 +8,11 @@
     @width: (@size * 2);
     .user-select(none);
     .nav-button(@size: 44px) {
+      .size(@size, @size);
       box-sizing: border-box;
       cursor: pointer;
       font-size: (@size / 4);
-      height: @size;
       line-height: @size;
-      width: @size;
       z-index: 24;
       color: transparent;
     }
@@ -28,8 +27,7 @@
           }
           > .menu {
             .position(fixed, 0, auto, 0, 0);
-            height: 100%;
-            width: 44px;
+            .size(100%, 44px);
             display: block;
             color: transparent;
           }
@@ -39,10 +37,9 @@
             margin-left: (@size / -2);
             &:after {
               .position(absolute, auto, 8px, 10px, auto);
+              .size(0, 0);
               content: "";
               display: block;
-              width: 0;
-              height: 0;
               border: 8px solid transparent;
               border-color: @white transparent transparent transparent;
               border-width: 8px 6px;
@@ -57,10 +54,9 @@
             margin-left: (@size / -2);
             &:after {
               .position(absolute, 10px, 8px, auto, auto);
+              .size(0, 0);
               content: "";
               display: block;
-              width: 0;
-              height: 0;
               border: 8px solid transparent;
               border-color: transparent transparent @white transparent;
               border-width: 8px 6px;
@@ -82,14 +78,12 @@
     @width: (@size * 2);
     .user-select(none);
     .position(absolute, auto, auto, 4px, 4px);
-    width: @width;
-    height: 128px;
+    .size(128px, @width);
     .nav-button(@size: 44px) {
+      .size(@size, @size);
       text-align: center;
       line-height: @size;
       font-size: (@size / 4);
-      width: @size;
-      height: @size;
       cursor: pointer;
       color: @green;
       background-color: @white;

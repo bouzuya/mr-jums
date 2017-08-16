@@ -1,14 +1,14 @@
 @import "./color";
 @import "./entry-list";
 @import "./entry-detail";
-@import "./nav";
 @import "./mixins/position";
+@import "./mixins/size";
+@import "./nav";
 .app() {
   .link-list-nav() {
     .position(absolute, 40%, auto, auto, 0);
+    .size(20%, 100%);
     display: none;
-    height: 20%;
-    width: 100%;
     &.is-menu {
       display: block;
     }
@@ -22,8 +22,7 @@
             display: none;
           }
           > .next, .prev {
-            width: 100%;
-            height: 25%;
+            .size(25%, 100%);
             background-color: transparent; // @white2;
             color: transparent;
             text-align: center;
@@ -33,20 +32,18 @@
             .position(absolute, auto, auto, -8px, auto);
             &:after {
               .position(absolute, 4px, auto, auto, 18px);
+              .size(0, 0);
               content: "";
               display: block;
-              width: 0;
-              height: 0;
               border: 8px solid transparent;
               border-color: @white transparent transparent transparent;
               border-width: 8px 6px;
             }
             &:before {
               .position(absolute, 6px, auto, auto, 18px);
+              .size(0, 0);
               content: "";
               display: block;
-              width: 0;
-              height: 0;
               border: 8px solid transparent;
               border-color: rgba(255, 255, 255, 0.3) transparent transparent transparent;
               border-width: 8px 6px;
@@ -59,20 +56,18 @@
             .position(absolute, -8px, auto, auto, auto);
             &:after {
               .position(absolute, auto, auto, 4px, 18px);
+              .size(0, 0);
               content: "";
               display: block;
-              width: 0;
-              height: 0;
               border: 8px solid transparent;
               border-color: transparent transparent @white transparent;
               border-width: 8px 6px;
             }
             &:before {
               .position(absolute, auto, auto, 2px, 18px);
+              .size(0, 0);
               content: "";
               display: block;
-              width: 0;
-              height: 0;
               border: 8px solid transparent;
               border-color: transparent transparent rgba(255, 255, 255, 0.3) transparent;
               border-width: 8px 6px;
@@ -87,8 +82,7 @@
   }
   @media (max-width: 767px) {
     .position(relative, auto, auto, auto, auto);
-    width: 100vw;
-    height: 100vh;
+    .size(100vh, 100vw);
     min-width: 320px;
     max-width: 960px;
     min-height: 480px;
@@ -109,16 +103,15 @@
     }
     > .header {
       > .title {
+        .size(100%, 100%);
         .position(fixed, 0, 0, 0, 0);
         box-sizing: border-box;
         color: @white2;
         display: block;
         font-size: 2rem;
         font-weight: bold;
-        height: 100%;
         padding: 20vh 0;
         text-align: center;
-        width: 100%;
       }
       > .nav {
         .link-list-nav();
@@ -143,9 +136,8 @@
           > .link-list {
             > .link {
               > .menu {
+                .size(100%, 44px);
                 .position(fixed, 0, auto, 0, 0);
-                height: 100%;
-                width: 44px;
                 display: block;
                 color: transparent;
                 z-index: 23;
@@ -166,8 +158,7 @@
   }
   /*
   @media (min-width: 768px) {
-    width: 100vw;
-    height: 100vh;
+    .size(100vh, 100vw);
     max-width: 960px;
     margin: 0 auto;
     position: relative;
