@@ -93,41 +93,92 @@
       }
     }
   }
-  /*
   @media (min-width: 768px) {
-    .size(100%, 80%);
+    .size(100%, 100%);
     overflow: auto;
-    transition: width 0.5s ease;
+    // transition: width 0.5s ease;
+    z-index: 8;
+    background-color: @green;
     > .entry {
+      font-size: 16px;
       margin: 0 auto;
-      padding-bottom: 128px; // for .nav
+      box-sizing: border-box;
+      padding: 8px 8px 128px 8px;
       max-width: 720px;
       > .header {
-        > .title {
-          display: block;
-        }
-        > .miuntes {
-          display: block;
-        }
-        > .pubdate {
-          display: block;
-        }
-        > .tags {
-          display: block;
+        > .id-title {
+          // TODO: a
+          > a {
+            text-decoration: none;
+            > .id {
+              font-size: 12px;
+              font-weight: normal;
+            }
+            > .separator {
+              display: none;
+            }
+            > .title {
+              display: block;
+              font-size: 20px;
+              font-weight: bold;
+            }
+          }
         }
       }
       > .body {
-        a {
-          background-color: @green;
-          color: @white;
+        > .content {
+          h1, h2, h3, h4, h5, h6 {
+            font-size: 16px;
+            font-weight: bold;
+            margin: 1.5rem 0 0.5rem 0;
+          }
+          p {
+            font-size: 16px;
+          }
+          a {
+            background-color: @green;
+            color: @white;
+            text-decoration: underline;
+          }
+          blockquote {
+            margin: 0 0 0 3rem;
+          }
+          hr {
+            border: 1px solid @white;
+            margin: 16px 0;
+          }
+          pre {
+            background-color: @black;
+            border: 1px solid @white;
+            color: @white;
+            font-size: 16px;
+            padding: 16px;
+            white-space: pre-wrap;
+          }
+          ul {
+            font-size: 16px;
+            list-style-type: disc;
+            margin: 0 0 0 3rem;
+            padding: 0;
+          }
+          ol {
+            font-size: 16px;
+            list-style-type: decimal;
+            margin: 0 0 0 3rem;
+            padding: 0;
+          }
+          img {
+            border: 1px solid @white;
+          }
         }
-        pre {
-          white-space: pre-wrap;
-          background-color: @black;
-          padding: 1rem;
+      }
+      > .footer {
+        > .permalink {
+          > .pubdate {
+            font-size: 12px;
+          }
         }
       }
     }
   }
-  */
 }

@@ -72,40 +72,79 @@
       }
     }
   }
-  /*
   @media (min-width: 768px) {
-    .size(100%, 20%);
-    color: @white2;
+    .size(100%, 100%);
+    // color: @white2;
+    overflow: hidden;
     transition: width 0.5s ease;
-    > .entry-list {
-      height: 100%;
-      > .entry-list-item {
-        height: 10%;
-        border-left: 16px solid @green;
-        &.is-focused {
-          border-left-color: @white;
-        }
-        &.is-selected {
-          background-color: @white;
-          color: @green;
-        }
-        > .entry {
-          height: 100%;
-          > .header {
-            > .id {
-              display: block;
+    // TODO: nav
+    > nav {
+      .size(100%, 100%);
+      > .header {
+        display: none;
+      }
+      > .body {
+        .position(relative, auto, auto, auto, auto);
+        .size(100%, 100%);
+        > .entry-list {
+          .position(absolute, 0, auto, auto, auto);
+          .size(100%, 100%);
+          &.count-1, &.count-2, &.count-3, &.count-4, &.count-5, &.count-6, &.count-7, &.count-8 {
+            &.index-0 {
+              top: 40%;
             }
-            > .title {
-              display: block;
-              overflow: hidden;
-              text-overflow: ellipsis;
-              white-space: nowrap;
-              width: 100%;
+            &.index-1 {
+              top: 30%;
+            }
+            &.index-2 {
+              top: 20%;
+            }
+            &.index-3 {
+              top: 10%;
+            }
+          }
+          > .entry-list-item {
+            display: flex;
+            align-items: center;
+            height: 10%;
+            color: @white2;
+            background-color: @green;
+            &.is-focused {
+              height: 20%;
+              color: @white;
+            }
+            > .entry {
+              .size(100%, 100%);
+              padding-left: 8px;
+              max-height: 48px;
+              // TODO: a
+              > a {
+                display: block;
+                text-decoration: none;
+                padding: 8px 0;
+                > .id {
+                  display: block;
+                  font-size: 0.8rem;
+                  height: (4px * 3); // 12/32
+                }
+                > .separator {
+                  display: none;
+                }
+                > .title {
+                  .size((4px * 5), 100%); // 20/32
+                  display: block;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  white-space: nowrap;
+                }
+              }
             }
           }
         }
       }
+      > .footer {
+        display: none;
+      }
     }
   }
-  */
 }
