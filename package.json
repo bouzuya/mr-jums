@@ -19,7 +19,7 @@
   "dependencies": {
     "@bouzuya/cyclejs-history-driver": "0.2.1",
     "@cycle/dom": "^18.1.0",
-    "@cycle/http": "14.0.0",
+    "@cycle/http": "^14.2.0",
     "@cycle/run": "^3.2.0",
     "compression": "1.6.2",
     "express": "4.15.0",
