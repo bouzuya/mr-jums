@@ -16,7 +16,7 @@ import { State } from '../type/state';
 import { view as appView } from './app';
 
 const view = (
-  state: State, _scriptUrl: string, styleUrl: string, imageBaseUrl: string
+  state: State, scriptUrl: string, styleUrl: string, imageBaseUrl: string
 ): VNode => {
   const faviconUrl = `${imageBaseUrl}/images/favicon.png`;
   const entry = state.selectedEntryDetail;
@@ -76,7 +76,7 @@ const view = (
     ]),
     body([
       div('#app', [appView(state)]),
-      // script({ props: { src: scriptUrl } }, [])
+      script({ props: { src: scriptUrl } }, [])
     ])
   ]);
 };
