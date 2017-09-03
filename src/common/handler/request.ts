@@ -1,4 +1,5 @@
 import xs from 'xstream';
+import sampleCombine from 'xstream/extra/sampleCombine';
 import { FetchPostsRequestCommand } from '../command';
 import { select } from './util/select';
 import { getCurrentSelectedEntry } from '../model/entry-viewer';
@@ -8,9 +9,19 @@ import { State } from '../type/state';
 import { url } from '../util/url';
 
 const fetchPostsRequest$ = (message$: xs<Message>): xs<any> => {
-  return select<FetchPostsRequestCommand>(
-    message$, 'fetch-posts-request')
-    .map(({ request }) => request);
+  return xs.merge(
+    select<FetchPostsRequestCommand>(
+      message$, 'fetch-posts-request')
+      .map(({ request }) => request),
+    message$
+      .filter(({ type }) => type === 'next' || type === 'prev')
+      .compose(sampleCombine(message$.filter(({ type }) => type === 'state')))
+      .filter(([_, state]) => (state as StateEvent).state.entryViewer.allEntries === null)
+      .map(() => ({
+        url: url('/posts.json'),
+        category: 'posts'
+      }))
+  );
 };
 
 const fetchPostRequest$ = (message$: xs<Message>): xs<any> => {

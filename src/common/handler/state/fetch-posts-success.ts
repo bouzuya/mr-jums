@@ -1,5 +1,5 @@
 import { FetchPostsSuccessCommand } from '../../command';
-import { create } from '../../model/entry-viewer';
+import { withAll } from '../../model/entry-viewer';
 import { State } from '../../type/state';
 
 const fetchPostsSuccess = (
@@ -9,7 +9,7 @@ const fetchPostsSuccess = (
     .map(({ date, title }) => ({ id: date, title }))
     .sort(({ id: a }, { id: b }) => a > b ? -1 : (a === b ? 0 : 1));
   return Object.assign({}, state, {
-    entryViewer: create(posts)
+    entryViewer: withAll(state.entryViewer, posts)
   });
 };
 
