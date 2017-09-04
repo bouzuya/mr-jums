@@ -7,7 +7,8 @@ import { HistoryPoppedEvent, HistoryPushedEvent, StateEvent } from '../event';
 import { Command, Event, Message } from '../model/message';
 import {
   getCurrentFocusedEntry,
-  getCurrentSelectedEntry
+  getCurrentSelectedEntry,
+  getPrevFocusedEntry
 } from '../model/entry-viewer';
 
 type P = {
@@ -28,7 +29,7 @@ const p$ = (message$: xs<Message>): xs<P> => {
       const focused = getCurrentFocusedEntry(entryViewer);
       const selected = getCurrentSelectedEntry(entryViewer);
       const path = focus === 'entry-list'
-        ? focused === null
+        ? focused === null || getPrevFocusedEntry(entryViewer) === null
           ? '/'
           : `/${focused.id.replace(/-/g, '/')}/related/`
         : selected === null
