@@ -5,7 +5,10 @@ import {
 import xs from 'xstream';
 import { HistoryPoppedEvent, HistoryPushedEvent, StateEvent } from '../event';
 import { Command, Event, Message } from '../model/message';
-import { getCurrentSelectedEntry } from '../model/entry-viewer';
+import {
+  getCurrentFocusedEntry,
+  getCurrentSelectedEntry
+} from '../model/entry-viewer';
 
 type P = {
   path: string;
@@ -22,13 +25,20 @@ const p$ = (message$: xs<Message>): xs<P> => {
   return message$
     .filter((m): m is StateEvent => m.type === 'state')
     .map(({ state: { entryViewer, focus } }: StateEvent) => {
-      const entry = getCurrentSelectedEntry(entryViewer);
+      const focused = getCurrentFocusedEntry(entryViewer);
+      const selected = getCurrentSelectedEntry(entryViewer);
       const path = focus === 'entry-list'
-        ? '/' : entry === null
-          ? '/' : `/${entry.id.replace(/-/g, '/')}/`;
+        ? focused === null
+          ? '/'
+          : `/${focused.id.replace(/-/g, '/')}/related/`
+        : selected === null
+          ? '/'
+          : `/${selected.id.replace(/-/g, '/')}/`;
       const title = focus === 'entry-list'
-        ? bbn : entry === null
-          ? bbn : `${entry.id} ${entry.title} - ${bbn}`;
+        ? bbn
+        : selected === null
+          ? bbn
+          : `${selected.id} ${selected.title} - ${bbn}`;
       return { path, title };
     });
 };
