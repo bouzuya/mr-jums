@@ -5,7 +5,6 @@ import { select } from './util/select';
 import { getCurrentSelectedEntry } from '../model/entry-viewer';
 import { Command, Event, Message } from '../model/message';
 import { RequestEvent, StateEvent } from '../event';
-import { State } from '../type/state';
 import { url } from '../util/url';
 
 const fetchPostsRequest$ = (message$: xs<Message>): xs<any> => {
@@ -31,10 +30,9 @@ const fetchPostRequest$ = (message$: xs<Message>): xs<any> => {
   }
   const initial: S = { b: false, id: null };
   return message$
-    .filter((message) => message.type === 'state')
-    .map<StateEvent>((message) => message as StateEvent)
-    .map<State>(({ state }) => state)
-    .map<{ l: string | null; d: string | null; }>((state) => {
+    .filter<StateEvent>((m): m is StateEvent => m.type === 'state')
+    .filter(({ state: { focus } }) => focus === 'entry-detail')
+    .map<{ l: string | null; d: string | null; }>(({ state }) => {
       const d = state.selectedEntryDetail;
       const l = getCurrentSelectedEntry(state.entryViewer);
       return {
