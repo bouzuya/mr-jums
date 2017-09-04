@@ -1,6 +1,5 @@
 *.log
-.env
-.envrc
+.env*
 .tmp/
 /public/scripts/
 /public/styles/
