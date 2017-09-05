@@ -1,6 +1,6 @@
 import { Test, TestFn, test } from 'beater';
 import * as assert from 'power-assert';
-import xs, { Listener, Stream } from 'xstream';
+import xs from 'xstream';
 import {
   HistoryPoppedEvent
 } from '../../../src/common/event/history-popped-event';
@@ -8,6 +8,7 @@ import {
   HistoryPushedEvent
 } from '../../../src/common/event/history-pushed-event';
 import { model } from '../../../src/common/handler/title';
+import { toPromise } from './_';
 
 const fixture = <T, U>(options: {
   before: () => T;
@@ -28,26 +29,6 @@ const fixture = <T, U>(options: {
 };
 
 const category = '/common/handler/title ';
-
-const toPromise = <T>(s: Stream<T>): Promise<T[]> => {
-  return new Promise<T[]>((resolve, reject) => {
-    const values: T[] = [];
-    const listener: Listener<T> = {
-      complete() {
-        s.removeListener(listener);
-        resolve(values);
-      },
-      error(e) {
-        s.removeListener(listener);
-        reject(e);
-      },
-      next(value) {
-        values.push(value);
-      }
-    };
-    s.addListener(listener);
-  });
-};
 
 const tests1: Test[] = [
   test(category + 'HistoryPoppedEvent', fixture({

@@ -1,31 +1,12 @@
 import { Test, test } from 'beater';
 import * as assert from 'power-assert';
-import xs, { Listener, Stream } from 'xstream';
+import xs from 'xstream';
 
 import { StateEvent } from '../../../src/common/event/state-event';
 import { model } from '../../../src/common/handler/history';
+import { toPromise } from './_';
 
 const category = '/common/handler/history ';
-
-const toPromise = <T>(s: Stream<T>): Promise<T[]> => {
-  return new Promise<T[]>((resolve, reject) => {
-    const values: T[] = [];
-    const listener: Listener<T> = {
-      complete() {
-        s.removeListener(listener);
-        resolve(values);
-      },
-      error(e) {
-        s.removeListener(listener);
-        reject(e);
-      },
-      next(value) {
-        values.push(value);
-      }
-    };
-    s.addListener(listener);
-  });
-};
 
 const tests1: Test[] = [
   test(category + 'entry: null, focus: "entry-list"', () => {
