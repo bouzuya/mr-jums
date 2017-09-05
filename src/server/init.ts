@@ -1,4 +1,4 @@
-import { create } from '../common/model/state/index';
+import { create } from '../common/model/state';
 import { Entry } from '../common/type/entry';
 import { ServerConfig } from '../common/type/server-config';
 import { State } from '../common/type/state';
