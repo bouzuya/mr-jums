@@ -4,7 +4,6 @@ import { makeHTTPDriver } from '@cycle/http';
 import { makeHistoryDriver } from '@bouzuya/cyclejs-history-driver';
 import { intent } from './intent';
 import { model } from '../common/model';
-import { model as goTo$ } from '../common/handler/go-to';
 import { model as history$ } from '../common/handler/history';
 import { model as log$ } from '../common/handler/log'; // for DEBUG
 import { model as request$ } from '../common/handler/request';
@@ -22,7 +21,6 @@ const main = (): void => {
   run(
     (sources: Sources): Sinks => view(model([
       (_) => intent(sources),
-      goTo$,
       history$,
       request$,
       (subject$) => state$(subject$, initialState),

@@ -1,8 +1,10 @@
 import xs from 'xstream';
+import { route } from '../../../server/route'; // TODO
 import {
   EnterCommand,
   FetchPostSuccessCommand,
   FetchPostsSuccessCommand,
+  GoToCommand,
   MenuCommand,
   NextCommand,
   PrevCommand,
@@ -26,6 +28,7 @@ type StateCommand =
   EnterCommand |
   FetchPostSuccessCommand |
   FetchPostsSuccessCommand |
+  GoToCommand |
   MenuCommand |
   NextCommand |
   PrevCommand |
@@ -36,6 +39,7 @@ const intent = (message$: xs<Message>): xs<StateCommand> => {
     select<EnterCommand>(message$, 'enter'),
     select<FetchPostSuccessCommand>(message$, 'fetch-post-success'),
     select<FetchPostsSuccessCommand>(message$, 'fetch-posts-success'),
+    select<GoToCommand>(message$, 'go-to'),
     select<MenuCommand>(message$, 'menu'),
     select<NextCommand>(message$, 'next'),
     select<PrevCommand>(message$, 'prev'),
@@ -51,6 +55,18 @@ const model = (command$: xs<StateCommand>, initialState: State): xs<State> => {
       return fetchPostSuccess(state, command);
     } else if (command.type === 'fetch-posts-success') {
       return fetchPostsSuccess(state, command);
+    } else if (command.type === 'go-to') {
+      const { name, params } = route(command.path);
+      if (name === 'entry-list') {
+        return menu(state, { type: 'menu' });
+      } else if (name === 'entry-detail') {
+        const { year, month, date } = params;
+        const entryId = `${year}-${month}-${date}`;
+        return doSelect(state, { type: 'select', entryId });
+      } else {
+        console.error('unknown name: ' + name);
+        return state;
+      }
     } else if (command.type === 'menu') {
       return menu(state, command);
     } else if (command.type === 'next') {
