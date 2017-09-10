@@ -24,7 +24,15 @@ type T = {
 const p$ = (message$: xs<Message>): xs<P> => {
   const bbn = 'blog.bouzuya.net';
   return message$
-    .filter((m): m is StateEvent => m.type === 'state')
+    .filter<StateEvent>((m): m is StateEvent => m.type === 'state')
+    .filter(({ state: { lastCommand } }) =>
+      typeof lastCommand === 'undefined' ||
+      lastCommand.type === 'enter' ||
+      lastCommand.type === 'menu' ||
+      lastCommand.type === 'next' ||
+      lastCommand.type === 'prev' ||
+      lastCommand.type === 'select'
+    )
     .map(({ state: { entryViewer, focus } }: StateEvent) => {
       const focused = getCurrentFocusedEntry(entryViewer);
       const selected = getCurrentSelectedEntry(entryViewer);
