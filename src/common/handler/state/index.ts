@@ -49,7 +49,9 @@ const model = (command$: xs<StateCommand>, initialState: State): xs<State> => {
     } else if (command.type === 'go-to') {
       const { name, params } = route(command.path);
       if (name === 'entry-list') {
-        return menu(state, { type: 'menu' });
+        const { year, month, date } = params;
+        const entryId = `${year}-${month}-${date}`;
+        return menu(state, { type: 'menu', entryId });
       } else if (name === 'entry-detail') {
         const { year, month, date } = params;
         const entryId = `${year}-${month}-${date}`;
