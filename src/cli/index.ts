@@ -10,6 +10,7 @@ import { init } from '../server/init';
 import { render } from '../server/render';
 import { Route, route } from '../server/route';
 import { buildCss } from './build-css';
+import { buildJs } from './build-js';
 
 export interface Options {
   dstDir: string;
@@ -161,6 +162,7 @@ const build = (options: Options) => {
     Promise.resolve()
       .then(() => buildHtml(config, dstDir, targetEntryIds))
       .then(() => buildCss(dstDir))
+      .then(() => buildJs(dstDir))
       .then(() => {
         console.log('completed');
       }, (error) => {

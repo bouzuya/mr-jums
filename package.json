@@ -64,6 +64,7 @@
   },
   "files": [
     ".tmp/es5/src/",
+    "public/scripts/index-*.js",
     "public/styles/index-*.css",
     "rev.json"
   ],
