@@ -10,9 +10,9 @@ import {
   PrevCommand,
   SelectCommand
 } from '../../command';
-// StateCommand
 import { StateEvent } from '../../event';
 import { State } from '../../type/state';
+import { StateCommand } from '../../type/state-command';
 import { Message } from '../../model/message';
 import { select } from '../util/select';
 
@@ -23,16 +23,6 @@ import { menu } from './menu';
 import { next } from './next';
 import { prev } from './prev';
 import { select as doSelect } from './select';
-
-type StateCommand =
-  EnterCommand |
-  FetchPostSuccessCommand |
-  FetchPostsSuccessCommand |
-  GoToCommand |
-  MenuCommand |
-  NextCommand |
-  PrevCommand |
-  SelectCommand;
 
 const intent = (message$: xs<Message>): xs<StateCommand> => {
   return xs.merge<StateCommand>(
