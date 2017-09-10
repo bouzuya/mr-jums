@@ -38,7 +38,8 @@ const intent = (message$: xs<Message>): xs<StateCommand> => {
 };
 
 const model = (command$: xs<StateCommand>, initialState: State): xs<State> => {
-  return command$.fold((state: State, command: StateCommand) => {
+  return command$.fold((s: State, command: StateCommand) => {
+    const state = Object.assign({}, s, { lastCommand: command })
     if (command.type === 'enter') {
       return enter(state, command);
     } else if (command.type === 'fetch-post-success') {
