@@ -6,18 +6,18 @@
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/@bouzuya/cyclejs-history-driver/-/cyclejs-history-driver-0.2.1.tgz#9182aadf071e4bc246291ea0d078c1e923e38dbb"
 
-"@cycle/dom@^18.1.0":
-  version "18.1.0"
-  resolved "https://registry.yarnpkg.com/@cycle/dom/-/dom-18.1.0.tgz#71734cf1058d89c105b55b9bcbd6b2415f2c3101"
+"@cycle/dom@^18.3.0":
+  version "18.3.0"
+  resolved "https://registry.yarnpkg.com/@cycle/dom/-/dom-18.3.0.tgz#37b9f55c6b0f629d1b689ece57637768fbeed2b0"
   dependencies:
     "@cycle/run" "*"
     es6-map "^0.1.4"
     snabbdom "0.7.0"
     snabbdom-selector "1.2.1"
 
-"@cycle/http@^14.2.0":
-  version "14.2.0"
-  resolved "https://registry.yarnpkg.com/@cycle/http/-/http-14.2.0.tgz#31e053c36a54aee3316741873db290797a87609f"
+"@cycle/http@^14.3.0":
+  version "14.3.0"
+  resolved "https://registry.yarnpkg.com/@cycle/http/-/http-14.3.0.tgz#d16a2a5cb71afb4c9cef47fa4ee86f6bcd015f33"
   dependencies:
     "@cycle/run" "*"
     "@types/superagent" "3.5.3"
