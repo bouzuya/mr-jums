@@ -123,6 +123,7 @@
       }
       > .entry-detail {
         .entry-detail();
+        transition: left 0.5s ease;
       }
     }
     > .footer {
@@ -162,6 +163,8 @@
     min-width: 768px;
     max-width: 1280px;
     margin: 0 auto;
+    display: flex;
+    overflow: hidden;
     &.is-menu {
       > .body {
         > .entry-list {
@@ -171,7 +174,7 @@
           }
         }
         > .entry-detail {
-          flex: 2 1 0;
+          flex: 2 1 320px;
           // color: @white2;
         }
       }
@@ -206,6 +209,7 @@
       > .entry-detail {
         .entry-detail();
         flex: 2 1 640px;
+        transition: flex 0.5s ease;
       }
     }
     > .footer {
