@@ -1,6 +1,5 @@
 *.d.ts
-.env
-.envrc
+.env*
 .travis.yml
 .vscode
 Dockerfile
