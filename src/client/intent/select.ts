@@ -4,7 +4,7 @@ import { Sources } from '../type/sources';
 import { Command } from './util/command';
 
 const intent = ({ DOM }: Sources): xs<Command> => {
-  const clickList$: xs<Event> = DOM.select('li').events('click').map((e) => {
+  const clickList$: xs<Event> = DOM.select('li.entry-list-item').events('click').map((e) => {
     e.preventDefault();
     return e;
   });
