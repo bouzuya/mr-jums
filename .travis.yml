@@ -2,8 +2,11 @@ sudo: required
 language: node_js
 node_js:
 - node
+- '10'
 - '8'
 - '6'
+before_install:
+- npm i -g npm@latest
 services:
 - docker
 after_success:
