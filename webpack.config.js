@@ -1,34 +1,29 @@
-var webpack = require('webpack');
 var path = require('path');
-var fs = require('fs');
 
 module.exports = [
   {
-    name: 'client',
-    target: 'web',
+    mode: 'production',
     module: {
-      loaders: [
+      rules: [
         {
-          test: /\.js$/,
           exclude: /node_modules/,
-          loader: 'babel-loader',
-          query: {
-            presets: ['@babel/preset-env']
+          test: /\.js$/,
+          use: {
+            loader: 'babel-loader',
+            options: {
+              presets: ['@babel/preset-env']
+            }
           }
         }
       ]
     },
-    entry: {
-      app: [
-        path.join(__dirname, '.tmp/es2015/src/client/index.js')
-      ]
+    entry: path.join(__dirname, '.tmp/es2015/src/client/index.js'),
+    optimization: {
+      minimize: true
     },
     output: {
-      path: path.join(__dirname, 'public'),
-      filename: '/scripts/index.js'
-    },
-    plugins: [
-      new webpack.optimize.UglifyJsPlugin()
-    ]
+      path: path.join(__dirname, 'public', 'scripts'),
+      filename: 'index.js'
+    }
   }
 ];

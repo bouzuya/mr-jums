@@ -1,31 +1,31 @@
 var webpack = require('webpack');
 var path = require('path');
-var fs = require('fs');
 
 var port = 3001;
 
 module.exports = {
-  name: 'client',
-  target: 'web',
+  mode: 'development',
   module: {
     rules: [
-      { use: ['source-map-loader'], test: /\.js$/, enforce: 'pre' }
-    ],
-    loaders: [
       {
+        use: ['source-map-loader'],
         test: /\.js$/,
+        enforce: 'pre'
+      },
+      {
         exclude: /node_modules/,
-        loader: 'babel-loader',
-        query: {
-          presets: ['@babel/preset-env']
+        test: /\.js$ /,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env']
+          }
         }
       }
     ]
   },
   devtool: 'source-map',
-  entry: {
-    app: path.join(__dirname, '.tmp/es2015/src/client/index.js')
-  },
+  entry: path.join(__dirname, '.tmp/es2015/src/client/index.js'),
   output: {
     path: path.join(__dirname, 'public'),
     publicPath: '/scripts/',

@@ -64,8 +64,9 @@
     "tap-dot-b": "^0.1.0",
     "typescript": "^2.4.2",
     "watch": "^1.0.2",
-    "webpack": "2.2.1",
-    "webpack-dev-server": "2.4.1"
+    "webpack": "^4.27.1",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.10"
   },
   "files": [
     ".tmp/es5/src/",
