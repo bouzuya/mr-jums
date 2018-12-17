@@ -86,7 +86,7 @@
     "build": "npm-run-all -s 'build:ts' 'build:es2015' -p 'build:less'",
     "build:bundle": "webpack",
     "build:es2015": "babel .tmp/es2015/ -d .tmp/es5/",
-    "build:less": "lessc --no-js --strict-imports --strict-math=on --strict-units=on src/common/view/index.less ./public/styles/index.css",
+    "build:less": "lessc --math=strict --strict-imports --strict-units=on src/common/view/index.less ./public/styles/index.css",
     "build:rev": "node scripts/rev.js",
     "build:ts": "tsc",
     "clean": "rimraf .tmp public",
