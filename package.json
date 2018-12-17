@@ -25,7 +25,7 @@
   "dependencies": {
     "@bouzuya/cyclejs-history-driver": "0.2.1",
     "@cycle/dom": "^18.3.0",
-    "@cycle/http": "^14.3.0",
+    "@cycle/http": "^14.10.0",
     "@cycle/run": "^3.2.0",
     "compression": "^1.7.3",
     "fake-history-fns": "0.1.3",
