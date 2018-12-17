@@ -7,7 +7,7 @@ mr-jums is a html generator for bbn: blog.bouzuya.net using Cycle.js
 ### Run debugger & watcher
 
 ```
-$ yarn
+$ npm i
 $ npm run watch
 $ # VS Code "Debug: Start Debugging" (F5)
 ```
