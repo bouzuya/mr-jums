@@ -21,16 +21,22 @@ const getUrls = (): { scriptUrl: string; styleUrl: string; } => {
 };
 
 const create = (options?: Partial<{ imageBaseUrl: string; jsonBaseUrl: string; }>): ServerConfig => {
+  const imageBaseUrlOrUndefined = process.env.IMAGE_BASE_URL;
   const imageBaseUrl = typeof options === 'undefined'
-    ? process.env.IMAGE_BASE_URL
+    ? imageBaseUrlOrUndefined
     : typeof options.imageBaseUrl === 'undefined'
-      ? process.env.IMAGE_BASE_URL
+      ? imageBaseUrlOrUndefined
       : options.imageBaseUrl;
+  if (typeof imageBaseUrl === 'undefined')
+    throw new Error('imageBaseUrl is not defined');
+  const jsonBaseUrlOrUndefined = process.env.JSON_BASE_URL;
   const jsonBaseUrl = typeof options === 'undefined'
-    ? process.env.JSON_BASE_URL
+    ? jsonBaseUrlOrUndefined
     : typeof options.jsonBaseUrl === 'undefined'
-      ? process.env.JSON_BASE_URL
+      ? jsonBaseUrlOrUndefined
       : options.jsonBaseUrl;
+  if (typeof jsonBaseUrl === 'undefined')
+    throw new Error('jsonBaseUrl is not defined');
   const port = parseInt((process.env.PORT || '4000'), 10);
   const publicDir = join(process.cwd(), 'public');
   const urls = getUrls();
