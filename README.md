@@ -28,9 +28,12 @@ $ docker push registry.heroku.com/mr-jums/web
 
 ## Badges
 
+[![npm version][npm-badge-url]][npm-url]
 [![Travis CI][travisci-badge-url]][travisci-url]
 
-[travisci-badge-url]: https://travis-ci.org/bouzuya/mr-jums.svg
+[npm-badge-url]: https://img.shields.io/npm/v/@bouzuya/mr-jums.svg
+[npm-url]: https://www.npmjs.com/package/@bouzuya/mr-jums
+[travisci-badge-url]: https://img.shields.io/travis/bouzuya/mr-jums.svg
 [travisci-url]: https://travis-ci.org/bouzuya/mr-jums
 
 ## License
