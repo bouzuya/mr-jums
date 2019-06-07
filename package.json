@@ -2,11 +2,7 @@
   "name": "@bouzuya/mr-jums",
   "description": "A client for blog.bouzuya.net using Cycle.js",
   "version": "0.9.3",
-  "author": {
-    "name": "bouzuya",
-    "email": "m@bouzuya.net",
-    "url": "http://bouzuya.net"
-  },
+  "author": "bouzuya <m@bouzuya.net> (https://bouzuya.net/)",
   "babel": {
     "presets": [
       [
