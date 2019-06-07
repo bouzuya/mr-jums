@@ -87,7 +87,7 @@
     "build:rev": "node scripts/rev.js",
     "build:ts": "tsc",
     "clean": "rimraf .tmp public",
-    "prepublish": "npm-run-all -s 'clean' 'build' 'build:bundle' 'build:rev'",
+    "prepare": "npm-run-all -s 'clean' 'build' 'build:bundle' 'build:rev'",
     "start": "node .tmp/es2015/src/server/index.js",
     "test": "node .tmp/es5/test/index.js | tap-dot-b",
     "watch": "npm-run-all -p 'watch:*'",
