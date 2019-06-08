@@ -13,6 +13,7 @@
     "removeComments": true,
     "rootDir": ".",
     "sourceMap": true,
+    "strict": false, // TODO
     "strictNullChecks": true,
     "target": "es2015"
   },
