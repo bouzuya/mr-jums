@@ -16,7 +16,7 @@ import { Sources } from './type/sources';
 
 const main = (): void => {
   if (typeof window === 'undefined') throw new Error();
-  const serialized: string = (<any>window).INITIAL_STATE;
+  const serialized: string = document.getElementById('initial-state')!.getAttribute('data-initial-state')!;
   const initialState = deserialize(serialized);
   run(
     (sources: Sources): Sinks => view(model([

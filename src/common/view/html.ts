@@ -9,7 +9,6 @@ import {
   script,
   title
 } from '@cycle/dom';
-import * as htmlescape from 'htmlescape';
 
 import { serialize } from '../model/state/serialize';
 import { State } from '../type/state';
@@ -20,7 +19,6 @@ const view = (
 ): VNode => {
   const faviconUrl = `${imageBaseUrl}/images/favicon.png`;
   const entry = state.selectedEntryDetail;
-  const escapedInitialState = htmlescape(serialize(state));
   const title1 = (entry === null
     ? '' : entry.id + ' ' + entry.title + ' - ') +
     'blog.bouzuya.net';
@@ -72,7 +70,12 @@ const view = (
       link({
         props: { rel: 'apple-touch-icon', sizes: '192x192', href: faviconUrl }
       }),
-      script(`window.INITIAL_STATE = ${escapedInitialState};`)
+      script({
+        props: {
+          id: 'initial-state',
+          'data-initial-state': serialize(state)
+        }
+      }, [])
     ]),
     body([
       div('#app', [appView(state)]),
