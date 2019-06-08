@@ -1,7 +1,7 @@
 {
   "name": "@bouzuya/mr-jums",
   "description": "A client for blog.bouzuya.net using Cycle.js",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "bouzuya <m@bouzuya.net> (https://bouzuya.net/)",
   "babel": {
     "presets": [
