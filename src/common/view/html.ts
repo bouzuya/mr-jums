@@ -23,10 +23,10 @@ const view = (
     ? '' : entry.id + ' ' + entry.title + ' - ') +
     'blog.bouzuya.net';
   const ogTitle = title1;
-  const ogUrl = 'http://blog.bouzuya.net' + (entry === null
+  const ogUrl = 'https://blog.bouzuya.net' + (entry === null
     ? '/'
     : '/' + entry.id.split('-').join('/') + '/');
-  const ogImageUrl = 'http://blog.bouzuya.net/images/favicon.png';
+  const ogImageUrl = 'https://blog.bouzuya.net/images/favicon.png';
   const ogDescription = entry === null ? 'blog.bouzuya.net' : entry.description;
   const ogSiteName = 'blog.bouzuya.net';
   return html({ lang: 'ja', prefix: 'og: http://ogp.me/ns#' }, [
